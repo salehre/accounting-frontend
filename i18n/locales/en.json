@@ -1,0 +1,69 @@
+{
+  "app": {
+    "name": "Accounting"
+  },
+  "common": {
+    "language": "Language",
+    "menu": "Menu",
+    "back": "Back",
+    "comingSoon": "Coming soon"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "accounts": "Chart of accounts",
+    "entries": "Journal entries",
+    "reports": "Reports",
+    "fiscalYears": "Fiscal years",
+    "locks": "Date locks",
+    "users": "Users & roles"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Could not reach the server.",
+    "tooManyAttempts": "Too many failed attempts. Try again later.",
+    "accountDisabled": "This account is disabled."
+  },
+  "limits": {
+    "users": "Active users"
+  },
+  "subscription": {
+    "grace": "Your subscription has ended. You can renew until {date}, after which the system becomes read-only.",
+    "expired": "Your subscription has ended. The system is read-only and you can still export. Renew to continue working.",
+    "suspended": "Your account is suspended. Contact support."
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "company": "Company code",
+    "companyHint": "The code that came with your account",
+    "username": "Username",
+    "password": "Password",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "fillAll": "Fill in all fields.",
+    "badCredentials": "Wrong username or password.",
+    "companyNotFound": "This company code was not found."
+  },
+  "password": {
+    "title": "Your password",
+    "intro": "{name}, do you keep the password the administrator gave you, or set a new one?",
+    "keep": "Keep this password",
+    "change": "Set a new password",
+    "current": "Current password",
+    "new": "New password",
+    "repeat": "Repeat new password",
+    "rule": "At least {n} characters",
+    "save": "Save and continue",
+    "required": "This field is required.",
+    "tooShort": "The password must be at least {n} characters.",
+    "sameAsOld": "The new password must differ from the current one.",
+    "mismatch": "The two passwords do not match.",
+    "wrongCurrent": "The current password is wrong.",
+    "alreadyDone": "This choice has already been made."
+  },
+  "home": {
+    "welcome": "Hello {name}",
+    "subtitle": "Your overview",
+    "role": "Your role",
+    "building": "Accounting screens are added to the menu one by one. Dimmed items are not ready yet."
+  }
+}
