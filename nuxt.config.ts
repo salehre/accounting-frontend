@@ -41,11 +41,7 @@ export default defineNuxtConfig({
       { code: 'en', language: 'en-US', name: 'English', dir: 'ltr', file: 'en.json' },
       { code: 'ar', language: 'ar', name: 'العربية', dir: 'rtl', file: 'ar.json' },
     ],
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'acc_locale',
-      redirectOn: 'root',
-      fallbackLocale: 'fa',
-    },
+    // always start in Persian; the person's own choice is remembered in a cookie (see app.vue)
+    detectBrowserLanguage: false,
   },
 })

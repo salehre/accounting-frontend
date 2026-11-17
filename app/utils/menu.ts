@@ -13,7 +13,7 @@ export interface MenuItem {
  */
 export const MENU: MenuItem[] = [
   { key: 'dashboard', to: '/', icon: 'home', ready: true },
-  { key: 'accounts', to: '/accounts', icon: 'list', permission: 'accounts.read', ready: false },
+  { key: 'accounts', to: '/accounts', icon: 'list', permission: 'accounts.read', ready: true },
   { key: 'entries', to: '/entries', icon: 'book', permission: 'entries.read', ready: false },
   { key: 'reports', to: '/reports', icon: 'chart', permission: 'reports.read', ready: false },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: false },

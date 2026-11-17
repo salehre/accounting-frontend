@@ -6,7 +6,14 @@
     "language": "Language",
     "menu": "Menu",
     "back": "Back",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "retry": "Try again",
+    "loading": "Loading…"
   },
   "menu": {
     "dashboard": "Dashboard",
@@ -21,7 +28,8 @@
     "generic": "Something went wrong. Please try again.",
     "network": "Could not reach the server.",
     "tooManyAttempts": "Too many failed attempts. Try again later.",
-    "accountDisabled": "This account is disabled."
+    "accountDisabled": "This account is disabled.",
+    "forbidden": "You are not allowed to do this."
   },
   "limits": {
     "users": "Active users"
@@ -65,5 +73,64 @@
     "subtitle": "Your overview",
     "role": "Your role",
     "building": "Accounting screens are added to the menu one by one. Dimmed items are not ready yet."
+  },
+  "accounts": {
+    "subtitle": "The account tree: group, general and detail level. Only level 3 accounts can be used in entries.",
+    "addGroup": "Add group",
+    "searchPlaceholder": "Search by code or name…",
+    "showInactive": "Show inactive",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "empty": "No accounts yet.",
+    "noMatch": "Nothing found.",
+    "name": "Name",
+    "code": "Code",
+    "natureLabel": "Nature",
+    "type": "Type",
+    "inactive": "Inactive",
+    "detailTag": "Detail required",
+    "addChild": "Add child",
+    "disable": "Disable",
+    "enable": "Enable",
+    "addTitle": "Add {level}",
+    "editTitle": "Edit account",
+    "under": "Under",
+    "codeHint": "The code must start with {code} and be longer.",
+    "codeDigitsHint": "Digits only, up to 20.",
+    "requiresDetail": "Requires a detail account",
+    "requiresDetailHint": "Entries must pick a detail account (customer, bank…) for this account.",
+    "inUseNote": "This account is in use (it has children or entries). Only the name and active status can be changed.",
+    "deleteTitle": "Delete account",
+    "deleteMessage": "Delete \"{name}\" (code {code})? This cannot be undone.",
+    "nature": {
+      "debit": "Debit",
+      "credit": "Credit",
+      "both": "Both"
+    },
+    "level": {
+      "1": "Group",
+      "2": "General",
+      "3": "Detail account"
+    },
+    "errors": {
+      "codeDigits": "The code must be digits only (1 to 20).",
+      "codeParent": "The code must start with {code} and be longer.",
+      "nameRequired": "The name is required.",
+      "nameLong": "The name is at most 150 characters."
+    }
+  },
+  "serverMsg": {
+    "accountInUseDelete": "This account is in use. Disable it instead of deleting it.",
+    "accountInUseEdit": "This account is in use: only its name and active status can be changed.",
+    "disableChildrenFirst": "Disable the child accounts first.",
+    "enableParentFirst": "Enable the parent account first.",
+    "parentDisabled": "The parent account is disabled.",
+    "onlyLevel3Detail": "Only level 3 accounts can require a detail account.",
+    "codeFollowsParent": "The code must start with the parent code ({code}) and be longer.",
+    "taken": "This value is already taken.",
+    "nothingToUpdate": "Nothing to update.",
+    "notFound": "Account not found."
   }
 }
