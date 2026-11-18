@@ -22,7 +22,8 @@
     "reports": "Reports",
     "fiscalYears": "Fiscal years",
     "locks": "Date locks",
-    "users": "Users & roles"
+    "users": "Users & roles",
+    "detailAccounts": "Detail accounts"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -131,6 +132,103 @@
     "codeFollowsParent": "The code must start with the parent code ({code}) and be longer.",
     "taken": "This value is already taken.",
     "nothingToUpdate": "Nothing to update.",
-    "notFound": "Account not found."
+    "notFound": "Account not found.",
+    "yearClosedEdit": "A closed fiscal year cannot be edited. Reopen it first.",
+    "yearHasEntriesDates": "Dates can no longer be changed: this fiscal year already has entries.",
+    "yearClosedDelete": "A closed fiscal year cannot be deleted.",
+    "yearHasEntriesDelete": "This fiscal year has entries and cannot be deleted.",
+    "yearAlreadyClosed": "This fiscal year is already closed.",
+    "yearNotClosed": "This fiscal year is not closed.",
+    "yearCannotClose": "The fiscal year cannot be closed yet.",
+    "endAfterStart": "The end date must be after the start date.",
+    "yearTooLong": "A fiscal year cannot be longer than {n} days.",
+    "yearNotFound": "Fiscal year not found."
+  },
+  "detail": {
+    "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
+    "add": "Add detail account",
+    "searchPlaceholder": "Search by code or name…",
+    "allKinds": "All kinds",
+    "kindLabel": "Kind",
+    "name": "Name",
+    "code": "Code",
+    "empty": "No detail accounts yet.",
+    "addTitle": "Add detail account",
+    "editTitle": "Edit detail account",
+    "codeHint": "Latin letters, digits and . _ - (up to 30)",
+    "deleteTitle": "Delete detail account",
+    "deleteMessage": "Delete \"{name}\" (code {code})? If it is used in an entry it cannot be deleted; disable it instead.",
+    "limitNote": "Only the first {n} are shown. Narrow the search.",
+    "kind": {
+      "customer": "Customer",
+      "supplier": "Supplier",
+      "employee": "Employee",
+      "bank": "Bank",
+      "cash": "Cash box",
+      "cost_center": "Cost center",
+      "other": "Other"
+    },
+    "errors": {
+      "code": "The code may contain Latin letters, digits and . _ - only (1 to 30).",
+      "nameRequired": "The name is required.",
+      "nameLong": "The name is at most 150 characters."
+    }
+  },
+  "date": {
+    "year": "Year",
+    "month": "Month",
+    "day": "Day",
+    "invalid": "This date does not exist."
+  },
+  "fiscal": {
+    "subtitle": "Every journal entry belongs to a fiscal year.",
+    "add": "Add fiscal year",
+    "title": "Title",
+    "titleHint": "For example \"Fiscal year 2026\"",
+    "start": "Start date",
+    "end": "End date",
+    "entries": "Entries",
+    "status": "Status",
+    "empty": "No fiscal years yet.",
+    "addTitle": "Add fiscal year",
+    "editTitle": "Edit fiscal year",
+    "datesLockedNote": "This fiscal year has entries or is closed: only the title can be changed.",
+    "entriesCount": "{posted} posted, {drafts} draft",
+    "statuses": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "close": "Close year",
+    "reopen": "Reopen",
+    "closeTitle": "Close \"{title}\"",
+    "closeNote": "Closing the year stops posting and changing entries in it. An administrator can reopen it with a reason if needed.",
+    "blockersTitle": "What blocks closing",
+    "warningsTitle": "Warnings",
+    "noDescription": "No description",
+    "posted": "Posted entries",
+    "drafts": "Drafts",
+    "totalDebit": "Total debit (rial)",
+    "totalCredit": "Total credit (rial)",
+    "blockers": {
+      "already_closed": "This fiscal year is already closed.",
+      "draft_entries": "{n} draft entries must be posted or deleted first."
+    },
+    "warnings": {
+      "earlier_year_open": "An earlier fiscal year (\"{title}\") is still open.",
+      "no_entries": "This fiscal year has no entries."
+    },
+    "reopenTitle": "Reopen \"{title}\"",
+    "reopenWarning": "Reopening a closed year is sensitive. It is recorded with your reason and your name.",
+    "reason": "Reason for reopening",
+    "reasonHint": "At least 10 characters",
+    "reasonShort": "The reason must be at least 10 characters.",
+    "deleteTitle": "Delete fiscal year",
+    "deleteMessage": "Delete fiscal year \"{title}\"?",
+    "errors": {
+      "titleRequired": "The title is required.",
+      "titleLong": "The title is at most 100 characters.",
+      "dateRequired": "Enter the full date.",
+      "endAfterStart": "The end date must be after the start date."
+    }
   }
 }

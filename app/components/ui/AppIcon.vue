@@ -11,6 +11,7 @@ const paths: Record<string, string> = {
   users: 'M16 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1M9.5 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM21 20v-1a4 4 0 00-3-3.9M16 4.2a3.5 3.5 0 010 6.6',
   menu: 'M4 6h16M4 12h16M4 18h16',
   logout: 'M15 17l5-5-5-5M20 12H9M12 20H5V4h7',
+  unlock: 'M6 11h12v9H6zM8 11V8a4 4 0 017.5-2',
   plus: 'M12 5v14M5 12h14',
   edit: 'M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4',
   trash: 'M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3',

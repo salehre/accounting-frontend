@@ -13,6 +13,16 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/has already been taken/, 'serverMsg.taken'],
   [/^Nothing to update/, 'serverMsg.nothingToUpdate'],
   [/^Account not found/, 'serverMsg.notFound'],
+  [/^A closed fiscal year cannot be edited/, 'serverMsg.yearClosedEdit'],
+  [/^Dates can no longer be changed/, 'serverMsg.yearHasEntriesDates'],
+  [/^A closed fiscal year cannot be deleted/, 'serverMsg.yearClosedDelete'],
+  [/^This fiscal year has entries and cannot be deleted/, 'serverMsg.yearHasEntriesDelete'],
+  [/^This fiscal year is already closed/, 'serverMsg.yearAlreadyClosed'],
+  [/^This fiscal year is not closed/, 'serverMsg.yearNotClosed'],
+  [/^The fiscal year cannot be closed yet/, 'serverMsg.yearCannotClose'],
+  [/^The end date must be after the start date/, 'serverMsg.endAfterStart'],
+  [/^A fiscal year cannot be longer than (\d+) days/, 'serverMsg.yearTooLong', (m) => ({ n: m[1]! })],
+  [/^Fiscal year not found/, 'serverMsg.yearNotFound'],
 ]
 
 export function useErrorText() {

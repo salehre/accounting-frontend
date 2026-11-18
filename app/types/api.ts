@@ -35,3 +35,34 @@ export interface Account {
   hasChildren: boolean
   hasEntries: boolean
 }
+
+export type DetailKind = 'customer' | 'supplier' | 'employee' | 'bank' | 'cash' | 'cost_center' | 'other'
+export const DETAIL_KINDS: DetailKind[] = ['customer', 'supplier', 'employee', 'bank', 'cash', 'cost_center', 'other']
+
+export interface DetailAccount {
+  id: number
+  code: string
+  name: string
+  kind: DetailKind
+  isActive: boolean
+}
+
+export interface FiscalYear {
+  id: number
+  title: string
+  startDate: string
+  endDate: string
+  status: 'open' | 'closed'
+  postedEntries: number
+  draftEntries: number
+  hasEntries: boolean
+}
+
+export interface CloseCheck {
+  fiscalYearId: number
+  status: 'open' | 'closed'
+  canClose: boolean
+  blockers: Array<{ code: string; message: string; count?: number; entries?: Array<{ id: number; entryDate: string; description: string | null }> }>
+  warnings: Array<{ code: string; message: string }>
+  summary: { postedEntries: number; draftEntries: number; lastEntryNumber: number | null; totalDebit: number; totalCredit: number }
+}
