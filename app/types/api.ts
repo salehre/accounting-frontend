@@ -66,3 +66,51 @@ export interface CloseCheck {
   warnings: Array<{ code: string; message: string }>
   summary: { postedEntries: number; draftEntries: number; lastEntryNumber: number | null; totalDebit: number; totalCredit: number }
 }
+
+export interface Paginated<T> {
+  items: T[]
+  page: number
+  pageSize: number
+  total: number
+}
+
+export interface EntryRow {
+  id: number
+  number: number | null
+  entryDate: string
+  description: string | null
+  status: 'draft' | 'posted'
+  sourceType: string | null
+  totalDebit: number
+}
+
+export interface EntryLine {
+  id: number
+  lineNo: number
+  accountId: number
+  accountCode: string
+  accountName: string
+  detailId: number | null
+  detailName: string | null
+  description: string | null
+  debit: number
+  credit: number
+}
+
+export interface JournalEntry {
+  id: number
+  fiscalYearId: number
+  number: number | null
+  entryDate: string
+  description: string | null
+  status: 'draft' | 'posted'
+  sourceType: string | null
+  sourceId: number | null
+  reversesEntryId: number | null
+  totalDebit: number
+  totalCredit: number
+  isBalanced: boolean
+  lines: EntryLine[]
+}
+
+export interface ComboOption { value: number | string; label: string; sub?: string }

@@ -15,7 +15,7 @@ export const MENU: MenuItem[] = [
   { key: 'dashboard', to: '/', icon: 'home', ready: true },
   { key: 'accounts', to: '/accounts', icon: 'list', permission: 'accounts.read', ready: true },
   { key: 'detailAccounts', to: '/detail-accounts', icon: 'users', permission: 'accounts.read', ready: true },
-  { key: 'entries', to: '/entries', icon: 'book', permission: 'entries.read', ready: false },
+  { key: 'entries', to: '/entries', icon: 'book', permission: 'entries.read', ready: true },
   { key: 'reports', to: '/reports', icon: 'chart', permission: 'reports.read', ready: false },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: true },
   { key: 'locks', to: '/locks', icon: 'lock', permission: 'entries.read', ready: false },

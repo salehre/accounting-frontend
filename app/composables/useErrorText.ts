@@ -23,6 +23,11 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^The end date must be after the start date/, 'serverMsg.endAfterStart'],
   [/^A fiscal year cannot be longer than (\d+) days/, 'serverMsg.yearTooLong', (m) => ({ n: m[1]! })],
   [/^Fiscal year not found/, 'serverMsg.yearNotFound'],
+  [/^Each line must have either a debit or a credit/, 'serverMsg.lineAmount'],
+  [/^The fiscal year does not exist or is closed/, 'serverMsg.entryYearClosed'],
+  [/^Entry is already posted/, 'serverMsg.entryPosted'],
+  [/^Entry not found/, 'serverMsg.entryNotFound'],
+  [/^Year-end entries are managed from/, 'serverMsg.yearEndManaged'],
 ]
 
 export function useErrorText() {
