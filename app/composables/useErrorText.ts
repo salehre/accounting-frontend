@@ -28,6 +28,13 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^Entry is already posted/, 'serverMsg.entryPosted'],
   [/^Entry not found/, 'serverMsg.entryNotFound'],
   [/^Year-end entries are managed from/, 'serverMsg.yearEndManaged'],
+  [/^The soft lock already has this date/, 'serverMsg.softSame'],
+  [/^The password is incorrect/, 'serverMsg.passwordWrong'],
+  [/^Type exactly:/, 'serverMsg.phraseWrong'],
+  [/^Read the warnings of the preview/, 'serverMsg.ackWarnings'],
+  [/before or equal to today/, 'serverMsg.notFuture'],
+  [/must be at least (\d+) characters/, 'serverMsg.minChars', (m) => ({ n: m[1]! })],
+  [/^The books cannot be hard-locked yet/, 'serverMsg.cannotHardLock'],
 ]
 
 export function useErrorText() {

@@ -114,3 +114,34 @@ export interface JournalEntry {
 }
 
 export interface ComboOption { value: number | string; label: string; sub?: string }
+
+export interface LockEvent {
+  id: number
+  kind: 'soft' | 'hard'
+  oldDate: string | null
+  newDate: string | null
+  reason: string
+  username: string
+  fullName: string | null
+  ip: string | null
+  postedEntries: number | null
+  createdAt: string
+}
+
+export interface PeriodLockStatus {
+  softLockDate: string | null
+  hardLockDate: string | null
+  effectiveLockDate: string | null
+  events: LockEvent[]
+}
+
+export interface HardLockPreview {
+  date: string
+  canLock: boolean
+  blockers: Array<{ code: string; message: string; count?: number; entries?: Array<{ id: number; entryDate: string; description: string | null }> }>
+  warnings: Array<{ code: string; severity: 'important' | 'info'; message: string }>
+  needsAcknowledgement: boolean
+  summary: { postedEntries: number; totalDebit: number; totalCredit: number; lastEntryDate: string | null }
+  confirmationPhrase: string
+  token: string | null
+}

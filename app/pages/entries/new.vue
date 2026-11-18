@@ -175,30 +175,30 @@ async function save(post: boolean) {
   const used = validate(post)
   if (!used) return
   saving.value = true
-  let created: JournalEntry | null = null
+  const body = {
+    fiscalYearId: Number(yearId.value),
+    entryDate: entryDate.value,
+    description: description.value.trim() || null,
+    lines: used.map((l) => ({
+      accountId: l.accountId,
+      detailId: l.detailId,
+      description: l.description.trim() || null,
+      debit: l.debit ?? 0,
+      credit: l.credit ?? 0,
+    })),
+  }
+  let created: JournalEntry
   try {
-    created = await api.post<JournalEntry>('/entries', {
-      fiscalYearId: Number(yearId.value),
-      entryDate: entryDate.value,
-      description: description.value.trim() || null,
-      lines: used.map((l) => ({
-        accountId: l.accountId,
-        detailId: l.detailId,
-        description: l.description.trim() || null,
-        debit: l.debit ?? 0,
-        credit: l.credit ?? 0,
-      })),
-    })
+    // editing a draft updates it in place (same id); otherwise a new draft is created
+    created = replace.value && fromId.value
+        ? await api.put<JournalEntry>(`/entries/${fromId.value}`, body)
+        : await api.post<JournalEntry>('/entries', body)
   } catch (e) {
     showServerErrors(e)
     saving.value = false
     return
   }
 
-  // "edit a draft" = the new version was saved, now remove the old draft
-  if (replace.value && fromId.value) {
-    try { await api.del(`/entries/${fromId.value}`) } catch { flash.value = { kind: 'warning', text: t('entries.form.deleteOldFailed') } }
-  }
   if (post) {
     try { await api.post(`/entries/${created.id}/post`) } catch (e) {
       flash.value = { kind: 'error', text: t('entries.form.postFailedNote', { reason: errorText.of(e) }) }
@@ -234,7 +234,7 @@ async function save(post: boolean) {
       </div>
 
       <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <div class="min-w-230">
+        <div class="min-w-[920px]">
           <div class="grid grid-cols-[2.5rem_minmax(220px,2fr)_minmax(170px,1.4fr)_minmax(140px,1.4fr)_9.5rem_9.5rem_2.5rem] gap-2 bg-slate-50 px-3 py-2.5 text-xs font-medium text-slate-500">
             <span>#</span><span>{{ $t('entries.form.account') }}</span><span>{{ $t('entries.form.detail') }}</span><span>{{ $t('entries.form.lineDescription') }}</span>
             <span class="text-end">{{ $t('entries.form.debit') }}</span><span class="text-end">{{ $t('entries.form.credit') }}</span><span />

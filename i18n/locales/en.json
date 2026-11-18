@@ -153,7 +153,14 @@
     "entryYearClosed": "The fiscal year does not exist or is closed.",
     "entryPosted": "This entry is already posted.",
     "entryNotFound": "Entry not found.",
-    "yearEndManaged": "Year-end entries are managed from the fiscal year screen only."
+    "yearEndManaged": "Year-end entries are managed from the fiscal year screen only.",
+    "softSame": "The soft lock already has this date.",
+    "passwordWrong": "The password is incorrect.",
+    "phraseWrong": "The confirmation phrase is not exact.",
+    "ackWarnings": "Read the warnings and confirm them.",
+    "notFuture": "The date cannot be in the future.",
+    "minChars": "At least {n} characters are needed.",
+    "cannotHardLock": "The books cannot be hard-locked yet."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -282,7 +289,7 @@
     "form": {
       "title": "New entry",
       "titleEdit": "Edit draft",
-      "editingNote": "A new version is saved and the previous draft is deleted.",
+      "editingNote": "This draft is updated in place.",
       "year": "Fiscal year",
       "date": "Entry date",
       "description": "Description",
@@ -312,8 +319,72 @@
       "amountOne": "Fill in only one of debit or credit.",
       "detailRequired": "This account needs a detail account.",
       "cannotPostUnbalanced": "To post, total debit and total credit must be equal.",
-      "deleteOldFailed": "The new version was saved but the old draft could not be deleted. Delete it manually.",
       "postFailedNote": "The draft was saved but not posted: {reason}"
+    }
+  },
+  "locks": {
+    "subtitle": "Close the books for a past period. A soft lock can be changed any time; a hard lock cannot be undone.",
+    "none": "No lock",
+    "reason": "Reason",
+    "reasonHint": "At least 10 characters. It is kept in the history.",
+    "reasonShort": "Write the reason (at least 10 characters).",
+    "notFuture": "The date cannot be in the future.",
+    "saved": "The soft lock was saved.",
+    "hardApplied": "The books are now hard-locked.",
+    "effective": "Entries dated on or before {date} cannot be posted any more.",
+    "soft": {
+      "name": "Soft lock",
+      "short": "Nobody can post entries dated up to this date. Drafts can still be edited. You can change or remove it at any time.",
+      "change": "Set or change",
+      "title": "Soft lock",
+      "explain": "Entries dated on or before the lock date can no longer be posted. It is a reminder-strength lock: it can be moved or removed with a reason.",
+      "currently": "Current soft lock",
+      "remove": "Remove the soft lock",
+      "removeBtn": "Remove lock",
+      "date": "Lock up to (inclusive)",
+      "dateRequired": "Choose the date.",
+      "sameDate": "This is already the soft lock date."
+    },
+    "hard": {
+      "name": "Hard lock",
+      "short": "Nothing dated up to this date can be added, changed or deleted by anyone, for good.",
+      "apply": "Hard lock…",
+      "title": "Hard lock",
+      "explain": "A hard lock is permanent. The database refuses every change dated on or before the lock date, for every user and every role. It cannot be undone from the program.",
+      "currently": "Current hard lock",
+      "mustBeLater": "the new date must be later",
+      "date": "Lock up to (inclusive)",
+      "dateHint": "Next you see what the lock will do. Nothing is locked yet.",
+      "dateRequired": "Choose the date.",
+      "previewBtn": "Check",
+      "lockUpTo": "Lock everything up to",
+      "lastEntry": "Last entry",
+      "irreversible": "This cannot be undone. Check the numbers above first.",
+      "acknowledge": "I have read the warnings above and I still want to lock.",
+      "password": "Your password",
+      "typePhrase": "Confirmation phrase",
+      "phraseNote": "Type exactly (Latin letters and the Gregorian date):",
+      "applyBtn": "Lock permanently",
+      "ledgerChanged": "The books changed after the check. Review the new numbers and confirm again.",
+      "tokenExpired": "The confirmation expired. Review the check and confirm again.",
+      "blockers": {
+        "not_forward": "The books are already hard-locked up to {date}. A new lock must be later.",
+        "draft_entries": "{n} draft entries are dated in this period. Post or delete them first."
+      },
+      "warnings": {
+        "year_end_not_posted": "These fiscal years have no posted year-end entries: {titles}. After the lock they can never be added.",
+        "lock_inside_year": "The lock ends inside fiscal year \"{title}\", which continues until {end}."
+      }
+    },
+    "history": {
+      "title": "History",
+      "empty": "No lock has been set yet.",
+      "when": "When",
+      "kind": "Kind",
+      "change": "Change",
+      "by": "By",
+      "removed": "{date} → removed",
+      "entries": "{n} entries locked"
     }
   }
 }
