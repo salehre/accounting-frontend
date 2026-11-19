@@ -25,6 +25,7 @@ const error = ref<string | null>(null)
 const fieldErrs = ref<Record<string, string>>({})
 let seq = 0
 let lastQuery: Record<string, unknown> = {}
+const shownQuery = ref<Record<string, unknown> | null>(null)
 
 const accountOptions = computed<ComboOption[]>(() => accounts.value.map((a) => ({ value: a.id, label: a.name, sub: a.code })))
 
@@ -51,6 +52,8 @@ async function run() {
     const data = await api.get<Ledger>('/reports/ledger', query)
     if (my !== seq) return
     lastQuery = query
+    const { pageSize: _p, ...exportable } = query
+    shownQuery.value = exportable
     report.value = data
     items.value = data.items
     nextCursor.value = data.nextCursor
@@ -141,9 +144,11 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
 
     <template v-if="report">
       <div class="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm sm:grid-cols-4">
-        <div class="sm:col-span-4 text-slate-600">
+        <div class="flex flex-wrap items-center justify-between gap-3 sm:col-span-4 text-slate-600">
+          <span>
           <b class="text-slate-900">{{ report.account.name }}</b> <span dir="ltr" class="text-slate-400">{{ report.account.code }}</span>
-          — {{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}
+          — {{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}</span>
+          <ExportButton path="/reports/ledger/export" :query="shownQuery" />
         </div>
         <div><div class="text-xs text-slate-500">{{ $t('reports.ledger.opening') }}</div><b dir="ltr">{{ bal(report.openingBalance) }}</b> <span class="text-xs text-slate-500">{{ side(report.openingBalance) }}</span></div>
         <div><div class="text-xs text-slate-500">{{ $t('reports.debit') }}</div><b dir="ltr">{{ fmt.money(report.totals.periodDebit) }}</b></div>

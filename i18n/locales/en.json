@@ -479,6 +479,7 @@
     "loadMore": "Load more",
     "unclassified": {
       "text": "Some accounts belong to groups without a category (revenue, expense…), so the result may be incomplete. Classify these groups first:"
-    }
+    },
+    "exportExcel": "Excel"
   }
 }

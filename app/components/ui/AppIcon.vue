@@ -3,6 +3,7 @@ defineProps<{ name: string }>()
 // small stroke icons (24x24), no icon library needed
 const paths: Record<string, string> = {
   home: 'M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10',
+  download: 'M12 4v11m0 0l-4-4m4 4l4-4M5 20h14',
   list: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
   book: 'M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5zM4 19a2 2 0 002 2h13',
   chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',

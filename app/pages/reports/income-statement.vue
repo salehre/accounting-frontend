@@ -13,6 +13,7 @@ const to = ref('')
 const level = ref('2')
 
 const report = ref<IncomeStatement | null>(null)
+const shownQuery = ref<Record<string, unknown> | null>(null)
 const running = ref(false)
 const error = ref<string | null>(null)
 const fieldErrs = ref<Record<string, string>>({})
@@ -33,7 +34,7 @@ async function run() {
   running.value = true
   try {
     const data = await api.get<IncomeStatement>('/reports/income-statement', query)
-    if (my === seq) report.value = data
+    if (my === seq) { report.value = data; shownQuery.value = query }
   } catch (e) {
     if (my !== seq) return
     const err = toApiError(e)
@@ -78,7 +79,10 @@ onMounted(async () => {
     <AppAlert v-if="error">{{ error }}</AppAlert>
 
     <template v-if="report">
-      <p class="text-sm text-slate-600">{{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}</p>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-slate-600">{{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}</p>
+        <ExportButton path="/reports/income-statement/export" :query="shownQuery" />
+      </div>
       <UnclassifiedWarning :warnings="report.warnings" />
 
       <div class="space-y-4" :class="running ? 'opacity-60' : ''">

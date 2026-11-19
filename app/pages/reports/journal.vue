@@ -22,6 +22,7 @@ const error = ref<string | null>(null)
 const fieldErrs = ref<Record<string, string>>({})
 let seq = 0
 let lastQuery: Record<string, unknown> = {}
+const shownQuery = ref<Record<string, unknown> | null>(null)
 
 const balanced = computed(() => !!report.value && report.value.totals.debit === report.value.totals.credit)
 
@@ -54,6 +55,8 @@ async function run() {
     const data = await api.get<Journal>('/reports/journal', query)
     if (my !== seq) return
     lastQuery = query
+    const { pageSize: _p, ...exportable } = query
+    shownQuery.value = exportable
     report.value = data
     items.value = data.items
     nextCursor.value = data.nextCursor
@@ -127,7 +130,8 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
     <template v-if="report">
       <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
         <span>{{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}</span>
-        <span class="flex items-center gap-4">
+        <span class="flex flex-wrap items-center gap-4">
+          <ExportButton path="/reports/journal/export" :query="shownQuery" />
           <span>{{ $t('reports.debit') }}: <b class="text-slate-900" dir="ltr">{{ fmt.money(report.totals.debit) }}</b></span>
           <span>{{ $t('reports.credit') }}: <b class="text-slate-900" dir="ltr">{{ fmt.money(report.totals.credit) }}</b></span>
           <span v-if="balanced" class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">{{ $t('reports.trialBalance.balanced') }}</span>

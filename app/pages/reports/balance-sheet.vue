@@ -12,6 +12,7 @@ const date = ref('')
 const level = ref('2')
 
 const report = ref<BalanceSheet | null>(null)
+const shownQuery = ref<Record<string, unknown> | null>(null)
 const running = ref(false)
 const error = ref<string | null>(null)
 const fieldErrs = ref<Record<string, string>>({})
@@ -30,7 +31,7 @@ async function run() {
   running.value = true
   try {
     const data = await api.get<BalanceSheet>('/reports/balance-sheet', query)
-    if (my === seq) report.value = data
+    if (my === seq) { report.value = data; shownQuery.value = query }
   } catch (e) {
     if (my !== seq) return
     const err = toApiError(e)
@@ -76,6 +77,7 @@ onMounted(async () => {
     <template v-if="report">
       <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
         <span>{{ report.fiscalYear.title }} — {{ $t('reports.balanceSheet.onDate', { date: fmt.date(report.date) }) }}</span>
+        <ExportButton path="/reports/balance-sheet/export" :query="shownQuery" />
         <span v-if="report.balanced" class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">{{ $t('reports.balanceSheet.balanced') }}</span>
         <span v-else class="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700">
           {{ $t('reports.balanceSheet.notBalanced') }}: <span dir="ltr">{{ fmt.money(Math.abs(report.difference)) }}</span>

@@ -72,7 +72,44 @@ export function useApi() {
     }
   }
 
+  /** Downloads a file (an Excel report) and gives it to the browser to save. */
+  async function download(path: string, query?: Record<string, unknown>): Promise<void> {
+    const headers: Record<string, string> = { Accept: '*/*', ...companyHeaders() }
+    const token = xsrfToken()
+    if (token) headers['X-XSRF-TOKEN'] = token
+
+    let res
+    try {
+      res = await $fetch.raw<Blob>(path, { baseURL: config.public.apiBase, headers, query: query as any, responseType: 'blob' })
+    } catch (e) {
+      // with a blob response an error body is a blob too: read the JSON out of it
+      const err = e as { data?: unknown; response?: { _data?: unknown; status?: number } }
+      const body = err?.data ?? err?.response?._data
+      if (body instanceof Blob) {
+        let json: any = {}
+        try { json = JSON.parse(await body.text()) } catch { /* not JSON */ }
+        const status = (e as any)?.status ?? (e as any)?.statusCode ?? err?.response?.status ?? 0
+        const apiErr = toApiError({ status, data: json, message: (e as any)?.message })
+        if (apiErr.status === 401) { useSessionStore().clear(); await navigateTo('/login') }
+        throw apiErr
+      }
+      throw toApiError(e)
+    }
+
+    const disposition = res.headers.get('content-disposition') ?? ''
+    const name = /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i.exec(disposition)?.[1]
+    const url = URL.createObjectURL(res._data as Blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = name ? decodeURIComponent(name) : 'report.xlsx'
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 10_000)
+  }
+
   return {
+    download,
     get: <T>(path: string, query?: Record<string, unknown>) => request<T>(path, { query: query as any }),
     post: <T>(path: string, body?: Record<string, unknown>) => request<T>(path, { method: 'POST', body }),
     patch: <T>(path: string, body?: Record<string, unknown>) => request<T>(path, { method: 'PATCH', body }),

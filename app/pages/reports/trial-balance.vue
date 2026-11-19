@@ -17,6 +17,7 @@ const hideZero = ref(true)
 const includeClosing = ref(false)
 
 const report = ref<TrialBalance | null>(null)
+const shownQuery = ref<Record<string, unknown> | null>(null)
 const loadingYears = ref(true)
 const running = ref(false)
 const error = ref<string | null>(null)
@@ -49,7 +50,7 @@ async function run() {
     if (from.value) query.from = from.value
     if (to.value) query.to = to.value
     const data = await api.get<TrialBalance>('/reports/trial-balance', query)
-    if (my === seq) report.value = data
+    if (my === seq) { report.value = data; shownQuery.value = query }
   } catch (e) {
     if (my !== seq) return
     const err = toApiError(e)
@@ -119,6 +120,7 @@ const columns = ['opening', 'period', 'closing'] as const
           {{ report.fiscalYear.title }} — {{ $t('reports.period', { from: fmt.date(report.from), to: fmt.date(report.to) }) }}
           <span class="text-slate-400">· {{ $t('reports.rowsCount', { n: fmt.money(report.rows.length) }) }}</span>
         </span>
+        <ExportButton path="/reports/trial-balance/export" :query="shownQuery" />
         <span v-if="report.balanced === true" class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">{{ $t('reports.trialBalance.balanced') }}</span>
         <span v-else-if="report.balanced === false" class="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700">{{ $t('reports.trialBalance.notBalanced') }}</span>
       </div>
