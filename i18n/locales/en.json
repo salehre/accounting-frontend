@@ -160,7 +160,9 @@
     "ackWarnings": "Read the warnings and confirm them.",
     "notFuture": "The date cannot be in the future.",
     "minChars": "At least {n} characters are needed.",
-    "cannotHardLock": "The books cannot be hard-locked yet."
+    "cannotHardLock": "The books cannot be hard-locked yet.",
+    "detailsLevel3": "Detail accounts can only be shown at level 3.",
+    "reportTooBig": "The report has more than {n} rows. Narrow it down by account or by date."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -385,6 +387,57 @@
       "by": "By",
       "removed": "{date} → removed",
       "entries": "{n} entries locked"
+    }
+  },
+  "reports": {
+    "subtitle": "Reports of the books. They read posted entries only.",
+    "year": "Fiscal year",
+    "yearRequired": "Choose a fiscal year.",
+    "from": "From date",
+    "to": "To date",
+    "emptyMeansYear": "Empty = from the start / to the end of the year",
+    "fromAfterTo": "The end date is before the start date.",
+    "hideZero": "Hide accounts without balance or movement",
+    "includeClosing": "Include year-end (closing) entries",
+    "show": "Show report",
+    "period": "{from} to {to}",
+    "rowsCount": "{n} rows",
+    "code": "Code",
+    "name": "Account",
+    "debit": "Debit",
+    "credit": "Credit",
+    "totals": "Total",
+    "empty": "No data for these filters.",
+    "trialBalance": {
+      "name": "Trial balance",
+      "desc": "Opening balance, movement and closing balance of every account. Debits and credits must be equal.",
+      "level": "Level",
+      "level1": "Group (level 1)",
+      "level2": "General (level 2)",
+      "level3": "Subsidiary (level 3)",
+      "withDetails": "Per detail account",
+      "detail": "Detail account",
+      "opening": "Opening balance",
+      "period": "Movement",
+      "closing": "Closing balance",
+      "balanced": "Balanced",
+      "notBalanced": "Not balanced"
+    },
+    "ledger": {
+      "name": "General ledger",
+      "desc": "Every line of one account, with a running balance."
+    },
+    "journal": {
+      "name": "Journal book",
+      "desc": "All entries in order of number, with their lines."
+    },
+    "incomeStatement": {
+      "name": "Income statement",
+      "desc": "Revenues and expenses of a period and the profit or loss."
+    },
+    "balanceSheet": {
+      "name": "Balance sheet",
+      "desc": "Assets, liabilities and equity on a date."
     }
   }
 }

@@ -145,3 +145,30 @@ export interface HardLockPreview {
   confirmationPhrase: string
   token: string | null
 }
+
+export interface TrialBalanceRow {
+  accountId: number
+  code: string
+  name: string
+  level: number
+  detailId?: number | null
+  detailCode?: string | null
+  detailName?: string | null
+  openingDebit: number
+  openingCredit: number
+  periodDebit: number
+  periodCredit: number
+  closingDebit: number
+  closingCredit: number
+}
+
+export interface TrialBalance {
+  fiscalYear: { id: number; title: string }
+  from: string
+  to: string
+  level: number
+  includeClosing: boolean
+  rows: TrialBalanceRow[]
+  totals: Record<'openingDebit' | 'openingCredit' | 'periodDebit' | 'periodCredit' | 'closingDebit' | 'closingCredit', number>
+  balanced: boolean | null
+}

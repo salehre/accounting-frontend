@@ -34,6 +34,8 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^Read the warnings of the preview/, 'serverMsg.ackWarnings'],
   [/before or equal to today/, 'serverMsg.notFuture'],
   [/must be at least (\d+) characters/, 'serverMsg.minChars', (m) => ({ n: m[1]! })],
+  [/^Detail accounts can only be shown at level 3/, 'serverMsg.detailsLevel3'],
+  [/^The report has more than (\d+) rows/, 'serverMsg.reportTooBig', (m) => ({ n: m[1]! })],
   [/^The books cannot be hard-locked yet/, 'serverMsg.cannotHardLock'],
 ]
 
