@@ -7,8 +7,8 @@ const REPORTS = [
   { key: 'trialBalance', to: '/reports/trial-balance', icon: 'chart', ready: true },
   { key: 'ledger', to: '/reports/ledger', icon: 'book', ready: true },
   { key: 'journal', to: '/reports/journal', icon: 'list', ready: true },
-  { key: 'incomeStatement', to: '/reports/income-statement', icon: 'chart', ready: false },
-  { key: 'balanceSheet', to: '/reports/balance-sheet', icon: 'chart', ready: false },
+  { key: 'incomeStatement', to: '/reports/income-statement', icon: 'chart', ready: true },
+  { key: 'balanceSheet', to: '/reports/balance-sheet', icon: 'chart', ready: true },
 ]
 </script>
 

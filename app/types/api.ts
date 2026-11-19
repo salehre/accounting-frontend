@@ -233,3 +233,35 @@ export interface Journal {
   items: JournalItem[]
   nextCursor: string | null
 }
+
+export interface StatementRow { accountId: number; code: string; name: string; level: number; amount: number }
+export interface StatementGroup { rows: StatementRow[]; total: number }
+export interface UnclassifiedAccount { accountId: number; code: string; name: string; balance: number }
+export interface StatementWarning { code: string; message: string; accounts?: UnclassifiedAccount[] }
+
+export interface IncomeStatement {
+  fiscalYear: { id: number; title: string }
+  from: string
+  to: string
+  level: number
+  revenue: StatementGroup
+  expenses: StatementGroup
+  netProfit: number
+  complete: boolean
+  warnings: StatementWarning[]
+}
+
+export interface BalanceSheet {
+  fiscalYear: { id: number; title: string }
+  date: string
+  level: number
+  assets: StatementGroup
+  liabilities: StatementGroup
+  equity: StatementGroup
+  currentPeriodResult: number
+  liabilitiesAndEquity: number
+  difference: number
+  balanced: boolean
+  complete: boolean
+  warnings: StatementWarning[]
+}

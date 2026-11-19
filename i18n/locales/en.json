@@ -449,12 +449,36 @@
     },
     "incomeStatement": {
       "name": "Income statement",
-      "desc": "Revenues and expenses of a period and the profit or loss."
+      "desc": "Revenues and expenses of a period and the profit or loss.",
+      "revenue": "Revenue",
+      "expenses": "Expenses",
+      "totalRevenue": "Total revenue",
+      "totalExpenses": "Total expenses",
+      "profit": "Net profit",
+      "loss": "Net loss",
+      "note": "Year-end closing entries are never included."
     },
     "balanceSheet": {
       "name": "Balance sheet",
-      "desc": "Assets, liabilities and equity on a date."
+      "desc": "Assets, liabilities and equity on a date.",
+      "asOf": "As of date",
+      "dateHint": "Empty = the end of the year",
+      "onDate": "As of {date}",
+      "assets": "Assets",
+      "liabilities": "Liabilities",
+      "equity": "Equity",
+      "totalAssets": "Total assets",
+      "totalLiabilities": "Total liabilities",
+      "totalEquity": "Total equity",
+      "result": "Result of the period so far",
+      "totalLiabEquity": "Total liabilities and equity",
+      "balanced": "Balanced",
+      "notBalanced": "Not balanced, difference",
+      "note": "Assets = liabilities + equity + the result of the period so far (revenue and expenses are not closed yet)."
     },
-    "loadMore": "Load more"
+    "loadMore": "Load more",
+    "unclassified": {
+      "text": "Some accounts belong to groups without a category (revenue, expense…), so the result may be incomplete. Classify these groups first:"
+    }
   }
 }
