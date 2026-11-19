@@ -146,7 +146,7 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
             <span class="text-slate-700">{{ e.description }}</span>
           </header>
           <div class="overflow-x-auto">
-            <table class="w-full min-w-[640px] text-sm">
+            <table class="w-full min-w-160 text-sm">
               <tbody>
               <tr v-for="l in e.lines" :key="l.lineNo" class="border-t border-slate-100">
                 <td class="w-10 px-3 py-1.5 text-slate-400">{{ fmt.money(l.lineNo) }}</td>

@@ -162,7 +162,9 @@
     "minChars": "At least {n} characters are needed.",
     "cannotHardLock": "The books cannot be hard-locked yet.",
     "detailsLevel3": "Detail accounts can only be shown at level 3.",
-    "reportTooBig": "The report has more than {n} rows. Narrow it down by account or by date."
+    "reportTooBig": "The report has more than {n} rows. Narrow it down by account or by date.",
+    "numberOrder": "The last number must not be before the first number.",
+    "cursorInvalid": "The page position is not valid. Show the report again."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -425,11 +427,25 @@
     },
     "ledger": {
       "name": "General ledger",
-      "desc": "Every line of one account, with a running balance."
+      "desc": "Every line of one account, with a running balance.",
+      "accountRequired": "Choose an account.",
+      "account": "Account",
+      "accountHint": "A group or general account shows everything under it.",
+      "detail": "Detail account",
+      "opening": "Opening balance",
+      "closing": "Closing balance",
+      "balance": "Balance",
+      "dr": "Dr",
+      "cr": "Cr",
+      "note": "The balance is the running balance: Dr = debit side, Cr = credit side."
     },
     "journal": {
       "name": "Journal book",
-      "desc": "All entries in order of number, with their lines."
+      "desc": "All entries in order of number, with their lines.",
+      "fromNumber": "From entry number",
+      "toNumber": "To entry number",
+      "numberBad": "Enter a whole number from 1.",
+      "entryNo": "Entry {n}"
     },
     "incomeStatement": {
       "name": "Income statement",
@@ -438,6 +454,7 @@
     "balanceSheet": {
       "name": "Balance sheet",
       "desc": "Assets, liabilities and equity on a date."
-    }
+    },
+    "loadMore": "Load more"
   }
 }

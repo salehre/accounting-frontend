@@ -36,6 +36,8 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/must be at least (\d+) characters/, 'serverMsg.minChars', (m) => ({ n: m[1]! })],
   [/^Detail accounts can only be shown at level 3/, 'serverMsg.detailsLevel3'],
   [/^The report has more than (\d+) rows/, 'serverMsg.reportTooBig', (m) => ({ n: m[1]! })],
+  [/^The last number must not be before/, 'serverMsg.numberOrder'],
+  [/^The cursor is not valid/, 'serverMsg.cursorInvalid'],
   [/^The books cannot be hard-locked yet/, 'serverMsg.cannotHardLock'],
 ]
 

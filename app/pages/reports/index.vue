@@ -5,8 +5,8 @@ useHead({ title: computed(() => t('menu.reports')) })
 // ready:false = built in a later step (shown dimmed, not clickable)
 const REPORTS = [
   { key: 'trialBalance', to: '/reports/trial-balance', icon: 'chart', ready: true },
-  { key: 'ledger', to: '/reports/ledger', icon: 'book', ready: false },
-  { key: 'journal', to: '/reports/journal', icon: 'list', ready: false },
+  { key: 'ledger', to: '/reports/ledger', icon: 'book', ready: true },
+  { key: 'journal', to: '/reports/journal', icon: 'list', ready: true },
   { key: 'incomeStatement', to: '/reports/income-statement', icon: 'chart', ready: false },
   { key: 'balanceSheet', to: '/reports/balance-sheet', icon: 'chart', ready: false },
 ]

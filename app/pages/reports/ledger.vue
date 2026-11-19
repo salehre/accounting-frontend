@@ -152,7 +152,7 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
       </div>
 
       <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" :class="running ? 'opacity-60' : ''">
-        <table class="w-full min-w-[900px] text-sm">
+        <table class="w-full min-w-225 text-sm">
           <thead class="bg-slate-50 text-xs text-slate-500">
           <tr>
             <th class="px-3 py-2.5 text-start font-medium">{{ $t('entries.date') }}</th>

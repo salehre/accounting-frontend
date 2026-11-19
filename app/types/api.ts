@@ -172,3 +172,64 @@ export interface TrialBalance {
   totals: Record<'openingDebit' | 'openingCredit' | 'periodDebit' | 'periodCredit' | 'closingDebit' | 'closingCredit', number>
   balanced: boolean | null
 }
+
+export interface LedgerItem {
+  lineId: number
+  entryId: number
+  number: number
+  date: string
+  entryDescription: string | null
+  lineDescription: string | null
+  accountCode: string
+  accountName: string
+  detailId: number | null
+  detailName: string | null
+  debit: number
+  credit: number
+  balance: number
+}
+
+export interface Ledger {
+  fiscalYear: { id: number; title: string }
+  account: { id: number; code: string; name: string; level: number }
+  detailId: number | null
+  from: string
+  to: string
+  includeClosing: boolean
+  openingBalance: number
+  totals: { periodDebit: number; periodCredit: number; closingBalance: number }
+  items: LedgerItem[]
+  nextCursor: string | null
+}
+
+export interface JournalLine {
+  lineNo: number
+  accountCode: string
+  accountName: string
+  detailName: string | null
+  description: string | null
+  debit: number
+  credit: number
+}
+
+export interface JournalItem {
+  id: number
+  number: number
+  date: string
+  description: string | null
+  sourceType: string | null
+  totalDebit: number
+  totalCredit: number
+  lines: JournalLine[]
+}
+
+export interface Journal {
+  fiscalYear: { id: number; title: string }
+  from: string
+  to: string
+  fromNumber: number | null
+  toNumber: number | null
+  totals: { debit: number; credit: number }
+  items: JournalItem[]
+  nextCursor: string | null
+}
