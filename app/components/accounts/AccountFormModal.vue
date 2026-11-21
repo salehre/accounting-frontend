@@ -11,6 +11,7 @@ const emit = defineEmits<{ saved: [] }>()
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 
 const code = ref('')
@@ -26,7 +27,7 @@ const inUse = computed(() => props.mode === 'edit' && (props.account!.hasChildre
 const parentCode = computed(() => (props.mode === 'edit' ? '' : props.parent?.code ?? ''))
 
 const natureOptions = computed(() =>
-  (['debit', 'credit', 'both'] as const).map((v) => ({ value: v, label: t(`accounts.nature.${v}`) })),
+    (['debit', 'credit', 'both'] as const).map((v) => ({ value: v, label: t(`accounts.nature.${v}`) })),
 )
 
 watch(open, (v) => {
@@ -62,6 +63,7 @@ async function save() {
   error.value = null
   if (!validate()) return
   saving.value = true
+  let message: string | null = null
   try {
     if (props.mode === 'create') {
       await api.post('/accounts', {
@@ -72,6 +74,7 @@ async function save() {
         nature: nature.value,
         requiresDetail: level.value === 3 ? requiresDetail.value : false,
       })
+      message = t('toast.accountCreated', { name: name.value.trim() })
     } else {
       const a = props.account!
       const body: Record<string, unknown> = {}
@@ -81,10 +84,14 @@ async function save() {
         if (nature.value !== a.nature) body.nature = nature.value
         if (level.value === 3 && requiresDetail.value !== a.requiresDetail) body.requiresDetail = requiresDetail.value
       }
-      if (Object.keys(body).length > 0) await api.patch('/accounts/' + a.id, body)
+      if (Object.keys(body).length > 0) {
+        await api.patch('/accounts/' + a.id, body)
+        message = t('toast.accountUpdated', { name: name.value.trim() })
+      }
     }
     open.value = false
     emit('saved')
+    if (message) notify.success(message)
   } catch (e) {
     const err = toApiError(e)
     if (err.status === 422 && Object.keys(err.errors).length > 0) {

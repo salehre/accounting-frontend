@@ -3,10 +3,6 @@ const session = useSessionStore()
 const route = useRoute()
 const open = ref(false)
 
-const items = computed(() =>
-  MENU.filter((i) => (!i.permission || session.can(i.permission)) && session.hasFeature(i.feature)),
-)
-
 watch(() => route.path, () => { open.value = false })
 
 const sub = computed(() => session.features?.subscription ?? null)
@@ -18,28 +14,14 @@ const sub = computed(() => session.features?.subscription ?? null)
     <div v-if="open" class="fixed inset-0 z-30 bg-slate-900/40 lg:hidden" @click="open = false" />
 
     <aside
-      class="fixed inset-y-0 start-0 z-40 w-64 shrink-0 border-e border-slate-200 bg-white transition-transform lg:static lg:translate-x-0 rtl:lg:translate-x-0"
-      :class="open ? 'translate-x-0' : 'max-lg:-translate-x-full max-lg:rtl:translate-x-full'"
+        class="fixed inset-y-0 inset-s-0 z-40 w-64 shrink-0 border-e border-slate-200 bg-white transition-transform lg:static lg:translate-x-0 rtl:lg:translate-x-0"
+        :class="open ? 'translate-x-0' : 'max-lg:-translate-x-full max-lg:rtl:translate-x-full'"
     >
       <div class="flex h-16 items-center gap-3 border-b border-slate-200 px-5">
         <div class="flex size-9 items-center justify-center rounded-lg bg-indigo-600 text-white"><AppIcon name="book" /></div>
         <span class="font-bold text-slate-900">{{ $t('app.name') }}</span>
       </div>
-      <nav class="space-y-1 p-3">
-        <template v-for="item in items" :key="item.key">
-          <NuxtLink
-            v-if="item.ready"
-            :to="item.to"
-            class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
-            active-class="!bg-indigo-50 !text-indigo-700"
-          >
-            <AppIcon :name="item.icon" />{{ $t(`menu.${item.key}`) }}
-          </NuxtLink>
-          <span v-else class="flex cursor-not-allowed items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-400" :title="$t('common.comingSoon')">
-            <AppIcon :name="item.icon" />{{ $t(`menu.${item.key}`) }}
-          </span>
-        </template>
-      </nav>
+      <SidebarMenu />
     </aside>
 
     <div class="flex min-w-0 flex-1 flex-col">

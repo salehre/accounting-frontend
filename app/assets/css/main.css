@@ -20,3 +20,8 @@
     text-align: start;
   }
 }
+
+/* the toasts use the font of the app */
+[data-sonner-toaster] {
+  font-family: var(--font-sans);
+}

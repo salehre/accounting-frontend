@@ -481,5 +481,31 @@
       "text": "بعضی حساب‌ها به گروه‌هایی تعلق دارند که دسته‌بندی ندارند (درآمد، هزینه…)، پس نتیجه ممکن است ناقص باشد. اول این گروه‌ها را دسته‌بندی کنید:"
     },
     "exportExcel": "خروجی Excel"
+  },
+  "toast": {
+    "accountCreated": "حساب «{name}» ساخته شد.",
+    "accountUpdated": "حساب «{name}» ویرایش شد.",
+    "accountEnabled": "حساب «{name}» فعال شد.",
+    "accountDisabled": "حساب «{name}» غیرفعال شد.",
+    "accountDeleted": "حساب «{name}» حذف شد.",
+    "detailCreated": "تفصیلی «{name}» ساخته شد.",
+    "detailUpdated": "تفصیلی «{name}» ویرایش شد.",
+    "detailEnabled": "تفصیلی «{name}» فعال شد.",
+    "detailDisabled": "تفصیلی «{name}» غیرفعال شد.",
+    "detailDeleted": "تفصیلی «{name}» حذف شد.",
+    "yearCreated": "سال مالی «{title}» ساخته شد.",
+    "yearUpdated": "سال مالی «{title}» ویرایش شد.",
+    "yearClosed": "سال مالی «{title}» بسته شد.",
+    "yearReopened": "سال مالی «{title}» دوباره باز شد.",
+    "yearDeleted": "سال مالی «{title}» حذف شد.",
+    "draftSaved": "پیش‌نویس ذخیره شد.",
+    "draftUpdated": "پیش‌نویس به‌روز شد.",
+    "entryPosted": "سند ثبت قطعی شد.",
+    "entryDeleted": "پیش‌نویس حذف شد.",
+    "entryReversed": "پیش‌نویس سند معکوس ساخته شد.",
+    "softSaved": "قفل نرم روی {date} تنظیم شد.",
+    "softRemoved": "قفل نرم برداشته شد.",
+    "hardApplied": "دفاتر تا {date} با قفل سخت بسته شد.",
+    "exported": "فایل Excel دانلود شد."
   }
 }

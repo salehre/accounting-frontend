@@ -481,5 +481,31 @@
       "text": "بعض الحسابات تنتمي إلى مجموعات بلا تصنيف (إيراد، مصروف…)، لذا قد تكون النتيجة ناقصة. صنّف هذه المجموعات أولاً:"
     },
     "exportExcel": "تصدير Excel"
+  },
+  "toast": {
+    "accountCreated": "تم إنشاء الحساب «{name}».",
+    "accountUpdated": "تم تعديل الحساب «{name}».",
+    "accountEnabled": "تم تفعيل الحساب «{name}».",
+    "accountDisabled": "تم تعطيل الحساب «{name}».",
+    "accountDeleted": "تم حذف الحساب «{name}».",
+    "detailCreated": "تم إنشاء الحساب التفصيلي «{name}».",
+    "detailUpdated": "تم تعديل الحساب التفصيلي «{name}».",
+    "detailEnabled": "تم تفعيل الحساب التفصيلي «{name}».",
+    "detailDisabled": "تم تعطيل الحساب التفصيلي «{name}».",
+    "detailDeleted": "تم حذف الحساب التفصيلي «{name}».",
+    "yearCreated": "تم إنشاء السنة المالية «{title}».",
+    "yearUpdated": "تم تعديل السنة المالية «{title}».",
+    "yearClosed": "تم إغلاق السنة المالية «{title}».",
+    "yearReopened": "أُعيد فتح السنة المالية «{title}».",
+    "yearDeleted": "تم حذف السنة المالية «{title}».",
+    "draftSaved": "تم حفظ المسودة.",
+    "draftUpdated": "تم تحديث المسودة.",
+    "entryPosted": "تم ترحيل القيد.",
+    "entryDeleted": "تم حذف المسودة.",
+    "entryReversed": "تم إنشاء مسودة القيد العكسي.",
+    "softSaved": "أصبح القفل الناعم {date}.",
+    "softRemoved": "تمت إزالة القفل الناعم.",
+    "hardApplied": "أُغلقت الدفاتر قفلاً صلباً حتى {date}.",
+    "exported": "تم تنزيل ملف Excel."
   }
 }

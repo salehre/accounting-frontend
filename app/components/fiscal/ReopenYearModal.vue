@@ -7,6 +7,7 @@ const emit = defineEmits<{ reopened: [] }>()
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 
 const reason = ref('')
@@ -24,6 +25,7 @@ async function submit() {
   busy.value = true
   try {
     await api.post(`/fiscal-years/${props.year.id}/reopen`, { reason: reason.value.trim() })
+    notify.success(t('toast.yearReopened', { title: props.year.title }))
     open.value = false
     emit('reopened')
   } catch (e) {

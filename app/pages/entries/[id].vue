@@ -4,6 +4,7 @@ import type { JournalEntry } from '~/types/api'
 const { t } = useI18n()
 const route = useRoute()
 const api = useApi()
+const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 const fmt = useFormat()
@@ -56,6 +57,7 @@ async function doPost() {
   actionError.value = null
   try {
     await api.post(`/entries/${id.value}/post`)
+    notify.success(t('toast.entryPosted'))
     postOpen.value = false
     notice.value = null
     await load()
@@ -74,6 +76,7 @@ async function doDelete() {
   actionError.value = null
   try {
     await api.del(`/entries/${id.value}`)
+    notify.success(t('toast.entryDeleted'))
     await navigateTo('/entries')
   } catch (e) {
     deleteOpen.value = false

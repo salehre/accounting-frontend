@@ -481,5 +481,31 @@
       "text": "Some accounts belong to groups without a category (revenue, expense…), so the result may be incomplete. Classify these groups first:"
     },
     "exportExcel": "Excel"
+  },
+  "toast": {
+    "accountCreated": "Account “{name}” was created.",
+    "accountUpdated": "Account “{name}” was updated.",
+    "accountEnabled": "Account “{name}” was enabled.",
+    "accountDisabled": "Account “{name}” was disabled.",
+    "accountDeleted": "Account “{name}” was deleted.",
+    "detailCreated": "Detail account “{name}” was created.",
+    "detailUpdated": "Detail account “{name}” was updated.",
+    "detailEnabled": "Detail account “{name}” was enabled.",
+    "detailDisabled": "Detail account “{name}” was disabled.",
+    "detailDeleted": "Detail account “{name}” was deleted.",
+    "yearCreated": "Fiscal year “{title}” was created.",
+    "yearUpdated": "Fiscal year “{title}” was updated.",
+    "yearClosed": "Fiscal year “{title}” was closed.",
+    "yearReopened": "Fiscal year “{title}” was reopened.",
+    "yearDeleted": "Fiscal year “{title}” was deleted.",
+    "draftSaved": "The draft was saved.",
+    "draftUpdated": "The draft was updated.",
+    "entryPosted": "The entry was posted.",
+    "entryDeleted": "The draft was deleted.",
+    "entryReversed": "The reversal draft was created.",
+    "softSaved": "The soft lock is now {date}.",
+    "softRemoved": "The soft lock was removed.",
+    "hardApplied": "The books are hard-locked up to {date}.",
+    "exported": "The Excel file was downloaded."
   }
 }

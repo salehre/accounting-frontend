@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   components: [{ path: '~/components', pathPrefix: false }],
 
   modules: ['@nuxtjs/i18n', '@pinia/nuxt'],
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', 'vue-sonner/style.css'],
 
   vite: {
     plugins: [tailwindcss()],

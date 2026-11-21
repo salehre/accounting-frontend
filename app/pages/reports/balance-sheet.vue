@@ -58,7 +58,7 @@ onMounted(async () => {
 <template>
   <div class="mx-auto max-w-6xl space-y-4">
     <div>
-      <NuxtLink to="/reports" class="text-sm text-indigo-600 hover:underline">{{ $t('menu.reports') }}</NuxtLink>
+      <span class="text-sm text-slate-500">{{ $t('menu.reports') }}</span>
       <h1 class="mt-1 text-2xl font-bold text-slate-900">{{ $t('reports.balanceSheet.name') }}</h1>
       <p class="mt-1 text-sm text-slate-600">{{ $t('reports.balanceSheet.desc') }}</p>
     </div>

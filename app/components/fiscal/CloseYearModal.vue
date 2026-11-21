@@ -7,6 +7,7 @@ const emit = defineEmits<{ closed: [] }>()
 
 const { t, te } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 const fmt = useFormat()
 
@@ -47,6 +48,7 @@ async function doClose() {
   error.value = null
   try {
     await api.post(`/fiscal-years/${props.year.id}/close`)
+    notify.success(t('toast.yearClosed', { title: props.year.title }))
     open.value = false
     emit('closed')
   } catch (e) {

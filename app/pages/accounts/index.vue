@@ -3,6 +3,7 @@ import type { Account } from '~/types/api'
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 useHead({ title: computed(() => t('menu.accounts')) })
@@ -107,6 +108,7 @@ async function setActive(a: Account, active: boolean) {
   busyId.value = a.id
   try {
     await api.patch(`/accounts/${a.id}`, { isActive: active })
+    notify.success(t(active ? 'toast.accountEnabled' : 'toast.accountDisabled', { name: a.name }))
     await load()
   } catch (e) {
     actionError.value = errorText.of(e)
@@ -124,7 +126,9 @@ async function doDelete() {
   actionError.value = null
   deleteBusy.value = true
   try {
+    const name = deleting.value.name
     await api.del(`/accounts/${deleting.value.id}`)
+    notify.success(t('toast.accountDeleted', { name }))
     deleteOpen.value = false
     await load()
   } catch (e) {
@@ -150,7 +154,7 @@ async function doDelete() {
 
     <div class="flex flex-wrap items-center gap-3">
       <div class="relative min-w-56 flex-1 sm:max-w-sm">
-        <span class="pointer-events-none absolute inset-y-0 start-3 flex items-center text-slate-400"><AppIcon name="search" /></span>
+        <span class="pointer-events-none absolute inset-y-0 inset-s-3 flex items-center text-slate-400"><AppIcon name="search" /></span>
         <input v-model="search" type="search" :placeholder="$t('accounts.searchPlaceholder')"
                class="block w-full rounded-lg border border-slate-300 bg-white py-2.5 ps-10 pe-3 text-sm shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40">
       </div>
@@ -167,49 +171,49 @@ async function doDelete() {
     <AppAlert v-if="loadError">{{ loadError }} <button class="underline" @click="load">{{ $t('common.retry') }}</button></AppAlert>
 
     <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-      <table class="w-full min-w-[640px] text-sm">
+      <table class="w-full min-w-160 text-sm">
         <thead class="bg-slate-50 text-xs text-slate-500">
-          <tr>
-            <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.name') }}</th>
-            <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.code') }}</th>
-            <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.natureLabel') }}</th>
-            <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.type') }}</th>
-            <th class="px-4 py-3" />
-          </tr>
+        <tr>
+          <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.name') }}</th>
+          <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.code') }}</th>
+          <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.natureLabel') }}</th>
+          <th class="px-4 py-3 text-start font-medium">{{ $t('accounts.type') }}</th>
+          <th class="px-4 py-3" />
+        </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
-          <tr v-if="loading"><td colspan="5" class="px-4 py-10 text-center text-slate-500">{{ $t('common.loading') }}</td></tr>
-          <tr v-else-if="rows.length === 0">
-            <td colspan="5" class="px-4 py-10 text-center text-slate-500">{{ query ? $t('accounts.noMatch') : $t('accounts.empty') }}</td>
-          </tr>
-          <tr v-for="a in rows" :key="a.id" :class="a.isActive ? '' : 'bg-slate-50 text-slate-400'">
-            <td class="px-4 py-2.5">
-              <div class="flex items-center gap-1" :style="{ paddingInlineStart: `${(a.level - 1) * 1.5}rem` }">
-                <button v-if="a.hasChildren && !visibleIds" class="rounded p-0.5 text-slate-500 hover:bg-slate-100"
-                        :aria-label="expanded.has(a.id) ? $t('accounts.collapse') : $t('accounts.expand')" @click="toggle(a)">
-                  <AppIcon name="chevron" class="size-4 transition-transform" :class="expanded.has(a.id) ? 'rotate-90' : 'rtl:rotate-180'" />
-                </button>
-                <span v-else class="inline-block size-5" />
-                <span :class="a.level === 1 ? 'font-bold' : a.level === 2 ? 'font-semibold' : ''">{{ a.name }}</span>
-                <span v-if="!a.isActive" class="ms-2 rounded bg-slate-200 px-1.5 py-0.5 text-[11px] text-slate-600">{{ $t('accounts.inactive') }}</span>
-              </div>
-            </td>
-            <td class="px-4 py-2.5 font-mono" dir="ltr">{{ a.code }}</td>
-            <td class="px-4 py-2.5">{{ $t(`accounts.nature.${a.nature}`) }}</td>
-            <td class="px-4 py-2.5">
-              <span class="text-xs">{{ $t(`accounts.level.${a.level}`) }}</span>
-              <span v-if="a.requiresDetail" class="ms-2 rounded bg-indigo-50 px-1.5 py-0.5 text-[11px] text-indigo-700">{{ $t('accounts.detailTag') }}</span>
-            </td>
-            <td class="px-4 py-2.5">
-              <div v-if="canManage" class="flex justify-end gap-1 text-slate-500">
-                <button v-if="a.level < 3 && a.isActive" class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('accounts.addChild')" @click="addChild(a)"><AppIcon name="plus" /></button>
-                <button class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('common.edit')" @click="edit(a)"><AppIcon name="edit" /></button>
-                <button class="rounded p-1.5 hover:bg-slate-100 hover:text-amber-600 disabled:opacity-50" :disabled="busyId === a.id"
-                        :title="a.isActive ? $t('accounts.disable') : $t('accounts.enable')" @click="setActive(a, !a.isActive)"><AppIcon name="power" /></button>
-                <button v-if="!a.hasChildren && !a.hasEntries" class="rounded p-1.5 hover:bg-slate-100 hover:text-red-600" :title="$t('common.delete')" @click="askDelete(a)"><AppIcon name="trash" /></button>
-              </div>
-            </td>
-          </tr>
+        <tr v-if="loading"><td colspan="5" class="px-4 py-10 text-center text-slate-500">{{ $t('common.loading') }}</td></tr>
+        <tr v-else-if="rows.length === 0">
+          <td colspan="5" class="px-4 py-10 text-center text-slate-500">{{ query ? $t('accounts.noMatch') : $t('accounts.empty') }}</td>
+        </tr>
+        <tr v-for="a in rows" :key="a.id" :class="a.isActive ? '' : 'bg-slate-50 text-slate-400'">
+          <td class="px-4 py-2.5">
+            <div class="flex items-center gap-1" :style="{ paddingInlineStart: `${(a.level - 1) * 1.5}rem` }">
+              <button v-if="a.hasChildren && !visibleIds" class="rounded p-0.5 text-slate-500 hover:bg-slate-100"
+                      :aria-label="expanded.has(a.id) ? $t('accounts.collapse') : $t('accounts.expand')" @click="toggle(a)">
+                <AppIcon name="chevron" class="size-4 transition-transform" :class="expanded.has(a.id) ? 'rotate-90' : 'rtl:rotate-180'" />
+              </button>
+              <span v-else class="inline-block size-5" />
+              <span :class="a.level === 1 ? 'font-bold' : a.level === 2 ? 'font-semibold' : ''">{{ a.name }}</span>
+              <span v-if="!a.isActive" class="ms-2 rounded bg-slate-200 px-1.5 py-0.5 text-[11px] text-slate-600">{{ $t('accounts.inactive') }}</span>
+            </div>
+          </td>
+          <td class="px-4 py-2.5 font-mono" dir="ltr">{{ a.code }}</td>
+          <td class="px-4 py-2.5">{{ $t(`accounts.nature.${a.nature}`) }}</td>
+          <td class="px-4 py-2.5">
+            <span class="text-xs">{{ $t(`accounts.level.${a.level}`) }}</span>
+            <span v-if="a.requiresDetail" class="ms-2 rounded bg-indigo-50 px-1.5 py-0.5 text-[11px] text-indigo-700">{{ $t('accounts.detailTag') }}</span>
+          </td>
+          <td class="px-4 py-2.5">
+            <div v-if="canManage" class="flex justify-end gap-1 text-slate-500">
+              <button v-if="a.level < 3 && a.isActive" class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('accounts.addChild')" @click="addChild(a)"><AppIcon name="plus" /></button>
+              <button class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('common.edit')" @click="edit(a)"><AppIcon name="edit" /></button>
+              <button class="rounded p-1.5 hover:bg-slate-100 hover:text-amber-600 disabled:opacity-50" :disabled="busyId === a.id"
+                      :title="a.isActive ? $t('accounts.disable') : $t('accounts.enable')" @click="setActive(a, !a.isActive)"><AppIcon name="power" /></button>
+              <button v-if="!a.hasChildren && !a.hasEntries" class="rounded p-1.5 hover:bg-slate-100 hover:text-red-600" :title="$t('common.delete')" @click="askDelete(a)"><AppIcon name="trash" /></button>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

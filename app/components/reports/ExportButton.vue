@@ -2,8 +2,9 @@
 /** "Excel" button of a report: downloads the same report, with the filters that are on the screen. */
 const props = defineProps<{ path: string; query: Record<string, unknown> | null }>()
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 
@@ -18,6 +19,7 @@ async function exportIt() {
   try {
     // the sheet follows the language: Jalali dates in Persian, Gregorian in the other languages
     await api.download(props.path, { ...props.query, calendar: locale.value === 'fa' ? 'jalali' : 'gregorian' })
+    notify.success(t('toast.exported'))
   } catch (e) {
     error.value = errorText.of(e)
   } finally {

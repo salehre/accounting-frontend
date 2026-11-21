@@ -3,6 +3,7 @@ import type { FiscalYear } from '~/types/api'
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 const fmt = useFormat()
@@ -58,7 +59,9 @@ async function doDelete() {
   actionError.value = null
   deleteBusy.value = true
   try {
+    const title = target.value.title
     await api.del(`/fiscal-years/${target.value.id}`)
+    notify.success(t('toast.yearDeleted', { title }))
     deleteOpen.value = false
     await load()
   } catch (e) {

@@ -26,6 +26,7 @@ function fromModel() {
 watch(() => model.value, (v) => { if (v !== currentIso()) fromModel() }, { immediate: true })
 watch([y, m, d], () => { if (jalali.value) model.value = currentIso() })
 
+const monthOptions = JALALI_MONTHS_FA.map((name, i) => ({ value: String(i + 1), label: name }))
 const partial = computed(() => jalali.value && (y.value || m.value || d.value))
 const invalid = computed(() => !!(y.value && m.value && d.value) && currentIso() === '')
 
@@ -39,11 +40,10 @@ const box = 'rounded-lg border bg-white px-3 py-2.5 text-sm shadow-sm outline-no
     <div v-if="jalali" class="flex gap-2" :aria-describedby="`${id}-msg`">
       <input :id="id" v-model="y" inputmode="numeric" dir="ltr" maxlength="4" :disabled="disabled" :placeholder="t('date.year')"
              :class="[box, 'w-24', error || invalid ? 'border-red-400' : 'border-slate-300 focus:border-indigo-500']">
-      <select v-model="m" :disabled="disabled" :aria-label="t('date.month')"
-              :class="[box, 'min-w-0 flex-1', error || invalid ? 'border-red-400' : 'border-slate-300 focus:border-indigo-500']">
-        <option value="">{{ t('date.month') }}</option>
-        <option v-for="(name, i) in JALALI_MONTHS_FA" :key="i" :value="String(i + 1)">{{ name }}</option>
-      </select>
+      <div class="min-w-0 flex-1">
+        <AppSelect v-model="m" compact :options="monthOptions" :placeholder="t('date.month')" :aria-label="t('date.month')"
+                   :disabled="disabled" :invalid="!!(error || invalid)" />
+      </div>
       <input v-model="d" inputmode="numeric" dir="ltr" maxlength="2" :disabled="disabled" :placeholder="t('date.day')"
              :class="[box, 'w-20', error || invalid ? 'border-red-400' : 'border-slate-300 focus:border-indigo-500']">
     </div>

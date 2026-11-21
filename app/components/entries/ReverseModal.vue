@@ -4,7 +4,9 @@ import type { JournalEntry } from '~/types/api'
 const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ entry: JournalEntry | null }>()
 
+const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 const date = ref('')
 const busy = ref(false)
@@ -19,6 +21,7 @@ async function submit() {
   try {
     const r = await api.post<JournalEntry>(`/entries/${props.entry.id}/reverse`, date.value ? { date: date.value } : {})
     open.value = false
+    notify.success(t('toast.entryReversed'))
     await navigateTo(`/entries/${r.id}`)
   } catch (e) {
     error.value = errorText.of(e)

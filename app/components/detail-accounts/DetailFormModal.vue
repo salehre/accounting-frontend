@@ -7,6 +7,7 @@ const emit = defineEmits<{ saved: [] }>()
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 
 const code = ref('')
@@ -40,19 +41,25 @@ async function save() {
   error.value = null
   if (!validate()) return
   saving.value = true
+  let message: string | null = null
   try {
     if (!props.account) {
       await api.post('/detail-accounts', { code: code.value, name: name.value.trim(), kind: kind.value })
+      message = t('toast.detailCreated', { name: name.value.trim() })
     } else {
       const a = props.account
       const body: Record<string, unknown> = {}
       if (code.value !== a.code) body.code = code.value
       if (name.value.trim() !== a.name) body.name = name.value.trim()
       if (kind.value !== a.kind) body.kind = kind.value
-      if (Object.keys(body).length > 0) await api.patch('/detail-accounts/' + a.id, body)
+      if (Object.keys(body).length > 0) {
+        await api.patch('/detail-accounts/' + a.id, body)
+        message = t('toast.detailUpdated', { name: name.value.trim() })
+      }
     }
     open.value = false
     emit('saved')
+    if (message) notify.success(message)
   } catch (e) {
     const err = toApiError(e)
     if (err.status === 422 && Object.keys(err.errors).length > 0) {

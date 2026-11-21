@@ -3,6 +3,7 @@ import type { PeriodLockStatus } from '~/types/api'
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 const fmt = useFormat()
@@ -11,7 +12,6 @@ useHead({ title: computed(() => t('menu.locks')) })
 const status = ref<PeriodLockStatus | null>(null)
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const notice = ref<string | null>(null)
 
 const canSoft = computed(() => session.can('fiscal-years.close') && !session.readOnly)
 const canHard = computed(() => session.can('fiscal-years.hard-lock') && !session.readOnly)
@@ -30,8 +30,14 @@ onMounted(load)
 
 const softOpen = ref(false)
 const hardOpen = ref(false)
-function onSaved(s: PeriodLockStatus) { status.value = s; notice.value = t('locks.saved') }
-function onApplied(s: PeriodLockStatus) { status.value = s; notice.value = t('locks.hardApplied') }
+function onSaved(s: PeriodLockStatus) {
+  status.value = s
+  notify.success(s.softLockDate ? t('toast.softSaved', { date: fmt.date(s.softLockDate) }) : t('toast.softRemoved'))
+}
+function onApplied(s: PeriodLockStatus) {
+  status.value = s
+  notify.success(t('toast.hardApplied', { date: fmt.date(s.hardLockDate) }))
+}
 
 function time(createdAt: string): string {
   const m = /[T ](\d{2}:\d{2})/.exec(createdAt)
@@ -51,7 +57,6 @@ function change(kind: 'soft' | 'hard', oldDate: string | null, newDate: string |
     </div>
 
     <AppAlert v-if="loadError">{{ loadError }} <button class="underline" @click="load">{{ $t('common.retry') }}</button></AppAlert>
-    <AppAlert v-if="notice" kind="info">{{ notice }}</AppAlert>
     <p v-if="loading" class="py-10 text-center text-slate-500">{{ $t('common.loading') }}</p>
 
     <template v-if="status">

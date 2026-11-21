@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Toaster } from 'vue-sonner'
+
 const { locale, locales, setLocale } = useI18n()
 
 // remember the chosen language for a year
@@ -21,4 +23,6 @@ useHead({ htmlAttrs: { lang: locale, dir } })
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <!-- every toast of the app is shown here (see composables/useNotify.ts) -->
+  <Toaster position="top-center" rich-colors close-button :dir="dir" :duration="3500" :visible-toasts="4" />
 </template>

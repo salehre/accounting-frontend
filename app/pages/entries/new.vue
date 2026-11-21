@@ -13,6 +13,7 @@ interface FormLine {
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const route = useRoute()
 const session = useSessionStore()
 const errorText = useErrorText()
@@ -200,10 +201,11 @@ async function save(post: boolean) {
   }
 
   if (post) {
-    try { await api.post(`/entries/${created.id}/post`) } catch (e) {
+    try { await api.post(`/entries/${created.id}/post`); notify.success(t('toast.entryPosted')) } catch (e) {
       flash.value = { kind: 'error', text: t('entries.form.postFailedNote', { reason: errorText.of(e) }) }
     }
   }
+  if (!post) notify.success(t(replace.value ? 'toast.draftUpdated' : 'toast.draftSaved'))
   saving.value = false
   await navigateTo(`/entries/${created.id}`)
 }
@@ -234,7 +236,7 @@ async function save(post: boolean) {
       </div>
 
       <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <div class="min-w-[920px]">
+        <div class="min-w-230">
           <div class="grid grid-cols-[2.5rem_minmax(220px,2fr)_minmax(170px,1.4fr)_minmax(140px,1.4fr)_9.5rem_9.5rem_2.5rem] gap-2 bg-slate-50 px-3 py-2.5 text-xs font-medium text-slate-500">
             <span>#</span><span>{{ $t('entries.form.account') }}</span><span>{{ $t('entries.form.detail') }}</span><span>{{ $t('entries.form.lineDescription') }}</span>
             <span class="text-end">{{ $t('entries.form.debit') }}</span><span class="text-end">{{ $t('entries.form.credit') }}</span><span />

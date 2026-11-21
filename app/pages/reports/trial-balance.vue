@@ -86,7 +86,7 @@ const columns = ['opening', 'period', 'closing'] as const
 <template>
   <div class="mx-auto max-w-7xl space-y-4">
     <div>
-      <NuxtLink to="/reports" class="text-sm text-indigo-600 hover:underline">{{ $t('menu.reports') }}</NuxtLink>
+      <span class="text-sm text-slate-500">{{ $t('menu.reports') }}</span>
       <h1 class="mt-1 text-2xl font-bold text-slate-900">{{ $t('reports.trialBalance.name') }}</h1>
       <p class="mt-1 text-sm text-slate-600">{{ $t('reports.trialBalance.desc') }}</p>
     </div>

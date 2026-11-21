@@ -7,6 +7,7 @@ const emit = defineEmits<{ saved: [warnings: string[]] }>()
 
 const { t } = useI18n()
 const api = useApi()
+const notify = useNotify()
 const errorText = useErrorText()
 
 const title = ref('')
@@ -44,11 +45,13 @@ async function save() {
   saving.value = true
   try {
     let warnings: string[] = []
+    let message: string | null = null
     if (!props.year) {
       const r = await api.post<{ warnings?: string[] }>('/fiscal-years', {
         title: title.value.trim(), startDate: startDate.value, endDate: endDate.value,
       })
       warnings = r.warnings ?? []
+      message = t('toast.yearCreated', { title: title.value.trim() })
     } else {
       const y = props.year
       const body: Record<string, unknown> = {}
@@ -60,10 +63,12 @@ async function save() {
       if (Object.keys(body).length > 0) {
         const r = await api.patch<{ warnings?: string[] }>('/fiscal-years/' + y.id, body)
         warnings = r.warnings ?? []
+        message = t('toast.yearUpdated', { title: title.value.trim() })
       }
     }
     open.value = false
     emit('saved', warnings)
+    if (message) notify.success(message)
   } catch (e) {
     const err = toApiError(e)
     if (err.status === 422 && Object.keys(err.errors).length > 0) {
