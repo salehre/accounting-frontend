@@ -265,3 +265,20 @@ export interface BalanceSheet {
   complete: boolean
   warnings: StatementWarning[]
 }
+
+export interface UserItem {
+  id: number
+  username: string
+  fullName: string
+  roleId: number
+  role: string
+  isActive: boolean
+  lastLoginAt: string | null
+  createdAt: string
+}
+
+export interface UserPage { items: UserItem[]; page: number; pageSize: number; total: number }
+
+export interface Role { id: number; name: string; permissions: string[]; builtIn: boolean; userCount: number }
+
+export interface PermissionCatalog { permissions: string[]; requires: Record<string, string[]> }

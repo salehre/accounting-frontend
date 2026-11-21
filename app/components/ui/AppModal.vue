@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const open = defineModel<boolean>('open', { default: false })
-defineProps<{ title: string }>()
+defineProps<{ title: string; size?: 'md' | 'lg' }>()
 
 function onKey(e: KeyboardEvent) {
   if (e.key === 'Escape') open.value = false
@@ -15,7 +15,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 <template>
   <Teleport to="body">
     <div v-if="open" class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/40 p-0 sm:items-center sm:p-4" @mousedown.self="open = false">
-      <div role="dialog" aria-modal="true" class="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-xl sm:max-w-lg sm:rounded-2xl">
+      <div role="dialog" aria-modal="true" class="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-xl sm:rounded-2xl" :class="size === 'lg' ? 'sm:max-w-2xl' : 'sm:max-w-lg'">
         <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
           <h2 class="text-base font-semibold text-slate-900">{{ title }}</h2>
           <button type="button" class="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100" :aria-label="$t('common.close')" @click="open = false">

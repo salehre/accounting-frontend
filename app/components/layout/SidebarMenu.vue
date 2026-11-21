@@ -12,20 +12,22 @@ const items = computed(() =>
         .filter((i) => !i.children || i.children.length > 0),
 )
 
+const inGroup = (children: Array<{ to: string }>, path: string) => children.some((c) => path === c.to || path.startsWith(c.to + '/'))
+
 // which groups are open. The group of the page on the screen is always opened.
 const openKeys = useState<string[]>('menuOpenGroups', () => [])
 watch(
     () => route.path,
     (path) => {
       for (const i of items.value) {
-        if (i.children && (path === i.to || path.startsWith(i.to + '/')) && !openKeys.value.includes(i.key)) openKeys.value = [...openKeys.value, i.key]
+        if (i.children && inGroup(i.children, path) && !openKeys.value.includes(i.key)) openKeys.value = [...openKeys.value, i.key]
       }
     },
     { immediate: true },
 )
 const isOpen = (key: string) => openKeys.value.includes(key)
 const toggle = (key: string) => { openKeys.value = isOpen(key) ? openKeys.value.filter((k) => k !== key) : [...openKeys.value, key] }
-const groupActive = (to: string) => route.path === to || route.path.startsWith(to + '/')
+const groupActive = (children: Array<{ to: string }>) => inGroup(children, route.path)
 
 const link = 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100'
 </script>
@@ -37,14 +39,14 @@ const link = 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
       <div v-if="item.children">
         <button
             type="button"
-            :class="[link, 'w-full', groupActive(item.to) ? 'text-indigo-700' : '']"
+            :class="[link, 'w-full', groupActive(item.children) ? 'text-indigo-700' : '']"
             :aria-expanded="isOpen(item.key)"
             :aria-controls="`menu-${item.key}`"
             @click="toggle(item.key)"
         >
           <AppIcon :name="item.icon" />
           <span class="flex-1 text-start">{{ $t(`menu.${item.key}`) }}</span>
-          <AppIcon name="chevron-down" class="!size-4 text-slate-400 transition-transform duration-200" :class="isOpen(item.key) ? 'rotate-180' : ''" />
+          <AppIcon name="chevron-down" class="size-4! text-slate-400 transition-transform duration-200" :class="isOpen(item.key) ? 'rotate-180' : ''" />
         </button>
         <!-- 0fr -> 1fr animates the height without measuring it -->
         <div

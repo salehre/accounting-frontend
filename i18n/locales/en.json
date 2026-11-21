@@ -164,7 +164,17 @@
     "detailsLevel3": "Detail accounts can only be shown at level 3.",
     "reportTooBig": "The report has more than {n} rows. Narrow it down by account or by date.",
     "numberOrder": "The last number must not be before the first number.",
-    "cursorInvalid": "The page position is not valid. Show the report again."
+    "cursorInvalid": "The page position is not valid. Show the report again.",
+    "selfChange": "You cannot change your own role or disable your own account.",
+    "adminRemains": "At least one active administrator must remain.",
+    "selfReset": "Use the change-password feature for your own account.",
+    "passwordTooLong": "The password is too long (72 bytes at most).",
+    "adminRoleFixed": "The administrator role always has every permission and cannot be changed.",
+    "builtInRename": "A built-in role cannot be renamed.",
+    "builtInDelete": "A built-in role cannot be deleted.",
+    "roleInUse": "This role is used by {n} user(s). Give them another role first.",
+    "roleNameTaken": "A role with this name already exists.",
+    "permNeeds": "“{a}” also needs “{b}”."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -506,6 +516,144 @@
     "softSaved": "The soft lock is now {date}.",
     "softRemoved": "The soft lock was removed.",
     "hardApplied": "The books are hard-locked up to {date}.",
-    "exported": "The Excel file was downloaded."
+    "exported": "The Excel file was downloaded.",
+    "userCreated": "User “{name}” was created.",
+    "userUpdated": "User “{name}” was updated.",
+    "userEnabled": "User “{name}” was enabled.",
+    "userDisabled": "User “{name}” was disabled.",
+    "passwordReset": "The password of “{name}” was reset.",
+    "roleCreated": "Role “{name}” was created.",
+    "roleUpdated": "Role “{name}” was updated.",
+    "roleDeleted": "Role “{name}” was deleted."
+  },
+  "users": {
+    "title": "Users",
+    "subtitle": "Who can sign in to this company, and with which role.",
+    "add": "New user",
+    "search": "Search name or username",
+    "status": "Status",
+    "allStatuses": "All",
+    "active": "Active",
+    "inactive": "Disabled",
+    "empty": "No users found.",
+    "you": "you",
+    "never": "Never signed in",
+    "lastLogin": "Last sign-in",
+    "fullName": "Full name",
+    "username": "Username",
+    "role": "Role",
+    "password": "Password",
+    "newPassword": "New password",
+    "newTitle": "New user",
+    "editTitle": "Edit user",
+    "usernameHint": "Lowercase letters, digits, dot, dash or underscore; 3 to 50 characters. It cannot be changed later.",
+    "usernameFixed": "The username cannot be changed.",
+    "passwordHint": "At least 10 characters. The user chooses their own password at the first sign-in.",
+    "showPassword": "Show",
+    "generate": "Generate a password",
+    "selfRole": "You cannot change your own role.",
+    "resetBtn": "Reset password",
+    "resetTitle": "Reset the password of {name}",
+    "resetIntro": "Type a temporary password and give it to the user. All their sessions are signed out now.",
+    "disable": "Disable",
+    "enable": "Enable",
+    "disableTitle": "Disable {name}?",
+    "disableMessage": "The user is signed out at once and cannot sign in until you enable the account again. Their entries stay.",
+    "errors": {
+      "username": "3 to 50 characters: lowercase letters, digits, dot, dash or underscore, starting with a letter or digit.",
+      "passwordShort": "The password needs at least 10 characters.",
+      "passwordLong": "The password is too long (72 bytes at most).",
+      "nameRequired": "Write the full name.",
+      "nameLong": "The name is too long (150 characters at most).",
+      "roleRequired": "Choose a role."
+    }
+  },
+  "roles": {
+    "title": "Roles",
+    "subtitle": "A role is a set of permissions. Every user has one role.",
+    "add": "New role",
+    "name": "Role name",
+    "nameHint": "Lowercase letters, digits, dash or underscore. It cannot contain spaces.",
+    "builtInFixed": "A built-in role cannot be renamed.",
+    "permissions": "Permissions",
+    "newTitle": "New role",
+    "editTitle": "Edit role",
+    "builtInBadge": "Built-in",
+    "userCount": "{n} users",
+    "everything": "Every permission",
+    "permCount": "{n} permissions",
+    "inUse": "Give its users another role first.",
+    "deleteTitle": "Delete the role “{name}”?",
+    "deleteMessage": "The role is removed for good. This is only possible while no user has it.",
+    "planLimited": "Custom roles are not included in your plan. You can see the roles but not change them.",
+    "selectGroup": "Select all",
+    "clearGroup": "Clear all",
+    "needs": "Needs: {list}",
+    "builtIn": {
+      "admin": "Administrator",
+      "accountant": "Accountant",
+      "viewer": "Viewer"
+    },
+    "errors": {
+      "name": "2 to 50 characters: lowercase letters, digits, dash or underscore.",
+      "permissionsRequired": "Choose at least one permission."
+    }
+  },
+  "permGroup": {
+    "accounts": "Accounts",
+    "entries": "Journal entries",
+    "fiscal_years": "Fiscal years and locks",
+    "reports": "Reports",
+    "users": "Users and roles"
+  },
+  "perm": {
+    "accounts_read": {
+      "name": "View accounts",
+      "hint": "Chart of accounts and detail accounts"
+    },
+    "accounts_manage": {
+      "name": "Manage accounts",
+      "hint": "Create, edit, disable and delete accounts and detail accounts"
+    },
+    "entries_read": {
+      "name": "View entries",
+      "hint": "Journal entries and their details"
+    },
+    "entries_write": {
+      "name": "Write drafts",
+      "hint": "Create, edit and delete draft entries"
+    },
+    "entries_post": {
+      "name": "Post entries",
+      "hint": "Make a draft final"
+    },
+    "entries_reverse": {
+      "name": "Reverse entries",
+      "hint": "Correct a posted entry with a reversal"
+    },
+    "fiscal_years_manage": {
+      "name": "Manage fiscal years",
+      "hint": "Create, edit and delete fiscal years"
+    },
+    "fiscal_years_close": {
+      "name": "Close fiscal years",
+      "hint": "Close and reopen a year; set the soft lock"
+    },
+    "fiscal_years_hard_lock": {
+      "name": "Hard lock",
+      "hint": "Permanent and irreversible: give it to the administrator only"
+    },
+    "reports_read": {
+      "name": "View reports",
+      "hint": "Trial balance, ledger, journal, income statement, balance sheet"
+    },
+    "reports_export": {
+      "name": "Export reports",
+      "hint": "Download reports as Excel"
+    },
+    "users_manage": {
+      "name": "Manage users and roles",
+      "hint": "Create users, reset passwords, edit roles"
+    }
   }
 }
