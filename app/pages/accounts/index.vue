@@ -11,7 +11,6 @@ useHead({ title: computed(() => t('menu.accounts')) })
 const accounts = ref<Account[]>([])
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 
 const search = ref('')
 const showInactive = ref(true)
@@ -104,14 +103,14 @@ function edit(a: Account) { formMode.value = 'edit'; formParent.value = null; fo
 // ---- disable / enable / delete
 const busyId = ref<number | null>(null)
 async function setActive(a: Account, active: boolean) {
-  actionError.value = null
   busyId.value = a.id
   try {
     await api.patch(`/accounts/${a.id}`, { isActive: active })
-    notify.success(t(active ? 'toast.accountEnabled' : 'toast.accountDisabled', { name: a.name }))
+    if (active) notify.success(t(active ? 'toast.accountEnabled' : 'toast.accountDisabled', { name: a.name }))
+    else notify.info(t(active ? 'toast.accountEnabled' : 'toast.accountDisabled', { name: a.name }))
     await load()
   } catch (e) {
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busyId.value = null
   }
@@ -123,7 +122,6 @@ const deleteBusy = ref(false)
 function askDelete(a: Account) { deleting.value = a; deleteOpen.value = true }
 async function doDelete() {
   if (!deleting.value) return
-  actionError.value = null
   deleteBusy.value = true
   try {
     const name = deleting.value.name
@@ -133,7 +131,7 @@ async function doDelete() {
     await load()
   } catch (e) {
     deleteOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     deleteBusy.value = false
   }
@@ -149,8 +147,6 @@ async function doDelete() {
       </div>
       <AppButton v-if="canManage" @click="addTop"><AppIcon name="plus" />{{ $t('accounts.addGroup') }}</AppButton>
     </div>
-
-    <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
 
     <div class="flex flex-wrap items-center gap-3">
       <div class="relative min-w-56 flex-1 sm:max-w-sm">

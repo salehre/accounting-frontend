@@ -14,7 +14,6 @@ const year = ref<FiscalYear | null>(null)
 const data = ref<YearEndPreview | null>(null)
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 const busy = ref<'generate' | 'discard' | 'post' | null>(null)
 
 useHead({ title: computed(() => t('yearEnd.link')) })
@@ -41,17 +40,17 @@ onMounted(load)
 
 // ---- actions
 async function run(kind: 'generate' | 'discard' | 'post', toastKey: string) {
-  actionError.value = null
   busy.value = kind
   try {
     const path = kind === 'discard' ? '/year-end' : `/year-end/${kind}`
     const url = `/fiscal-years/${yearId.value}${path}`
     if (kind === 'discard') await api.del(url)
     else await api.post(url)
-    notify.success(t(toastKey))
+    if (kind === 'discard') notify.info(t(toastKey))
+    else notify.success(t(toastKey))
     return true
   } catch (e) {
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
     return false
   } finally {
     busy.value = null
@@ -120,7 +119,6 @@ const stateColor = {
     <p v-else-if="loading" class="py-10 text-center text-slate-500">{{ $t('common.loading') }}</p>
 
     <template v-else-if="data">
-      <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
       <p class="text-sm text-slate-600">{{ $t(`yearEnd.stateHint.${data.state}`) }}</p>
 
       <AppAlert v-if="data.blockers.length">

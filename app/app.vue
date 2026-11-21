@@ -16,6 +16,9 @@ const dir = computed(() => {
   return (l && typeof l !== 'string' ? l.dir : undefined) ?? 'rtl'
 })
 
+// bottom, at the start side of the page: right in Persian and Arabic, left in English
+const toastPosition = computed(() => (dir.value === 'rtl' ? 'bottom-right' : 'bottom-left'))
+
 useHead({ htmlAttrs: { lang: locale, dir } })
 </script>
 
@@ -24,5 +27,5 @@ useHead({ htmlAttrs: { lang: locale, dir } })
     <NuxtPage />
   </NuxtLayout>
   <!-- every toast of the app is shown here (see composables/useNotify.ts) -->
-  <Toaster position="top-center" rich-colors close-button :dir="dir" :duration="3500" :visible-toasts="4" />
+  <Toaster :position="toastPosition" rich-colors :dir="dir" :duration="3500" :visible-toasts="4" />
 </template>

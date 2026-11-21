@@ -13,7 +13,6 @@ const LIMIT = 200
 const items = ref<DetailAccount[]>([])
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 
 const search = ref('')
 const kind = ref('')
@@ -63,14 +62,14 @@ function edit(d: DetailAccount) { formAccount.value = d; formOpen.value = true }
 // ---- disable / enable / delete
 const busyId = ref<number | null>(null)
 async function setActive(d: DetailAccount, active: boolean) {
-  actionError.value = null
   busyId.value = d.id
   try {
     await api.patch(`/detail-accounts/${d.id}`, { isActive: active })
-    notify.success(t(active ? 'toast.detailEnabled' : 'toast.detailDisabled', { name: d.name }))
+    if (active) notify.success(t(active ? 'toast.detailEnabled' : 'toast.detailDisabled', { name: d.name }))
+    else notify.info(t(active ? 'toast.detailEnabled' : 'toast.detailDisabled', { name: d.name }))
     await load()
   } catch (e) {
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busyId.value = null
   }
@@ -82,7 +81,6 @@ const deleteBusy = ref(false)
 function askDelete(d: DetailAccount) { deleting.value = d; deleteOpen.value = true }
 async function doDelete() {
   if (!deleting.value) return
-  actionError.value = null
   deleteBusy.value = true
   try {
     const name = deleting.value.name
@@ -92,7 +90,7 @@ async function doDelete() {
     await load()
   } catch (e) {
     deleteOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     deleteBusy.value = false
   }
@@ -108,8 +106,6 @@ async function doDelete() {
       </div>
       <AppButton v-if="canManage" @click="add"><AppIcon name="plus" />{{ $t('detail.add') }}</AppButton>
     </div>
-
-    <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
 
     <div class="flex flex-wrap items-end gap-3">
       <div class="relative min-w-56 flex-1 sm:max-w-sm">

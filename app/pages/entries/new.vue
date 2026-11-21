@@ -202,7 +202,9 @@ async function save(post: boolean) {
 
   if (post) {
     try { await api.post(`/entries/${created.id}/post`); notify.success(t('toast.entryPosted')) } catch (e) {
-      flash.value = { kind: 'error', text: t('entries.form.postFailedNote', { reason: errorText.of(e) }) }
+      const text = t('entries.form.postFailedNote', { reason: errorText.of(e) })
+      flash.value = { kind: 'error', text }
+      notify.error(text)
     }
   }
   if (!post) notify.success(t(replace.value ? 'toast.draftUpdated' : 'toast.draftSaved'))

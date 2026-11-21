@@ -15,7 +15,6 @@ const roles = ref<Role[]>([])
 const catalog = ref<PermissionCatalog>({ permissions: [], requires: {} })
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 
 // custom roles are a feature of the plan: without it the page only shows the roles
 const canEdit = computed(() => session.can('users.manage') && session.hasFeature('roles.custom') && !session.readOnly)
@@ -49,7 +48,6 @@ const deleteBusy = ref(false)
 function askDelete(r: Role) { deleting.value = r; deleteOpen.value = true }
 async function doDelete() {
   if (!deleting.value) return
-  actionError.value = null
   deleteBusy.value = true
   try {
     const name = deleting.value.name
@@ -59,7 +57,7 @@ async function doDelete() {
     await load()
   } catch (e) {
     deleteOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     deleteBusy.value = false
   }
@@ -79,7 +77,6 @@ async function doDelete() {
 
     <AppAlert v-if="planLimited" kind="info">{{ $t('roles.planLimited') }}</AppAlert>
     <AppAlert v-if="loadError">{{ loadError }} <button class="underline" @click="load">{{ $t('common.retry') }}</button></AppAlert>
-    <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
     <p v-if="loading" class="py-10 text-center text-slate-500">{{ $t('common.loading') }}</p>
 
     <div v-else class="grid gap-4 md:grid-cols-2">

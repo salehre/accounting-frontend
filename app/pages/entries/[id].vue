@@ -14,7 +14,6 @@ const id = computed(() => Number(route.params.id))
 const entry = ref<JournalEntry | null>(null)
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 const notice = ref<{ kind: 'error' | 'warning'; text: string } | null>(null)
 useHead({ title: computed(() => (entry.value?.number ? t('entries.detailTitle', { n: fmt.money(entry.value.number) }) : t('entries.draftTitle'))) })
 
@@ -54,7 +53,6 @@ const postOpen = ref(false)
 const busy = ref(false)
 async function doPost() {
   busy.value = true
-  actionError.value = null
   try {
     await api.post(`/entries/${id.value}/post`)
     notify.success(t('toast.entryPosted'))
@@ -63,7 +61,7 @@ async function doPost() {
     await load()
   } catch (e) {
     postOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busy.value = false
   }
@@ -73,14 +71,13 @@ async function doPost() {
 const deleteOpen = ref(false)
 async function doDelete() {
   busy.value = true
-  actionError.value = null
   try {
     await api.del(`/entries/${id.value}`)
     notify.success(t('toast.entryDeleted'))
     await navigateTo('/entries')
   } catch (e) {
     deleteOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busy.value = false
   }
@@ -98,7 +95,6 @@ const reverseOpen = ref(false)
 
     <template v-if="entry">
       <AppAlert v-if="notice" :kind="notice.kind">{{ notice.text }}</AppAlert>
-      <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
       <AppAlert v-if="isYearEnd" kind="info">{{ $t('entries.yearEndNote') }}</AppAlert>
 
       <div class="flex flex-wrap items-start justify-between gap-3">

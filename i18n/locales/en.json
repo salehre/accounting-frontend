@@ -78,9 +78,7 @@
   },
   "home": {
     "welcome": "Hello {name}",
-    "subtitle": "Your overview",
-    "role": "Your role",
-    "building": "Accounting screens are added to the menu one by one. Dimmed items are not ready yet."
+    "subtitle": "Your overview"
   },
   "accounts": {
     "subtitle": "The account tree: group, general and detail level. Only level 3 accounts can be used in entries.",
@@ -799,5 +797,29 @@
       "revenue": "Revenue",
       "expense": "Expense"
     }
+  },
+  "dashboard": {
+    "subscription": "Subscription",
+    "plan": "{name} plan",
+    "states": {
+      "active": "Active",
+      "grace": "Renewal grace",
+      "expired": "Ended",
+      "suspended": "Suspended"
+    },
+    "endsAt": "Subscription ends",
+    "noEnd": "No limit",
+    "daysLeft": "Remaining",
+    "days": "{n} days",
+    "graceEnds": "Grace ends",
+    "noSubscription": "Subscription information is not available.",
+    "fiscalYear": "Current fiscal year",
+    "noOpenYear": "There is no open fiscal year. Entries cannot be recorded without one.",
+    "posted": "{n} posted",
+    "drafts": "{n} drafts",
+    "draftsNote": "{n} draft entries are waiting to be posted or deleted.",
+    "recent": "Recent entries",
+    "all": "All entries",
+    "newEntry": "New entry"
   }
 }

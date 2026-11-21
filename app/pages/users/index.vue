@@ -18,7 +18,6 @@ const data = ref<UserPage>({ items: [], page: 1, pageSize: PAGE_SIZE, total: 0 }
 const roles = ref<Role[]>([])
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
 
 const search = ref('')
 const status = ref('')
@@ -73,14 +72,14 @@ const busyId = ref<number | null>(null)
 const disableOpen = ref(false)
 const disableTarget = ref<UserItem | null>(null)
 async function setActive(u: UserItem, active: boolean) {
-  actionError.value = null
   busyId.value = u.id
   try {
     await api.patch(`/users/${u.id}`, { isActive: active })
-    notify.success(t(active ? 'toast.userEnabled' : 'toast.userDisabled', { name: u.fullName }))
+    if (active) notify.success(t(active ? 'toast.userEnabled' : 'toast.userDisabled', { name: u.fullName }))
+    else notify.info(t(active ? 'toast.userEnabled' : 'toast.userDisabled', { name: u.fullName }))
     await load()
   } catch (e) {
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busyId.value = null
     disableOpen.value = false
@@ -116,7 +115,6 @@ function lastLogin(v: string | null): string {
     </div>
 
     <AppAlert v-if="loadError">{{ loadError }} <button class="underline" @click="load">{{ $t('common.retry') }}</button></AppAlert>
-    <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
     <p v-if="loading" class="py-10 text-center text-slate-500">{{ $t('common.loading') }}</p>
 
     <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">

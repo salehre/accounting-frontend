@@ -101,11 +101,9 @@ async function saveSettings() {
 // ---- categories
 const catOptions = computed(() => ACCOUNT_CATEGORIES.map((c) => ({ value: c, label: t(`acctSettings.categories.${c}`) })))
 const busyGroup = ref<number | null>(null)
-const catError = ref<string | null>(null)
 
 async function setCategory(g: AccountCategoryRow, value: string) {
   if (!value || value === g.category) return
-  catError.value = null
   const before = g.category
   busyGroup.value = g.id
   g.category = value as AccountCategoryRow['category']
@@ -114,7 +112,7 @@ async function setCategory(g: AccountCategoryRow, value: string) {
     notify.success(t('toast.categorySaved', { name: g.name ?? g.code }))
   } catch (e) {
     g.category = before
-    catError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     busyGroup.value = null
   }
@@ -156,10 +154,9 @@ const unclassified = computed(() => groups.value.filter((g) => !g.category).leng
           <h2 class="text-base font-semibold text-slate-900">{{ $t('acctSettings.categoriesTitle') }}</h2>
           <p class="mt-1 text-sm text-slate-600">{{ $t('acctSettings.categoriesHint') }}</p>
           <AppAlert v-if="unclassified" kind="warning" class="mt-3">{{ $t('acctSettings.unclassified', { n: unclassified }) }}</AppAlert>
-          <AppAlert v-if="catError" class="mt-3">{{ catError }}</AppAlert>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full min-w-[520px] text-sm">
+          <table class="w-full min-w-130 text-sm">
             <thead class="bg-slate-50 text-xs text-slate-500">
             <tr>
               <th class="px-5 py-2.5 text-start font-medium">{{ $t('acctSettings.group') }}</th>

@@ -12,8 +12,6 @@ useHead({ title: computed(() => t('menu.fiscalYears')) })
 const years = ref<FiscalYear[]>([])
 const loading = ref(true)
 const loadError = ref<string | null>(null)
-const actionError = ref<string | null>(null)
-const notice = ref<string[]>([])
 
 const canManage = computed(() => session.can('fiscal-years.manage') && !session.readOnly)
 const canClose = computed(() => session.can('fiscal-years.close') && !session.readOnly)
@@ -41,7 +39,7 @@ const formOpen = ref(false)
 const formYear = ref<FiscalYear | null>(null)
 function add() { formYear.value = null; formOpen.value = true }
 function edit(y: FiscalYear) { formYear.value = y; formOpen.value = true }
-function saved(warnings: string[]) { notice.value = warnings; load() }
+function saved(warnings: string[]) { warnings.forEach((w) => notify.warning(w)); load() }
 
 // ---- close / reopen
 const closeOpen = ref(false)
@@ -56,7 +54,6 @@ const deleteBusy = ref(false)
 function askDelete(y: FiscalYear) { target.value = y; deleteOpen.value = true }
 async function doDelete() {
   if (!target.value) return
-  actionError.value = null
   deleteBusy.value = true
   try {
     const title = target.value.title
@@ -66,7 +63,7 @@ async function doDelete() {
     await load()
   } catch (e) {
     deleteOpen.value = false
-    actionError.value = errorText.of(e)
+    notify.error(errorText.of(e))
   } finally {
     deleteBusy.value = false
   }
@@ -82,11 +79,6 @@ async function doDelete() {
       </div>
       <AppButton v-if="canManage" @click="add"><AppIcon name="plus" />{{ $t('fiscal.add') }}</AppButton>
     </div>
-
-    <AppAlert v-if="actionError">{{ actionError }}</AppAlert>
-    <AppAlert v-if="notice.length" kind="warning">
-      <ul class="list-disc space-y-0.5 ps-5"><li v-for="(w, i) in notice" :key="i">{{ w }}</li></ul>
-    </AppAlert>
     <AppAlert v-if="loadError">{{ loadError }} <button class="underline" @click="load">{{ $t('common.retry') }}</button></AppAlert>
 
     <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
