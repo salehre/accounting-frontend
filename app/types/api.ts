@@ -355,3 +355,40 @@ export interface AccountingSettings {
   closingAccountId: SettingAccount
   openingAccountId: SettingAccount
 }
+
+// ---- opening balances (import from Excel)
+export interface OpeningBalanceLine {
+  row: number
+  accountId: number
+  accountCode: string
+  accountName: string
+  detailId: number | null
+  detailCode: string | null
+  detailName: string | null
+  debit: number
+  credit: number
+}
+
+export interface OpeningBalanceReport {
+  fiscalYear: { id: number; title: string; startDate: string; endDate: string }
+  entryDate: string
+  rowCount: number
+  lineCount: number
+  skippedRows: number
+  totals: { debit: number; credit: number }
+  canImport: boolean
+  errorCount: number
+  errors: Array<{ row: number | null; message: string }>
+  warnings: Array<{ code: string; message: string }>
+  preview: OpeningBalanceLine[]
+}
+
+export interface OpeningBalanceResult {
+  entryId: number
+  fiscalYearId: number
+  entryDate: string
+  lineCount: number
+  totals: { debit: number; credit: number }
+  warnings: Array<{ code: string; message: string }>
+  message: string
+}

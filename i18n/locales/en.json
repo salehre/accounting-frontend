@@ -30,7 +30,8 @@
     "locks": "Date locks",
     "users": "Users & roles",
     "detailAccounts": "Detail accounts",
-    "accountingSettings": "Accounting settings"
+    "accountingSettings": "Accounting settings",
+    "openingBalance": "Opening balances"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -184,7 +185,12 @@
     "yeCannotPost": "The year-end entries cannot be posted yet.",
     "yeNothingToReverse": "There are no year-end entries to reverse.",
     "yeStillDrafts": "The year-end entries are still drafts. Discard them instead.",
-    "yeReopenFirst": "Reopen fiscal year “{title}” first."
+    "yeReopenFirst": "Reopen fiscal year “{title}” first.",
+    "openingTooMany": "The file has more than {n} rows. Split it into several files.",
+    "openingUnreadable": "The file could not be read. Use the .xlsx template.",
+    "openingCannotImport": "The file cannot be imported. Fix the errors and try again.",
+    "openingFileType": "The file must be an .xlsx file.",
+    "openingFileSize": "The file must be smaller than 5 MB."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -540,7 +546,8 @@
     "yearEndPosted": "The year-end entries were posted.",
     "yearEndReversed": "The year-end entries were reversed.",
     "settingsSaved": "The accounting settings were saved.",
-    "categorySaved": "The type of group “{name}” was saved."
+    "categorySaved": "The type of group “{name}” was saved.",
+    "openingImported": "The opening balance draft entry was created."
   },
   "users": {
     "title": "Users",
@@ -821,5 +828,69 @@
     "recent": "Recent entries",
     "all": "All entries",
     "newEntry": "New entry"
+  },
+  "opening": {
+    "subtitle": "Import account balances from an Excel file. The result is one draft entry dated on the first day of the fiscal year; posting it is a separate step.",
+    "step1": "1. Get the template",
+    "columnsHint": "Row 1 is the header. From row 2, each row is one movement account with a debit or a credit amount (only one), in whole rials.",
+    "template": "Download the Excel template",
+    "step2": "2. Check your file",
+    "year": "Fiscal year",
+    "yearHint": "Open years only",
+    "noYear": "There is no open fiscal year.",
+    "drop": "Drop the file here or click to choose",
+    "fileHint": ".xlsx only, up to 5 MB",
+    "check": "Check the file",
+    "okNote": "The file is valid. Continuing creates one draft entry dated {date}; nothing is posted yet.",
+    "badNote": "{n} error(s) found. Fix the file and check it again.",
+    "entryDate": "Entry date",
+    "lines": "Lines",
+    "totalDebit": "Total debit",
+    "totalCredit": "Total credit",
+    "errorsTitle": "Errors",
+    "row": "Row {n}",
+    "moreErrors": "{n} more error(s) exist; check again after fixing these.",
+    "moreLines": "{n} more line(s) are not shown.",
+    "importNow": "Create the draft entry",
+    "confirmTitle": "Create the opening balance entry",
+    "confirmMessage": "One draft entry dated {date} is created with all the rows. You must post it after checking it.",
+    "doneTitle": "The draft entry was created",
+    "doneNote": "{n} lines with a total of {total} were imported. Check and post the entry to make the balances official.",
+    "openEntry": "Open the entry",
+    "cols": {
+      "row": "Row",
+      "account": "Account",
+      "detail": "Detail",
+      "debit": "Debit",
+      "credit": "Credit"
+    },
+    "reasons": {
+      "notDate": "must be a number, not a date.",
+      "noDecimals": "must be a whole number of rials (no decimals).",
+      "wholeNumber": "must be a whole number of rials.",
+      "tooLarge": "is too large.",
+      "negative": "cannot be negative (use the other column instead)."
+    },
+    "err": {
+      "accountEmpty": "The account code is empty.",
+      "debit": "Debit: {reason}",
+      "credit": "Credit: {reason}",
+      "both": "A row cannot have both a debit and a credit amount.",
+      "noAccount": "Account code “{code}” does not exist.",
+      "notMovement": "“{code}” is not a movement account: only movement accounts can receive a balance.",
+      "accountDisabled": "Account “{code}” is disabled.",
+      "noDetail": "Detail account code “{code}” does not exist.",
+      "detailDisabled": "Detail account “{code}” is disabled.",
+      "needsDetail": "Account “{code}” needs a detail account code (column B).",
+      "yearClosed": "This fiscal year is closed. Reopen it first.",
+      "already": "Opening balances were already imported into this fiscal year. Delete that draft entry first to import again.",
+      "noRows": "The file has no row with an amount.",
+      "notBalanced": "The balances do not add up: total debit {debit}, total credit {credit} (difference {diff})."
+    },
+    "warnings": {
+      "earlier_year_exists": "An earlier fiscal year exists. Normally its year-end entries create the opening balances of this year.",
+      "year_has_entries": "This fiscal year already has posted entries. Make sure the balances are not counted twice.",
+      "rows_without_amount": "{n} row(s) without any amount were ignored."
+    }
   }
 }

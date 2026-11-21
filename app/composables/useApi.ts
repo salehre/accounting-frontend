@@ -111,7 +111,7 @@ export function useApi() {
   return {
     download,
     get: <T>(path: string, query?: Record<string, unknown>) => request<T>(path, { query: query as any }),
-    post: <T>(path: string, body?: Record<string, unknown>) => request<T>(path, { method: 'POST', body }),
+    post: <T>(path: string, body?: Record<string, unknown> | FormData) => request<T>(path, { method: 'POST', body }),
     patch: <T>(path: string, body?: Record<string, unknown>) => request<T>(path, { method: 'PATCH', body }),
     put: <T>(path: string, body?: Record<string, unknown>) => request<T>(path, { method: 'PUT', body }),
     del: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
