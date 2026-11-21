@@ -29,7 +29,8 @@
     "fiscalYears": "Fiscal years",
     "locks": "Date locks",
     "users": "Users & roles",
-    "detailAccounts": "Detail accounts"
+    "detailAccounts": "Detail accounts",
+    "accountingSettings": "Accounting settings"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -539,7 +540,9 @@
     "yearEndGenerated": "The year-end entries were generated.",
     "yearEndDiscarded": "The year-end drafts were discarded.",
     "yearEndPosted": "The year-end entries were posted.",
-    "yearEndReversed": "The year-end entries were reversed."
+    "yearEndReversed": "The year-end entries were reversed.",
+    "settingsSaved": "The accounting settings were saved.",
+    "categorySaved": "The type of group “{name}” was saved."
   },
   "users": {
     "title": "Users",
@@ -762,6 +765,39 @@
       "retainedEarningsAccountId": "Retained earnings",
       "closingAccountId": "Closing",
       "openingAccountId": "Opening"
+    }
+  },
+  "acctSettings": {
+    "subtitle": "The technical accounts and the account group types that the year-end entries need.",
+    "technicalTitle": "Year-end technical accounts",
+    "technicalHint": "Choose four separate level 3 accounts that do not require a detail account. The profit and loss, closing and opening accounts must always have a zero balance.",
+    "allRequired": "Choose all four accounts.",
+    "fields": {
+      "profitLossAccountId": "Profit and loss",
+      "retainedEarningsAccountId": "Retained earnings",
+      "closingAccountId": "Closing",
+      "openingAccountId": "Opening"
+    },
+    "fieldHints": {
+      "profitLossAccountId": "Revenue and expenses are closed against it.",
+      "retainedEarningsAccountId": "Must be in a group of type “equity”.",
+      "closingAccountId": "The counter account when the permanent accounts are closed.",
+      "openingAccountId": "The counter account of the next year’s opening entry."
+    },
+    "categoriesTitle": "Account group types",
+    "categoriesHint": "Every account group must be an asset, liability, equity, revenue or expense so the year-end entries close it correctly.",
+    "unclassified": "{n} group(s) have no type yet.",
+    "group": "Group",
+    "category": "Type",
+    "notSet": "Not set",
+    "hasEntries": "Has entries",
+    "noGroups": "There are no groups.",
+    "categories": {
+      "asset": "Asset",
+      "liability": "Liability",
+      "equity": "Equity",
+      "revenue": "Revenue",
+      "expense": "Expense"
     }
   }
 }

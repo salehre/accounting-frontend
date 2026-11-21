@@ -334,3 +334,24 @@ export interface YearEndPreview {
   entries: YearEndEntry[]
   existing: YearEndExisting[]
 }
+
+// ---- accounting settings
+export const ACCOUNT_CATEGORIES = ['asset', 'liability', 'equity', 'revenue', 'expense'] as const
+export type AccountCategory = (typeof ACCOUNT_CATEGORIES)[number]
+
+/** A level 1 group and the type (asset, liability...) the year-end entries use for it */
+export interface AccountCategoryRow {
+  id: number
+  code: string
+  name?: string
+  category: AccountCategory | null
+  hasEntries: boolean
+}
+
+type SettingAccount = { id: number; code: string; name?: string } | null
+export interface AccountingSettings {
+  profitLossAccountId: SettingAccount
+  retainedEarningsAccountId: SettingAccount
+  closingAccountId: SettingAccount
+  openingAccountId: SettingAccount
+}

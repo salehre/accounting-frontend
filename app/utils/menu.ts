@@ -36,6 +36,7 @@ export const MENU: MenuItem[] = [
     ],
   },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: true },
+  { key: 'accountingSettings', to: '/settings/accounting', icon: 'menu', permission: 'accounts.read', ready: true },
   { key: 'locks', to: '/locks', icon: 'lock', permission: 'entries.read', ready: true },
   {
     key: 'users', to: '/users', icon: 'users', permission: 'users.manage', ready: true,

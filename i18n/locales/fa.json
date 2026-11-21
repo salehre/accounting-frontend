@@ -29,7 +29,8 @@
     "fiscalYears": "سال مالی",
     "locks": "قفل تاریخ",
     "users": "کاربران و نقش‌ها",
-    "detailAccounts": "تفصیلی‌ها"
+    "detailAccounts": "تفصیلی‌ها",
+    "accountingSettings": "تنظیمات حسابداری"
   },
   "errors": {
     "generic": "مشکلی پیش آمد. دوباره تلاش کنید.",
@@ -539,7 +540,9 @@
     "yearEndGenerated": "اسناد اختتامیه تولید شدند.",
     "yearEndDiscarded": "پیش‌نویس‌های اختتامیه حذف شدند.",
     "yearEndPosted": "اسناد اختتامیه ثبت شدند.",
-    "yearEndReversed": "اسناد اختتامیه برگردانده شدند."
+    "yearEndReversed": "اسناد اختتامیه برگردانده شدند.",
+    "settingsSaved": "تنظیمات حسابداری ذخیره شد.",
+    "categorySaved": "نوع گروه «{name}» ذخیره شد."
   },
   "users": {
     "title": "کاربران",
@@ -762,6 +765,39 @@
       "retainedEarningsAccountId": "سود (زیان) انباشته",
       "closingAccountId": "اختتامیه",
       "openingAccountId": "افتتاحیه"
+    }
+  },
+  "acctSettings": {
+    "subtitle": "حساب‌های فنی و نوع گروه‌های حساب که اسناد اختتامیه به آن‌ها نیاز دارند.",
+    "technicalTitle": "حساب‌های فنی اختتامیه",
+    "technicalHint": "چهار حساب معین جدا و بدون تفصیلی انتخاب کنید. سه حساب سود و زیان، اختتامیه و افتتاحیه باید همیشه مانده‌ی صفر داشته باشند.",
+    "allRequired": "هر چهار حساب را انتخاب کنید.",
+    "fields": {
+      "profitLossAccountId": "سود و زیان",
+      "retainedEarningsAccountId": "سود (زیان) انباشته",
+      "closingAccountId": "اختتامیه",
+      "openingAccountId": "افتتاحیه"
+    },
+    "fieldHints": {
+      "profitLossAccountId": "درآمدها و هزینه‌ها در برابر آن بسته می‌شوند.",
+      "retainedEarningsAccountId": "باید در یک گروه از نوع «سرمایه» باشد.",
+      "closingAccountId": "حساب مقابل بستن حساب‌های دائمی.",
+      "openingAccountId": "حساب مقابل افتتاحیه‌ی سال بعد."
+    },
+    "categoriesTitle": "نوع گروه‌های حساب",
+    "categoriesHint": "هر گروه حساب باید دارایی، بدهی، سرمایه، درآمد یا هزینه باشد تا در اختتامیه درست بسته شود.",
+    "unclassified": "{n} گروه هنوز نوع ندارد.",
+    "group": "گروه",
+    "category": "نوع",
+    "notSet": "انتخاب نشده",
+    "hasEntries": "دارای سند",
+    "noGroups": "گروهی وجود ندارد.",
+    "categories": {
+      "asset": "دارایی",
+      "liability": "بدهی",
+      "equity": "سرمایه",
+      "revenue": "درآمد",
+      "expense": "هزینه"
     }
   }
 }

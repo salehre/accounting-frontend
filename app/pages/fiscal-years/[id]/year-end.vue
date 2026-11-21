@@ -128,6 +128,8 @@ const stateColor = {
         <ul class="mt-1 list-disc space-y-0.5 ps-5">
           <li v-for="(b, i) in data.blockers" :key="i">{{ issue('blockers', b) }}</li>
         </ul>
+        <NuxtLink v-if="data.blockers.some((b) => ['settings_missing', 'settings_invalid', 'unclassified_accounts'].includes(b.code))"
+                  to="/settings/accounting" class="mt-2 inline-block underline">{{ $t('menu.accountingSettings') }}</NuxtLink>
       </AppAlert>
       <AppAlert v-if="data.warnings.length" kind="warning">
         <div class="font-medium">{{ $t('yearEnd.warnings.title') }}</div>

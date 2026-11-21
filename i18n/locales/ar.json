@@ -29,7 +29,8 @@
     "fiscalYears": "السنوات المالية",
     "locks": "قفل التواريخ",
     "users": "المستخدمون والأدوار",
-    "detailAccounts": "الحسابات التفصيلية"
+    "detailAccounts": "الحسابات التفصيلية",
+    "accountingSettings": "إعدادات المحاسبة"
   },
   "errors": {
     "generic": "حدث خطأ. حاول مرة أخرى.",
@@ -539,7 +540,9 @@
     "yearEndGenerated": "تم إنشاء قيود الإقفال.",
     "yearEndDiscarded": "تم حذف مسودات الإقفال.",
     "yearEndPosted": "تم ترحيل قيود الإقفال.",
-    "yearEndReversed": "تم عكس قيود الإقفال."
+    "yearEndReversed": "تم عكس قيود الإقفال.",
+    "settingsSaved": "تم حفظ إعدادات المحاسبة.",
+    "categorySaved": "تم حفظ نوع المجموعة «{name}»."
   },
   "users": {
     "title": "المستخدمون",
@@ -762,6 +765,39 @@
       "retainedEarningsAccountId": "الأرباح المحتجزة",
       "closingAccountId": "الإقفال",
       "openingAccountId": "الافتتاح"
+    }
+  },
+  "acctSettings": {
+    "subtitle": "الحسابات الفنية وأنواع مجموعات الحسابات التي تحتاجها قيود الإقفال.",
+    "technicalTitle": "الحسابات الفنية للإقفال",
+    "technicalHint": "اختر أربعة حسابات منفصلة من المستوى الثالث لا تتطلب حسابًا تفصيليًا. يجب أن يكون رصيد حسابات الأرباح والخسائر والإقفال والافتتاح صفرًا دائمًا.",
+    "allRequired": "اختر الحسابات الأربعة كلها.",
+    "fields": {
+      "profitLossAccountId": "الأرباح والخسائر",
+      "retainedEarningsAccountId": "الأرباح المحتجزة",
+      "closingAccountId": "الإقفال",
+      "openingAccountId": "الافتتاح"
+    },
+    "fieldHints": {
+      "profitLossAccountId": "تُقفل الإيرادات والمصروفات مقابله.",
+      "retainedEarningsAccountId": "يجب أن يكون في مجموعة من نوع «حقوق الملكية».",
+      "closingAccountId": "الحساب المقابل عند إقفال الحسابات الدائمة.",
+      "openingAccountId": "الحساب المقابل لقيد افتتاح السنة التالية."
+    },
+    "categoriesTitle": "أنواع مجموعات الحسابات",
+    "categoriesHint": "يجب أن تكون كل مجموعة أصلًا أو خصمًا أو حقوق ملكية أو إيرادًا أو مصروفًا ليُقفلها قيد الإقفال بشكل صحيح.",
+    "unclassified": "{n} مجموعة بلا نوع بعد.",
+    "group": "المجموعة",
+    "category": "النوع",
+    "notSet": "غير محدد",
+    "hasEntries": "لها قيود",
+    "noGroups": "لا توجد مجموعات.",
+    "categories": {
+      "asset": "أصل",
+      "liability": "خصم",
+      "equity": "حقوق ملكية",
+      "revenue": "إيراد",
+      "expense": "مصروف"
     }
   }
 }
