@@ -282,3 +282,55 @@ export interface UserPage { items: UserItem[]; page: number; pageSize: number; t
 export interface Role { id: number; name: string; permissions: string[]; builtIn: boolean; userCount: number }
 
 export interface PermissionCatalog { permissions: string[]; requires: Record<string, string[]> }
+
+// ---- year-end entries
+export interface YearEndIssue {
+  code: string
+  message: string
+  count?: number
+  fields?: string[]
+  accounts?: Array<string | { accountId: number; code: string; balance: number }>
+  groups?: Array<{ id: number; code: string; name: string }>
+}
+
+export interface YearEndLine {
+  accountId: number
+  accountCode: string
+  accountName: string
+  detailId: number | null
+  detailName: string | null
+  debit: number
+  credit: number
+}
+
+export interface YearEndEntry {
+  type: 'temporary' | 'profit' | 'closing' | 'opening'
+  fiscalYearId: number
+  entryDate: string
+  description: string
+  totalDebit: number
+  totalCredit: number
+  lines: YearEndLine[]
+}
+
+export interface YearEndExisting {
+  id: number
+  status?: 'draft' | 'posted'
+  fiscalYearId?: number
+  entryDate?: string
+  description?: string
+  sourceType?: string
+}
+
+export interface YearEndPreview {
+  fiscalYearId: number
+  status: 'open' | 'closed'
+  state: 'none' | 'drafts' | 'posted'
+  canGenerate: boolean
+  actions: { generate: boolean; discard: boolean; post: boolean; reverse: boolean }
+  blockers: YearEndIssue[]
+  warnings: YearEndIssue[]
+  summary: { netProfit: number; temporaryAccounts: number; permanentAccounts: number; nextFiscalYearId: number | null } | null
+  entries: YearEndEntry[]
+  existing: YearEndExisting[]
+}

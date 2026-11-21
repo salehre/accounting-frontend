@@ -49,6 +49,17 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^A role with this name already exists/, 'serverMsg.roleNameTaken'],
   [/^"([^"]+)" also needs "([^"]+)"/, 'serverMsg.permNeeds', (m) => ({ a: m[1]!, b: m[2]! })],
   [/^The books cannot be hard-locked yet/, 'serverMsg.cannotHardLock'],
+  [/^Year-end entries already exist/, 'serverMsg.yeAlready'],
+  [/^Year-end entries cannot be generated yet/, 'serverMsg.yeCannotGenerate'],
+  [/^There is nothing to close in this fiscal year/, 'serverMsg.yeNothing'],
+  [/^There are no year-end drafts/, 'serverMsg.yeNoDrafts'],
+  [/^The year-end entries are already posted\. Reverse/, 'serverMsg.yePostedReverse'],
+  [/^Generate the year-end entries first/, 'serverMsg.yeGenerateFirst'],
+  [/^The year-end entries are already posted/, 'serverMsg.yeAlreadyPosted'],
+  [/^The year-end entries cannot be posted yet/, 'serverMsg.yeCannotPost'],
+  [/^There are no year-end entries to reverse/, 'serverMsg.yeNothingToReverse'],
+  [/^The year-end entries are still drafts/, 'serverMsg.yeStillDrafts'],
+  [/^Reopen fiscal year "(.+?)" first/, 'serverMsg.yeReopenFirst', (m) => ({ title: m[1]! })],
 ]
 
 export function useErrorText() {

@@ -174,7 +174,18 @@
     "builtInDelete": "A built-in role cannot be deleted.",
     "roleInUse": "This role is used by {n} user(s). Give them another role first.",
     "roleNameTaken": "A role with this name already exists.",
-    "permNeeds": "“{a}” also needs “{b}”."
+    "permNeeds": "“{a}” also needs “{b}”.",
+    "yeAlready": "Year-end entries already exist for this fiscal year. Discard the drafts or reverse the posted entries first.",
+    "yeCannotGenerate": "The year-end entries cannot be generated yet.",
+    "yeNothing": "There is nothing to close in this fiscal year.",
+    "yeNoDrafts": "There are no year-end drafts.",
+    "yePostedReverse": "The year-end entries are posted. Reverse them instead.",
+    "yeGenerateFirst": "Generate the year-end entries first.",
+    "yeAlreadyPosted": "The year-end entries are already posted.",
+    "yeCannotPost": "The year-end entries cannot be posted yet.",
+    "yeNothingToReverse": "There are no year-end entries to reverse.",
+    "yeStillDrafts": "The year-end entries are still drafts. Discard them instead.",
+    "yeReopenFirst": "Reopen fiscal year “{title}” first."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -524,7 +535,11 @@
     "passwordReset": "The password of “{name}” was reset.",
     "roleCreated": "Role “{name}” was created.",
     "roleUpdated": "Role “{name}” was updated.",
-    "roleDeleted": "Role “{name}” was deleted."
+    "roleDeleted": "Role “{name}” was deleted.",
+    "yearEndGenerated": "The year-end entries were generated.",
+    "yearEndDiscarded": "The year-end drafts were discarded.",
+    "yearEndPosted": "The year-end entries were posted.",
+    "yearEndReversed": "The year-end entries were reversed."
   },
   "users": {
     "title": "Users",
@@ -654,6 +669,99 @@
     "users_manage": {
       "name": "Manage users and roles",
       "hint": "Create users, reset passwords, edit roles"
+    }
+  },
+  "yearEnd": {
+    "link": "Year-end entries",
+    "title": "Year-end entries of {title}",
+    "subtitle": "Close the temporary accounts, move the profit, close the permanent accounts and open the next year. All four entries are generated and posted together.",
+    "back": "Back to fiscal years",
+    "retry": "Try again",
+    "states": {
+      "none": "Not generated",
+      "drafts": "Drafts",
+      "posted": "Posted"
+    },
+    "stateHint": {
+      "none": "Nothing has been generated yet. Generate the entries once nothing blocks them.",
+      "drafts": "The entries exist as drafts. Review and post them, or discard them and generate again.",
+      "posted": "The year-end entries are posted. To change anything, reverse them first."
+    },
+    "summary": {
+      "profit": "Net profit",
+      "loss": "Net loss",
+      "temporary": "Temporary accounts",
+      "permanent": "Permanent accounts"
+    },
+    "plan": "Planned entries",
+    "planDrafts": "Entries (drafts)",
+    "noPlan": "There is nothing to generate.",
+    "types": {
+      "temporary": {
+        "title": "Closing the temporary accounts",
+        "hint": "Revenue and expense accounts are closed against the profit and loss account."
+      },
+      "profit": {
+        "title": "Moving the profit or loss",
+        "hint": "The result of the year goes to retained earnings."
+      },
+      "closing": {
+        "title": "Closing entry",
+        "hint": "Assets, liabilities and equity are closed against the closing account."
+      },
+      "opening": {
+        "title": "Opening entry",
+        "hint": "The same balances are recreated on the first day of the next fiscal year."
+      }
+    },
+    "date": "Date",
+    "account": "Account",
+    "detail": "Detail",
+    "debit": "Debit",
+    "credit": "Credit",
+    "totals": "Total",
+    "showLines": "Show lines",
+    "hideLines": "Hide lines",
+    "lines": "{n} lines",
+    "existing": "Existing entries",
+    "openEntry": "Open",
+    "generate": "Generate entries",
+    "discard": "Discard drafts",
+    "post": "Post entries",
+    "reverse": "Reverse entries",
+    "discardTitle": "Discard the year-end drafts",
+    "discardMessage": "All four drafts are deleted. You can generate them again later.",
+    "postTitle": "Post the year-end entries",
+    "postMessage": "All four entries are posted together. Posted entries cannot be edited: they can only be reversed.",
+    "reverseTitle": "Reverse the year-end entries",
+    "reverseWarning": "A reversing entry is posted for each of the four entries. Every fiscal year involved must be open.",
+    "reason": "Reason",
+    "reasonHint": "The reason is saved in the audit log.",
+    "reasonShort": "Write the reason.",
+    "blockers": {
+      "title": "Blockers",
+      "settings_missing": "The technical accounts (profit and loss, retained earnings, closing, opening) are not chosen yet: {fields}.",
+      "settings_invalid": "These technical accounts are disabled: {accounts}.",
+      "year_closed": "This fiscal year is closed. Reopen it before generating the year-end entries.",
+      "draft_entries": "{count} draft entries must be posted or deleted first.",
+      "next_year_missing": "The next fiscal year does not exist yet: the opening entry belongs to it.",
+      "next_year_closed": "The next fiscal year (“{title}”) is closed.",
+      "technical_accounts_not_zero": "The profit and loss, closing and opening accounts must have a zero balance: {accounts}.",
+      "unclassified_accounts": "These account groups have balances but no category (asset, liability, equity, revenue or expense): {groups}.",
+      "year_end_stale": "The ledger or the settings changed after the entries were generated. Discard the drafts and generate them again."
+    },
+    "warnings": {
+      "title": "Warnings",
+      "reopen_to_reverse": "This fiscal year is closed. Reopen it before reversing the year-end entries.",
+      "gap_before_next_year": "There is a gap of {days} day(s) before the next fiscal year (“{title}”). The opening entry is dated {date}.",
+      "no_entries": "This fiscal year has no posted entries.",
+      "nothing_to_close": "All balances are zero: there is nothing to close."
+    },
+    "fields": {
+      "profitLossAccountId": "Profit and loss",
+      "retainedEarningsAccountId": "Retained earnings",
+      "closingAccountId": "Closing",
+      "openingAccountId": "Opening"
     }
   }
 }

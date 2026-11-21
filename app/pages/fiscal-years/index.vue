@@ -119,6 +119,7 @@ async function doDelete() {
           </td>
           <td class="px-4 py-2.5">
             <div class="flex justify-end gap-1 text-slate-500">
+              <NuxtLink v-if="canManage" :to="`/fiscal-years/${y.id}/year-end`" class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('yearEnd.link')"><AppIcon name="book" /></NuxtLink>
               <button v-if="canManage" class="rounded p-1.5 hover:bg-slate-100 hover:text-indigo-600" :title="$t('common.edit')" @click="edit(y)"><AppIcon name="edit" /></button>
               <button v-if="canClose && y.status === 'open'" class="rounded p-1.5 hover:bg-slate-100 hover:text-amber-600" :title="$t('fiscal.close')" @click="askClose(y)"><AppIcon name="lock" /></button>
               <button v-if="canClose && y.status === 'closed'" class="rounded p-1.5 hover:bg-slate-100 hover:text-emerald-600" :title="$t('fiscal.reopen')" @click="askReopen(y)"><AppIcon name="unlock" /></button>
