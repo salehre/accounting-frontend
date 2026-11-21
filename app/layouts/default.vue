@@ -32,10 +32,10 @@ const sub = computed(() => session.features?.subscription ?? null)
         <div class="hidden lg:block" />
         <div class="flex items-center gap-4">
           <LanguageSwitcher />
-          <div class="hidden text-end leading-tight sm:block">
+          <NuxtLink to="/profile" class="hidden rounded-lg px-2 py-1 text-end leading-tight hover:bg-slate-100 sm:block" :title="$t('profile.title')">
             <div class="text-sm font-medium text-slate-900">{{ session.user?.fullName }}</div>
             <div class="text-xs text-slate-500">{{ session.user?.role }}</div>
-          </div>
+          </NuxtLink>
           <button class="rounded-lg p-2 text-slate-600 hover:bg-slate-100" :title="$t('auth.logout')" @click="session.logout()">
             <AppIcon name="logout" />
             <span class="sr-only">{{ $t('auth.logout') }}</span>

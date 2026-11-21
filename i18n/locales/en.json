@@ -547,7 +547,9 @@
     "yearEndReversed": "The year-end entries were reversed.",
     "settingsSaved": "The accounting settings were saved.",
     "categorySaved": "The type of group “{name}” was saved.",
-    "openingImported": "The opening balance draft entry was created."
+    "openingImported": "The opening balance draft entry was created.",
+    "passwordChanged": "Your password was changed.",
+    "noAccess": "You do not have access to this page."
   },
   "users": {
     "title": "Users",
@@ -892,5 +894,21 @@
       "year_has_entries": "This fiscal year already has posted entries. Make sure the balances are not counted twice.",
       "rows_without_amount": "{n} row(s) without any amount were ignored."
     }
+  },
+  "profile": {
+    "title": "My account",
+    "fullName": "Name",
+    "username": "Username",
+    "role": "Role",
+    "permissions": "Permissions",
+    "allPermissions": "All permissions (system administrator)",
+    "changePassword": "Change password"
+  },
+  "errorPage": {
+    "title": "Something went wrong",
+    "text": "A problem occurred. Go back to the home page and try again.",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "This address does not exist or has moved.",
+    "home": "Back to the home page"
   }
 }
