@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/** "Excel" button of a report: downloads the same report, with the filters that are on the screen. */
+/** "Excel" and "CSV" buttons of a report: download the same report, with the filters that are on the screen. */
 const props = defineProps<{ path: string; query: Record<string, unknown> | null }>()
 
 const { locale, t } = useI18n()
@@ -8,26 +8,27 @@ const notify = useNotify()
 const session = useSessionStore()
 const errorText = useErrorText()
 
-const busy = ref(false)
+const busy = ref<'xlsx' | 'csv' | null>(null)
 const visible = computed(() => session.can('reports.export'))
 
-async function exportIt() {
+async function exportIt(format: 'xlsx' | 'csv') {
   if (!props.query) return
-  busy.value = true
+  busy.value = format
   try {
-    // the sheet follows the language: Jalali dates in Persian, Gregorian in the other languages
-    await api.download(props.path, { ...props.query, calendar: locale.value === 'fa' ? 'jalali' : 'gregorian' })
+    // the file follows the language: Jalali dates in Persian, Gregorian in the other languages
+    await api.download(props.path, { ...props.query, calendar: locale.value === 'fa' ? 'jalali' : 'gregorian', format })
     notify.success(t('toast.exported'))
   } catch (e) {
     notify.error(errorText.of(e))
   } finally {
-    busy.value = false
+    busy.value = null
   }
 }
 </script>
 
 <template>
-  <span v-if="visible" class="inline-flex flex-col items-end gap-1">
-    <AppButton variant="secondary" :loading="busy" :disabled="!query" @click="exportIt"><AppIcon name="download" />{{ $t('reports.exportExcel') }}</AppButton>
+  <span v-if="visible" class="inline-flex items-start gap-2">
+    <AppButton variant="secondary" :loading="busy === 'xlsx'" :disabled="!query || busy !== null" @click="exportIt('xlsx')"><AppIcon name="download" />{{ $t('reports.exportExcel') }}</AppButton>
+    <AppButton variant="secondary" :loading="busy === 'csv'" :disabled="!query || busy !== null" @click="exportIt('csv')"><AppIcon name="download" />CSV</AppButton>
   </span>
 </template>

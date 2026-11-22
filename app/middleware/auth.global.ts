@@ -1,6 +1,9 @@
 const PUBLIC = ['/login']
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  // The platform panel (the people who run the software) has its own sign-in: see middleware/platform-auth.ts
+  if (to.path === '/platform' || to.path.startsWith('/platform/')) return
+
   const session = useSessionStore()
   if (!session.checked) await session.restore()
 
