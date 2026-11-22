@@ -190,7 +190,11 @@
     "openingUnreadable": "The file could not be read. Use the .xlsx template.",
     "openingCannotImport": "The file cannot be imported. Fix the errors and try again.",
     "openingFileType": "The file must be an .xlsx file.",
-    "openingFileSize": "The file must be smaller than 5 MB."
+    "openingFileSize": "The file must be smaller than 5 MB.",
+    "fyHardStart": "A fiscal year cannot start inside the hard-locked period.",
+    "fyHardDates": "The dates cannot be changed: this fiscal year starts inside the hard-locked period.",
+    "fyHardDelete": "This fiscal year starts inside the hard-locked period and cannot be deleted.",
+    "fyHardReopen": "This fiscal year ends inside the hard-locked period and cannot be reopened."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
