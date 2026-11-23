@@ -35,6 +35,7 @@ export const MENU: MenuItem[] = [
       { label: 'reports.balanceSheet.name', to: '/reports/balance-sheet', feature: 'reports.statements' },
     ],
   },
+  { key: 'bank', to: '/bank', icon: 'book', permission: 'bank.read', feature: 'bank-reconciliation', ready: true },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: true },
   { key: 'openingBalance', to: '/opening-balance', icon: 'download', permission: 'entries.write', feature: 'opening-balance', ready: true },
   { key: 'accountingSettings', to: '/settings/accounting', icon: 'menu', permission: 'accounts.read', ready: true },

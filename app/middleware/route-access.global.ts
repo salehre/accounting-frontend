@@ -14,6 +14,8 @@ const RULES: Array<{ prefix: string; permission?: string; feature?: string }> = 
     { prefix: '/reports', permission: 'reports.read' },
     { prefix: '/reports/income-statement', permission: 'reports.read', feature: 'reports.statements' },
     { prefix: '/reports/balance-sheet', permission: 'reports.read', feature: 'reports.statements' },
+    { prefix: '/bank', permission: 'bank.read', feature: 'bank-reconciliation' },
+    { prefix: '/bank/new', permission: 'bank.manage', feature: 'bank-reconciliation' },
     { prefix: '/opening-balance', permission: 'entries.write', feature: 'opening-balance' },
     { prefix: '/users', permission: 'users.manage' },
     { prefix: '/roles', permission: 'users.manage' },

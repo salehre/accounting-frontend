@@ -37,9 +37,9 @@ export default defineNuxtConfig({
     defaultLocale: 'fa',
     strategy: 'no_prefix', // the language is a setting, not part of the address
     locales: [
-      { code: 'fa', language: 'fa-IR', name: 'فارسی', dir: 'rtl', files: ['fa.json', 'fa.platform.json'] },
-      { code: 'en', language: 'en-US', name: 'English', dir: 'ltr', files: ['en.json', 'en.platform.json'] },
-      { code: 'ar', language: 'ar', name: 'العربية', dir: 'rtl', files: ['ar.json', 'ar.platform.json'] },
+      { code: 'fa', language: 'fa-IR', name: 'فارسی', dir: 'rtl', file: 'fa.json' },
+      { code: 'en', language: 'en-US', name: 'English', dir: 'ltr', file: 'en.json' },
+      { code: 'ar', language: 'ar', name: 'العربية', dir: 'rtl', file: 'ar.json' },
     ],
     // always start in Persian; the person's own choice is remembered in a cookie (see app.vue)
     detectBrowserLanguage: false,
