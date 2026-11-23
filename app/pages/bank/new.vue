@@ -247,7 +247,7 @@ const sign = (n: number) => (n > 0 ? 'text-emerald-700' : 'text-rose-700')
       </div>
 
       <div v-if="previewRows.length" class="overflow-x-auto rounded-lg border border-slate-200">
-        <table class="w-full min-w-[560px] text-sm">
+        <table class="w-full min-w-140 text-sm">
           <thead class="bg-slate-50 text-xs text-slate-500">
           <tr>
             <th class="px-3 py-2 text-start font-medium">{{ $t('bank.new_.colDate') }}</th>

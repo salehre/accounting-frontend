@@ -180,7 +180,7 @@ const stateClass = { open: 'bg-amber-100 text-amber-800', matched: 'bg-emerald-1
         <section class="overflow-hidden rounded-xl border border-slate-200 bg-white">
           <h2 class="border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-800">{{ $t('bank.bankSide') }}</h2>
           <div class="max-h-[60vh] overflow-auto">
-            <table class="w-full min-w-[420px] text-sm">
+            <table class="w-full min-w-105 text-sm">
               <tbody class="divide-y divide-slate-100">
               <tr v-for="l in statement.lines" :key="l.id"
                   :class="[l.matched ? 'bg-emerald-50/50 text-slate-500' : '', lineId === l.id ? 'bg-indigo-100' : '', editable && !l.matched ? 'cursor-pointer hover:bg-indigo-50' : '']"
@@ -211,7 +211,7 @@ const stateClass = { open: 'bg-amber-100 text-amber-800', matched: 'bg-emerald-1
           </div>
           <p v-if="!bookLines.length" class="px-4 py-8 text-center text-sm text-slate-500">{{ $t('bank.noBookLines') }}</p>
           <div v-else class="max-h-[60vh] overflow-auto">
-            <table class="w-full min-w-[460px] text-sm">
+            <table class="w-full min-w-115 text-sm">
               <tbody class="divide-y divide-slate-100">
               <tr v-for="b in bookLines" :key="b.id"
                   :class="[picked.includes(b.id) ? 'bg-indigo-100' : suggests(b) ? 'bg-amber-50' : '', b.state === 'matched' ? 'text-slate-400' : '', editable && b.state !== 'matched' ? 'cursor-pointer hover:bg-indigo-50' : '']"

@@ -16,7 +16,7 @@ async function exportIt(format: 'xlsx' | 'csv') {
   busy.value = format
   try {
     // the file follows the language: Jalali dates in Persian, Gregorian in the other languages
-    await api.download(props.path, { ...props.query, calendar: locale.value === 'fa' ? 'jalali' : 'gregorian', format })
+    await api.download(props.path, { ...props.query, calendar: locale.value === 'fa' ? 'jalali' : 'gregorian', format, rtl: locale.value !== 'en' ? 1 : 0 })
     notify.success(t('toast.exported'))
   } catch (e) {
     notify.error(errorText.of(e))

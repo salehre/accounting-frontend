@@ -50,7 +50,7 @@ onMounted(load)
     </div>
 
     <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-      <table class="w-full min-w-[720px] text-sm">
+      <table class="w-full min-w-180 text-sm">
         <thead class="bg-slate-50 text-xs text-slate-500">
         <tr>
           <th class="px-4 py-2.5 text-start font-medium">{{ $t('bank.cols.title') }}</th>
