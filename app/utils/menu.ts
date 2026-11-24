@@ -40,6 +40,7 @@ export const MENU: MenuItem[] = [
     key: 'treasury', to: '/treasury', icon: 'book', permission: 'treasury.read', feature: 'treasury', ready: true,
     children: [
       { label: 'treasury.cheques', to: '/treasury' },
+      { label: 'treasury.vouchers.title', to: '/treasury/vouchers' },
       { label: 'treasury.settings.title', to: '/treasury/settings', permission: 'treasury.manage' },
     ],
   },

@@ -232,7 +232,10 @@
     "trDetailRequired": "This account needs a detail account: choose the customer or supplier.",
     "trDetailMissing": "The chosen detail account does not exist.",
     "trNoBank": "This cheque has no bank account.",
-    "trDueBeforeIssue": "The due date cannot be before the issue date."
+    "trDueBeforeIssue": "The due date cannot be before the issue date.",
+    "trVoucherNotFound": "Voucher not found.",
+    "trVoucherCancelled": "This voucher is already cancelled.",
+    "trVoucherAmount": "The amount of the voucher must be above zero."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -1408,6 +1411,64 @@
       "return": "Cheque {number} returned.",
       "endorse": "Cheque {number} endorsed.",
       "cancel": "Cheque {number} cancelled."
+    },
+    "vouchers": {
+      "title": "Receipts and payments",
+      "subtitle": "Money received and paid (cash, bank, card). Every voucher makes a posted entry; a mistake is corrected by cancelling.",
+      "newReceipt": "New receipt",
+      "newPayment": "New payment",
+      "newTitle": "Register a voucher",
+      "newSubtitle": "The entry is posted as soon as the voucher is registered. A double click cannot make a second one.",
+      "searchHint": "Number, description or the name of the party",
+      "empty": "No vouchers found.",
+      "emptyHint": "Register a new receipt or payment.",
+      "postedTotal": "Total of vouchers not cancelled",
+      "kind": {
+        "receipt": "Receipt",
+        "payment": "Payment"
+      },
+      "status": {
+        "posted": "Posted",
+        "cancelled": "Cancelled"
+      },
+      "method": {
+        "cash": "Cash",
+        "bank": "Bank",
+        "card": "Card",
+        "other": "Other"
+      },
+      "cols": {
+        "number": "Voucher",
+        "date": "Date"
+      },
+      "form": {
+        "kind": "Kind of voucher",
+        "date": "Voucher date",
+        "payer": "Paid by (account of the party)",
+        "payee": "Paid to (account of the party)",
+        "ways": "Ways of payment",
+        "method": "Way",
+        "account": "Cash or bank account",
+        "accountPlaceholder": "Cash or bank account",
+        "amount": "Amount",
+        "reference": "Reference",
+        "addWay": "Add a way",
+        "removeRow": "Remove row",
+        "total": "Total",
+        "submit": "Register voucher"
+      },
+      "entry": "Journal entry",
+      "cancel": "Cancel voucher",
+      "cancelTitle": "Cancel the voucher",
+      "cancelHint": "A posted reversing entry is made. The voucher keeps its number and shows \"cancelled\".",
+      "cancelReason": "Reason",
+      "cancelReasonHint": "At least 5 characters",
+      "cancelDate": "Date of the reversing entry",
+      "cancelledNote": "This voucher was cancelled. Reason: {reason}",
+      "toast": {
+        "created": "{kind} {number} registered.",
+        "cancelled": "Voucher {number} cancelled."
+      }
     }
   }
 }

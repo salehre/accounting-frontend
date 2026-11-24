@@ -64,3 +64,51 @@ export interface TreasurySummary { received: DirectionSummary; issued: Direction
 export type SettingKey = 'cheques_receivable' | 'cheques_in_collection' | 'cheques_payable'
 export const SETTING_KEYS: SettingKey[] = ['cheques_receivable', 'cheques_in_collection', 'cheques_payable']
 export type TreasurySettings = Record<SettingKey, { accountId: number; code: string; name: string } | null>
+
+// ---- receipts and payments of money (vouchers)
+export type VoucherKind = 'receipt' | 'payment'
+export type VoucherStatus = 'posted' | 'cancelled'
+export type PayMethod = 'cash' | 'bank' | 'card' | 'other'
+export const PAY_METHODS: PayMethod[] = ['cash', 'bank', 'card', 'other']
+
+export interface VoucherLine {
+    id: number
+    method: PayMethod
+    accountId: number
+    accountCode: string
+    accountName: string
+    detailId: number | null
+    detailName: string | null
+    amount: number
+    reference: string | null
+}
+
+export interface Voucher {
+    id: number
+    kind: VoucherKind
+    number: number
+    date: string
+    amount: number
+    status: VoucherStatus
+    partyAccountId: number
+    partyAccount: string
+    partyDetailId: number | null
+    partyDetailName: string | null
+    description: string | null
+    entryId: number
+    entryNumber: number | null
+    reversalEntryId: number | null
+    reversalNumber: number | null
+    cancelReason: string | null
+    createdAt: string
+}
+
+export interface VoucherDetail extends Voucher { lines: VoucherLine[] }
+
+export interface VoucherList {
+    items: Voucher[]
+    page: number
+    pageSize: number
+    total: number
+    postedTotal: number
+}

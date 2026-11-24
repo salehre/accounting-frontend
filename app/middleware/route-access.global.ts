@@ -18,6 +18,7 @@ const RULES: Array<{ prefix: string; permission?: string; feature?: string }> = 
     { prefix: '/bank/new', permission: 'bank.manage', feature: 'bank-reconciliation' },
     { prefix: '/treasury', permission: 'treasury.read', feature: 'treasury' },
     { prefix: '/treasury/new', permission: 'treasury.manage', feature: 'treasury' },
+    { prefix: '/treasury/vouchers/new', permission: 'treasury.manage', feature: 'treasury' },
     { prefix: '/treasury/settings', permission: 'treasury.manage', feature: 'treasury' },
     { prefix: '/opening-balance', permission: 'entries.write', feature: 'opening-balance' },
     { prefix: '/users', permission: 'users.manage' },

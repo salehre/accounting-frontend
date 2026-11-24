@@ -107,6 +107,9 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^The detail account does not exist/, 'serverMsg.trDetailMissing'],
   [/^The cheque has no bank account/, 'serverMsg.trNoBank'],
   [/due date.* after or equal to/i, 'serverMsg.trDueBeforeIssue'],
+  [/^Voucher not found/, 'serverMsg.trVoucherNotFound'],
+  [/^This voucher is already cancelled/, 'serverMsg.trVoucherCancelled'],
+  [/^The amount of the voucher must be above zero/, 'serverMsg.trVoucherAmount'],
 ]
 
 export function useErrorText() {
