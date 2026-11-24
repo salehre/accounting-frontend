@@ -32,7 +32,8 @@
     "detailAccounts": "Detail accounts",
     "accountingSettings": "Accounting settings",
     "openingBalance": "Opening balances",
-    "bank": "Bank reconciliation"
+    "bank": "Bank reconciliation",
+    "treasury": "Treasury"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -218,7 +219,20 @@
     "bankNotReconciled": "This statement is not reconciled.",
     "bankNoMatch": "This line has no match.",
     "bankNoCleared": "None of these lines was marked as cleared in this statement.",
-    "bankRace": "Some of the lines were matched by someone else a moment ago."
+    "bankRace": "Some of the lines were matched by someone else a moment ago.",
+    "trSettings": "Set the treasury accounts in \"Treasury settings\" first.",
+    "trNumberTaken": "This cheque number is already registered for this bank.",
+    "trSayadTaken": "This Sayad id is already registered.",
+    "trWrongStatus": "This action is not possible in the current status of the cheque. The page was refreshed; check again.",
+    "trNoAction": "This action does not exist for this kind of cheque.",
+    "trNoYear": "No fiscal year covers this date.",
+    "trYearClosed": "The fiscal year of this date is closed.",
+    "trNotFound": "Cheque not found.",
+    "trBankRequired": "The bank account the cheque is drawn on is required.",
+    "trDetailRequired": "This account needs a detail account: choose the customer or supplier.",
+    "trDetailMissing": "The chosen detail account does not exist.",
+    "trNoBank": "This cheque has no bank account.",
+    "trDueBeforeIssue": "The due date cannot be before the issue date."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -658,7 +672,8 @@
     "fiscal_years": "Fiscal years and locks",
     "reports": "Reports",
     "users": "Users and roles",
-    "bank": "Bank reconciliation"
+    "bank": "Bank reconciliation",
+    "treasury": "Treasury"
   },
   "perm": {
     "accounts_read": {
@@ -716,6 +731,14 @@
     "bank_manage": {
       "name": "Manage bank reconciliation",
       "hint": "Import statements, match lines, finish and reopen"
+    },
+    "treasury_read": {
+      "name": "View treasury",
+      "hint": "Cheques, due dates and settings"
+    },
+    "treasury_manage": {
+      "name": "Manage treasury",
+      "hint": "Register cheques and change their status (automatic journal entries)"
     }
   },
   "yearEnd": {
@@ -1267,6 +1290,124 @@
       "balanceBad": "The closing balance does not follow from the opening balance and the rows: it should be {expected}. Look for a missing or doubled row, or a wrong sign.",
       "balanceOk": "The balances agree with the rows.",
       "import": "Import statement"
+    }
+  },
+  "treasury": {
+    "title": "Treasury",
+    "cheques": "Cheques",
+    "subtitle": "Cheques received and issued, their status and due dates. Every change of status makes its own journal entry.",
+    "new": "Register cheque",
+    "newTitle": "Register a new cheque",
+    "newSubtitle": "Its journal entry is posted as soon as the cheque is registered.",
+    "overdue": "Overdue",
+    "empty": "No cheques found.",
+    "emptyHint": "Register a cheque or change the filters.",
+    "chequeNo": "Cheque no.",
+    "history": "History",
+    "entryNo": "Entry {n}",
+    "confirm": "Confirm",
+    "direction": {
+      "received": "Received",
+      "issued": "Issued"
+    },
+    "status": {
+      "in_hand": "In hand",
+      "deposited": "In collection",
+      "cleared": "Cleared",
+      "bounced": "Bounced",
+      "returned": "Returned",
+      "endorsed": "Endorsed",
+      "issued": "Issued",
+      "cancelled": "Cancelled"
+    },
+    "action": {
+      "register": "Registered",
+      "deposit": "Deposit at bank",
+      "clear": "Clear",
+      "bounce": "Bounce",
+      "return": "Return to payer",
+      "endorse": "Endorse",
+      "cancel": "Cancel cheque"
+    },
+    "actionHint": {
+      "deposit": "The cheque goes to the bank and stays in \"cheques in collection\" until it is cleared.",
+      "clear": "The money reached the bank account. The clearing entry is posted and shows up in bank reconciliation.",
+      "bounce": "The bank sent the cheque back. It is in hand again and can be deposited again or returned.",
+      "return": "The cheque goes back to its payer and the payer owes the amount again.",
+      "endorse": "You hand the cheque over to a supplier or another account.",
+      "cancel": "The cheque you wrote is voided and the debt to the other party stands again."
+    },
+    "filters": {
+      "all": "All",
+      "anyStatus": "Any status",
+      "direction": "Kind",
+      "status": "Status",
+      "search": "Search",
+      "searchHint": "Number, bank, Sayad id or the name of the party",
+      "overdueOnly": "Overdue only"
+    },
+    "cols": {
+      "number": "Cheque no.",
+      "party": "Party",
+      "dueDate": "Due date",
+      "amount": "Amount (rial)",
+      "status": "Status"
+    },
+    "summary": {
+      "overdue": "Overdue",
+      "next7": "Next 7 days",
+      "next30": "Next 30 days"
+    },
+    "form": {
+      "direction": "Kind of cheque",
+      "number": "Cheque number",
+      "bankName": "Bank",
+      "branch": "Branch",
+      "sayadId": "Sayad id",
+      "sayadHint": "Optional; 16 digits. If given it must be unique.",
+      "amount": "Amount (rial)",
+      "issueDate": "Issue date",
+      "dueDate": "Due date",
+      "payerAccount": "Account of the party (e.g. the customer)",
+      "payeeAccount": "Account of the party (e.g. the supplier)",
+      "partyHint": "A level-3 account that the entry is posted to",
+      "partyDetail": "Detail account of the party",
+      "detailPlaceholder": "Choose a detail account (if needed)",
+      "bankAccount": "Bank account of the cheque",
+      "bankAccountHint": "The account the cheque is drawn on",
+      "bankDetail": "Bank detail account",
+      "entryDate": "Entry date",
+      "entryDateHint": "Must be inside an open fiscal year",
+      "description": "Description",
+      "submit": "Register cheque",
+      "eventDate": "Date of this action",
+      "depositAccount": "Bank account the cheque is deposited to",
+      "targetAccount": "Target account",
+      "note": "Note"
+    },
+    "settings": {
+      "title": "Treasury settings",
+      "subtitle": "The accounts the automatic entries of the cheques are posted to.",
+      "incomplete": "Cheques cannot be registered until all three accounts are set.",
+      "fields": {
+        "cheques_receivable": "Cheques receivable",
+        "cheques_in_collection": "Cheques in collection",
+        "cheques_payable": "Cheques payable"
+      },
+      "hints": {
+        "cheques_receivable": "Received cheques that are still in our hands",
+        "cheques_in_collection": "Cheques deposited at the bank and not cleared yet",
+        "cheques_payable": "Cheques we wrote that have not been cashed yet"
+      }
+    },
+    "toast": {
+      "registered": "Cheque {number} registered.",
+      "deposit": "Cheque {number} deposited at the bank.",
+      "clear": "Cheque {number} cleared.",
+      "bounce": "Cheque {number} bounced.",
+      "return": "Cheque {number} returned.",
+      "endorse": "Cheque {number} endorsed.",
+      "cancel": "Cheque {number} cancelled."
     }
   }
 }

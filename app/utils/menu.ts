@@ -36,6 +36,13 @@ export const MENU: MenuItem[] = [
     ],
   },
   { key: 'bank', to: '/bank', icon: 'book', permission: 'bank.read', feature: 'bank-reconciliation', ready: true },
+  {
+    key: 'treasury', to: '/treasury', icon: 'book', permission: 'treasury.read', feature: 'treasury', ready: true,
+    children: [
+      { label: 'treasury.cheques', to: '/treasury' },
+      { label: 'treasury.settings.title', to: '/treasury/settings', permission: 'treasury.manage' },
+    ],
+  },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: true },
   { key: 'openingBalance', to: '/opening-balance', icon: 'download', permission: 'entries.write', feature: 'opening-balance', ready: true },
   { key: 'accountingSettings', to: '/settings/accounting', icon: 'menu', permission: 'accounts.read', ready: true },

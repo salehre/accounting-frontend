@@ -93,6 +93,20 @@ const PATTERNS: Array<[RegExp, string, ((m: RegExpMatchArray) => Record<string, 
   [/^This line has no match/, 'serverMsg.bankNoMatch'],
   [/^None of these lines was marked as cleared/, 'serverMsg.bankNoCleared'],
   [/^Some of the lines were matched by someone else/, 'serverMsg.bankRace'],
+  // ---- treasury (cheques)
+  [/^Set the account "[^"]+" in the treasury settings first/, 'serverMsg.trSettings'],
+  [/^This cheque number already exists for this bank/, 'serverMsg.trNumberTaken'],
+  [/^This Sayad id already exists/, 'serverMsg.trSayadTaken'],
+  [/^The cheque is "[^"]+": "[^"]+" is possible only from/, 'serverMsg.trWrongStatus'],
+  [/^A (received|issued) cheque has no action/, 'serverMsg.trNoAction'],
+  [/^No fiscal year covers this date/, 'serverMsg.trNoYear'],
+  [/^The fiscal year of this date is closed/, 'serverMsg.trYearClosed'],
+  [/^Cheque not found/, 'serverMsg.trNotFound'],
+  [/^The bank account the cheque is drawn on is required/, 'serverMsg.trBankRequired'],
+  [/^This account needs a detail account|^The account of the cheques needs a detail account/, 'serverMsg.trDetailRequired'],
+  [/^The detail account does not exist/, 'serverMsg.trDetailMissing'],
+  [/^The cheque has no bank account/, 'serverMsg.trNoBank'],
+  [/due date.* after or equal to/i, 'serverMsg.trDueBeforeIssue'],
 ]
 
 export function useErrorText() {
