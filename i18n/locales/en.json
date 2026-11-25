@@ -235,7 +235,26 @@
     "trDueBeforeIssue": "The due date cannot be before the issue date.",
     "trVoucherNotFound": "Voucher not found.",
     "trVoucherCancelled": "This voucher is already cancelled.",
-    "trVoucherAmount": "The amount of the voucher must be above zero."
+    "trVoucherAmount": "The amount of the voucher must be above zero.",
+    "trPettyNameTaken": "A petty cash fund with this name already exists.",
+    "trPettyCeilingLow": "The ceiling cannot be below what the fund already holds.",
+    "trPettyAboveCeiling": "This would take the fund above its ceiling.",
+    "trPettyNoCash": "The fund has less cash in hand than this.",
+    "trPettyCloseBlocked": "Only an empty fund with no open expenses can be closed: take the money back and settle the expenses first.",
+    "trPettyNotFound": "Fund, expense or settlement not found.",
+    "trPettyClosed": "This fund is closed.",
+    "trPettyExpenseNotOpen": "Only an expense that is not settled can be cancelled.",
+    "trPettySettleCancelled": "This settlement is already cancelled.",
+    "trPettyOverdrawn": "The settlement cannot be cancelled now: the fund would be overdrawn.",
+    "trPettyNothingOpen": "There are no open expenses to settle.",
+    "trPettyForeignExpenses": "Some of these expenses are not open expenses of this fund.",
+    "trBookNameTaken": "A cheque book with this name already exists.",
+    "trBookNumbersTaken": "Some of these cheque numbers already exist for this bank.",
+    "trBookNotFound": "Cheque book or leaf not found.",
+    "trLeafNotUnused": "Only an unused leaf can be voided.",
+    "trBookClosed": "This cheque book is closed.",
+    "trLeafIssuedOnly": "A cheque leaf can be used only for an issued cheque.",
+    "trLeafUsed": "This leaf is already used or voided."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -1386,7 +1405,10 @@
       "eventDate": "Date of this action",
       "depositAccount": "Bank account the cheque is deposited to",
       "targetAccount": "Target account",
-      "note": "Note"
+      "note": "Note",
+      "manualCheque": "By hand (no cheque book)",
+      "chequeBook": "Cheque book",
+      "leaf": "Leaf (cheque number)"
     },
     "settings": {
       "title": "Treasury settings",
@@ -1468,6 +1490,129 @@
       "toast": {
         "created": "{kind} {number} registered.",
         "cancelled": "Voucher {number} cancelled."
+      }
+    },
+    "petty": {
+      "title": "Petty cash",
+      "subtitle": "Small funds kept by a custodian. The books always show what you gave; expenses are booked when they are settled.",
+      "new": "New fund",
+      "newTitle": "New petty cash fund",
+      "empty": "No funds found.",
+      "emptyHint": "Create a fund with a ceiling.",
+      "noCustodian": "No custodian",
+      "status": {
+        "active": "Active",
+        "closed": "Closed"
+      },
+      "expenseStatus": {
+        "open": "Not settled",
+        "settled": "Settled",
+        "cancelled": "Cancelled"
+      },
+      "onHand": "Cash in hand",
+      "funded": "Book balance",
+      "openExpenses": "Open expenses",
+      "ceiling": "Ceiling",
+      "form": {
+        "name": "Name of the fund",
+        "account": "Petty cash account",
+        "accountHint": "A level 3 account used only for this fund.",
+        "custodian": "Custodian (detail account)"
+      },
+      "fund": "Give money",
+      "giveBack": "Take money back",
+      "changeCeiling": "Change ceiling",
+      "close": "Close fund",
+      "fundTitle": "Give money to the fund",
+      "returnTitle": "Take money back",
+      "expenseTitle": "Record an expense",
+      "settleTitle": "Settle expenses",
+      "cancelSettlementTitle": "Cancel the settlement",
+      "closeTitle": "Close the fund",
+      "ceilingTitle": "Change the ceiling",
+      "fundHint": "Room up to the ceiling: {room} rial.",
+      "returnHint": "You can take back up to {cash} rial (cash in hand).",
+      "expenseHint": "Cash in hand: {cash} rial. An expense makes no entry until it is settled.",
+      "settleHint": "The chosen expenses (or all open ones), {total} rial in all, are booked and paid back to the fund from cash or bank.",
+      "cancelSettlementHint": "A reversing entry is posted and the expenses of this settlement become \"not settled\" again.",
+      "closeHint": "The fund is closed and can no longer change. Its name can be used again.",
+      "addExpense": "New expense",
+      "settle": "Settle all",
+      "settleSelected": "Settle {n} chosen",
+      "selectAll": "Select all",
+      "cancelExpense": "Cancel expense",
+      "expenseAccount": "Expense account",
+      "expenseFor": "For",
+      "receiptNo": "Receipt no.",
+      "noExpenses": "No expenses.",
+      "noSettlements": "Nothing settled yet.",
+      "noMovements": "No money given yet.",
+      "settlementNo": "Settlement",
+      "cancelSettlement": "Cancel settlement",
+      "fromAccount": "Cash or bank account",
+      "toAccount": "To cash or bank account",
+      "note": "Note",
+      "confirm": "Confirm",
+      "tabs": {
+        "expenses": "Expenses",
+        "settlements": "Settlements",
+        "movements": "Given and returned"
+      },
+      "movement": {
+        "fund": "Money given",
+        "return": "Money returned"
+      },
+      "toast": {
+        "created": "Fund \"{name}\" created.",
+        "fund": "Money given to the fund.",
+        "return": "Money taken back.",
+        "expense": "Expense recorded.",
+        "expenseCancelled": "Expense cancelled.",
+        "settle": "Expenses settled.",
+        "settleCancelled": "Settlement cancelled.",
+        "closed": "Fund closed.",
+        "ceiling": "Ceiling changed."
+      }
+    },
+    "books": {
+      "title": "Cheque books",
+      "subtitle": "The cheque leaves of our banks. An issued cheque takes its number from a leaf and no leaf is used twice.",
+      "new": "New cheque book",
+      "newTitle": "New cheque book",
+      "empty": "No cheque books found.",
+      "emptyHint": "Register a bank cheque book with its first number and the number of leaves.",
+      "status": {
+        "active": "Active",
+        "closed": "Closed"
+      },
+      "unused": "Unused",
+      "issued": "Issued",
+      "voided": "Voided",
+      "leafCount": "Leaves",
+      "next": "Next leaf",
+      "form": {
+        "name": "Name of the book",
+        "firstNumber": "Number of the first leaf",
+        "leafCount": "Number of leaves",
+        "leafHint": "1 to 200"
+      },
+      "leafStatus": {
+        "unused": "Unused",
+        "issued": "Issued",
+        "voided": "Voided"
+      },
+      "leafHint": "Click a leaf to void it if it is spoiled or lost.",
+      "issueCheque": "Issue a cheque from this book",
+      "close": "Close the book",
+      "closeTitle": "Close the cheque book",
+      "closeHint": "The book is closed and gives no more leaves.",
+      "voidTitle": "Void leaf {n}",
+      "voidHint": "A voided leaf is never used again.",
+      "voidReason": "Reason (spoiled, lost...)",
+      "toast": {
+        "created": "Cheque book \"{name}\" created.",
+        "voided": "Leaf voided.",
+        "closed": "Cheque book closed."
       }
     }
   }

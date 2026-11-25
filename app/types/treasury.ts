@@ -112,3 +112,112 @@ export interface VoucherList {
     total: number
     postedTotal: number
 }
+
+// ---- petty cash
+
+export type FundStatus = 'active' | 'closed'
+export type ExpenseStatus = 'open' | 'settled' | 'cancelled'
+
+export interface PettyMovement {
+    id: number
+    kind: 'fund' | 'return'
+    amount: number
+    date: string
+    note: string | null
+    entryId: number
+    entryNumber: number | null
+}
+
+export interface PettySettlement {
+    id: number
+    number: number
+    date: string
+    total: number
+    status: 'posted' | 'cancelled'
+    cancelReason: string | null
+    entryId: number
+    entryNumber: number | null
+}
+
+export interface PettyFund {
+    id: number
+    name: string
+    status: FundStatus
+    custodianDetailId: number | null
+    custodianName: string | null
+    fundAccountId: number
+    fundAccount: string
+    ceiling: number
+    funded: number
+    openExpenses: number
+    onHand: number
+    room: number
+    createdAt: string
+}
+
+export interface PettyFundDetail extends PettyFund {
+    movements: PettyMovement[]
+    settlements: PettySettlement[]
+}
+
+export interface PettyExpense {
+    id: number
+    date: string
+    amount: number
+    description: string
+    receiptNo: string | null
+    status: ExpenseStatus
+    settlementId: number | null
+    accountId: number
+    accountCode: string
+    accountName: string
+    detailId: number | null
+    detailName: string | null
+}
+
+export interface PettyExpenseList {
+    items: PettyExpense[]
+    page: number
+    pageSize: number
+    total: number
+}
+
+// ---- cheque books
+
+export type LeafStatus = 'unused' | 'issued' | 'voided'
+
+export interface ChequeLeaf {
+    id: number
+    leafNo: number
+    number: string
+    status: LeafStatus
+    chequeId: number | null
+    voidReason: string | null
+    chequeAmount: number | null
+    chequeStatus: string | null
+    dueDate: string | null
+}
+
+export interface ChequeBook {
+    id: number
+    name: string
+    status: 'active' | 'closed'
+    bankName: string
+    branch: string | null
+    bankAccountId: number
+    bankAccount: string
+    bankDetailId: number | null
+    bankDetailName: string | null
+    firstNumber: number
+    leafCount: number
+    unused: number
+    issued: number
+    voided: number
+    nextLeafId: number | null
+    nextNumber: string | null
+    createdAt: string
+}
+
+export interface ChequeBookDetail extends ChequeBook {
+    leaves: ChequeLeaf[]
+}

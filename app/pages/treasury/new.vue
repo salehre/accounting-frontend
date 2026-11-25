@@ -1,15 +1,49 @@
 <script setup lang="ts">
-import type { ChequeDetail, ChequeDirection } from '~/types/treasury'
+import type { ChequeBook, ChequeBookDetail, ChequeDetail, ChequeDirection, ChequeLeaf } from '~/types/treasury'
 import {useTreasuryLookups} from "~/composables/useTreasuryLookups.ts";
 
 const { t } = useI18n()
+const route = useRoute()
 const api = useApi()
 const notify = useNotify()
 const errorText = useErrorText()
 const lookups = useTreasuryLookups()
 useHead({ title: computed(() => t('treasury.newTitle')) })
 
-onMounted(() => { void lookups.load() })
+// ---- our own cheque books: the number and the bank come from the leaf
+const books = ref<ChequeBook[]>([])
+const bookId = ref('')
+const leafId = ref('')
+const leaves = ref<ChequeLeaf[]>([])
+
+onMounted(async () => {
+  void lookups.load()
+  try {
+    books.value = (await api.get<{ items: ChequeBook[] }>('/cheque-books', { status: 'active' })).items.filter((b) => b.unused > 0)
+  } catch {
+    books.value = [] // the cheque can still be written by hand
+  }
+  const wanted = String(route.query.book ?? '')
+  if (wanted && books.value.some((b) => String(b.id) === wanted)) {
+    direction.value = 'issued'
+    bookId.value = wanted
+  } else if (books.value.length === 1) {
+    bookId.value = String(books.value[0]!.id)
+  }
+})
+
+watch(bookId, async (id) => {
+  leaves.value = []
+  leafId.value = ''
+  if (!id) return
+  try {
+    const b = await api.get<ChequeBookDetail>(`/cheque-books/${id}`)
+    leaves.value = b.leaves.filter((l) => l.status === 'unused')
+    leafId.value = b.nextLeafId === null ? '' : String(b.nextLeafId)
+  } catch (e) {
+    formError.value = errorText.of(e)
+  }
+})
 
 const todayIso = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10)
 
@@ -29,6 +63,12 @@ const bankDetailId = ref<number | string | null>(null)
 const description = ref('')
 
 const issued = computed(() => direction.value === 'issued')
+const fromBook = computed(() => issued.value && bookId.value !== '')
+const bookOptions = computed(() => [
+  { value: '', label: t('treasury.form.manualCheque') },
+  ...books.value.map((b) => ({ value: String(b.id), label: `${b.name} (${b.unused})` })),
+])
+const leafOptions = computed(() => leaves.value.map((l) => ({ value: String(l.id), label: l.number })))
 const directionOptions = computed(() => [
   { value: 'received', label: t('treasury.direction.received') },
   { value: 'issued', label: t('treasury.direction.issued') },
@@ -39,10 +79,10 @@ const saving = ref(false)
 const formError = ref<string | null>(null)
 const errs = ref<Record<string, string | null>>({})
 
-const FIELDS = ['number', 'sayadId', 'bankName', 'amount', 'issueDate', 'dueDate', 'date', 'counterpartyAccountId', 'counterpartyDetailId', 'bankAccountId', 'bankDetailId']
+const FIELDS = ['leafId', 'number', 'sayadId', 'bankName', 'amount', 'issueDate', 'dueDate', 'date', 'counterpartyAccountId', 'counterpartyDetailId', 'bankAccountId', 'bankDetailId']
 
-const canSubmit = computed(() => number.value.trim() !== '' && bankName.value.trim() !== '' && !!amount.value && issueDate.value !== ''
-    && dueDate.value !== '' && date.value !== '' && counterpartyAccountId.value !== null && (!issued.value || bankAccountId.value !== null))
+const canSubmit = computed(() => (fromBook.value ? leafId.value !== '' : number.value.trim() !== '' && bankName.value.trim() !== '' && (!issued.value || bankAccountId.value !== null))
+    && !!amount.value && issueDate.value !== '' && dueDate.value !== '' && date.value !== '' && counterpartyAccountId.value !== null)
 
 async function submit() {
   if (!canSubmit.value) return
@@ -52,18 +92,18 @@ async function submit() {
   try {
     const cheque = await api.post<ChequeDetail>('/cheques', {
       direction: direction.value,
-      number: number.value.trim(),
+      ...(fromBook.value
+          ? { leafId: Number(leafId.value) }
+          : { number: number.value.trim(), bankName: bankName.value.trim(), branch: branch.value.trim() || null }),
       sayadId: sayadId.value.trim() || null,
-      bankName: bankName.value.trim(),
-      branch: branch.value.trim() || null,
       amount: amount.value,
       issueDate: issueDate.value,
       dueDate: dueDate.value,
       date: date.value,
       counterpartyAccountId: Number(counterpartyAccountId.value),
       counterpartyDetailId: counterpartyDetailId.value === null ? null : Number(counterpartyDetailId.value),
-      bankAccountId: issued.value && bankAccountId.value !== null ? Number(bankAccountId.value) : null,
-      bankDetailId: issued.value && bankDetailId.value !== null ? Number(bankDetailId.value) : null,
+      bankAccountId: issued.value && !fromBook.value && bankAccountId.value !== null ? Number(bankAccountId.value) : null,
+      bankDetailId: issued.value && !fromBook.value && bankDetailId.value !== null ? Number(bankDetailId.value) : null,
       description: description.value.trim() || null,
     })
     notify.success(t('treasury.toast.registered', { number: cheque.number }))
@@ -100,9 +140,15 @@ async function submit() {
     <form class="space-y-5 rounded-xl border border-slate-200 bg-white p-5" @submit.prevent="submit">
       <div class="grid gap-4 sm:grid-cols-2">
         <AppSelect v-model="dir" :label="$t('treasury.form.direction')" :options="directionOptions" />
-        <AppInput v-model="number" ltr :label="$t('treasury.form.number')" :error="errs.number" />
-        <AppInput v-model="bankName" :label="$t('treasury.form.bankName')" :error="errs.bankName" />
-        <AppInput v-model="branch" :label="$t('treasury.form.branch')" />
+        <template v-if="issued && books.length">
+          <AppSelect v-model="bookId" :label="$t('treasury.form.chequeBook')" :options="bookOptions" />
+          <AppSelect v-if="fromBook" v-model="leafId" :label="$t('treasury.form.leaf')" :options="leafOptions" :error="errs.leafId" />
+        </template>
+        <template v-if="!fromBook">
+          <AppInput v-model="number" ltr :label="$t('treasury.form.number')" :error="errs.number" />
+          <AppInput v-model="bankName" :label="$t('treasury.form.bankName')" :error="errs.bankName" />
+          <AppInput v-model="branch" :label="$t('treasury.form.branch')" />
+        </template>
         <AppInput v-model="sayadId" ltr :label="$t('treasury.form.sayadId')" :hint="$t('treasury.form.sayadHint')" :error="errs.sayadId" />
         <div>
           <label class="mb-1.5 block text-sm font-medium text-slate-700">{{ $t('treasury.form.amount') }}</label>
@@ -127,7 +173,7 @@ async function submit() {
           <p v-if="errs.counterpartyDetailId" class="mt-1 text-xs text-red-600">{{ errs.counterpartyDetailId }}</p>
         </div>
 
-        <template v-if="issued">
+        <template v-if="issued && !fromBook">
           <div>
             <label class="mb-1.5 block text-sm font-medium text-slate-700">{{ $t('treasury.form.bankAccount') }}</label>
             <ComboBox v-model="bankAccountId" :options="lookups.bankOptions.value" :invalid="!!errs.bankAccountId"
