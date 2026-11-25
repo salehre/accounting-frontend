@@ -110,7 +110,7 @@ async function doDelete() {
     <div class="flex flex-wrap items-end gap-3">
       <div class="relative min-w-56 flex-1 sm:max-w-sm">
         <span class="pointer-events-none absolute inset-y-0 inset-s-3 flex items-center text-slate-400"><AppIcon name="search" /></span>
-        <input v-model="search" type="search" :placeholder="$t('detail.searchPlaceholder')"
+        <input v-model="search" type="search" :placeholder="$t('detail.searchPlaceholder')" :aria-label="$t('detail.searchPlaceholder')"
                class="block w-full rounded-lg border border-slate-300 bg-white py-2.5 ps-10 pe-3 text-sm shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40">
       </div>
       <div class="w-48"><AppSelect v-model="kind" :label="$t('detail.kindLabel')" :options="kindFilter" /></div>

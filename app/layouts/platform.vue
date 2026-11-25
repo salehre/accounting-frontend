@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {usePlatformStore} from "~/stores/platform.ts";
-
 const platform = usePlatformStore()
 const route = useRoute()
 
@@ -13,6 +11,7 @@ const links = [
 
 <template>
   <div class="min-h-dvh bg-slate-50">
+    <a href="#main" class="sr-only rounded-lg bg-white px-4 py-2 text-sm font-medium text-indigo-700 shadow focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4 focus:z-50" @click.prevent="($refs.main as HTMLElement | undefined)?.focus()">{{ $t('common.skipToContent') }}</a>
     <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <div class="flex min-w-0 items-center gap-3">
@@ -44,6 +43,6 @@ const links = [
       </nav>
     </header>
 
-    <main class="p-4 sm:p-6"><slot /></main>
+    <main id="main" ref="main" tabindex="-1" class="p-4 outline-none sm:p-6"><slot /></main>
   </div>
 </template>

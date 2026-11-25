@@ -25,3 +25,37 @@
 [data-sonner-toaster] {
   font-family: var(--font-sans);
 }
+
+/* Keyboard users always see where the focus is (the mouse does not draw this) */
+:where(a, button, [role="button"], [role="tab"], summary):focus-visible {
+  outline: 2px solid var(--color-indigo-500);
+  outline-offset: 2px;
+}
+
+/* On a touch screen a finger needs about 40px: small text links and "try again" buttons get a bigger target */
+@media (pointer: coarse) {
+  main a.text-indigo-700,
+  main button.text-indigo-700,
+  main button.underline,
+  main a.underline {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+  }
+
+  main table a {
+    display: inline-block;
+    padding-block: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

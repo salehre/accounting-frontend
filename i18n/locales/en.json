@@ -19,7 +19,9 @@
     "previous": "Previous",
     "next": "Next",
     "rangeOf": "{from} to {to} of {total}",
-    "rial": "rial"
+    "rial": "rial",
+    "skipToContent": "Skip to main content",
+    "mainMenu": "Main menu"
   },
   "menu": {
     "dashboard": "Dashboard",

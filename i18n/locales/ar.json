@@ -19,7 +19,9 @@
     "previous": "السابق",
     "next": "التالي",
     "rangeOf": "{from} إلى {to} من {total}",
-    "rial": "ريال"
+    "rial": "ريال",
+    "skipToContent": "انتقل إلى المحتوى الرئيسي",
+    "mainMenu": "القائمة الرئيسية"
   },
   "menu": {
     "dashboard": "لوحة التحكم",

@@ -35,16 +35,16 @@ const box = 'rounded-lg border bg-white px-3 py-2.5 text-sm shadow-sm outline-no
 
 <template>
   <div>
-    <label :for="id" class="mb-1.5 block text-sm font-medium text-slate-700">{{ label }}</label>
+    <label :id="`${id}-label`" :for="id" class="mb-1.5 block text-sm font-medium text-slate-700">{{ label }}</label>
 
-    <div v-if="jalali" class="flex gap-2" :aria-describedby="`${id}-msg`">
-      <input :id="id" v-model="y" inputmode="numeric" dir="ltr" maxlength="4" :disabled="disabled" :placeholder="t('date.year')"
+    <div v-if="jalali" class="flex gap-2" role="group" :aria-labelledby="`${id}-label`" :aria-describedby="`${id}-msg`">
+      <input :id="id" v-model="y" inputmode="numeric" dir="ltr" maxlength="4" :disabled="disabled" :placeholder="t('date.year')" :aria-label="t('date.year')"
              :class="[box, 'w-24', error || invalid ? 'border-red-400' : 'border-slate-300 focus:border-indigo-500']">
       <div class="min-w-0 flex-1">
         <AppSelect v-model="m" compact :options="monthOptions" :placeholder="t('date.month')" :aria-label="t('date.month')"
                    :disabled="disabled" :invalid="!!(error || invalid)" />
       </div>
-      <input v-model="d" inputmode="numeric" dir="ltr" maxlength="2" :disabled="disabled" :placeholder="t('date.day')"
+      <input v-model="d" inputmode="numeric" dir="ltr" maxlength="2" :disabled="disabled" :placeholder="t('date.day')" :aria-label="t('date.day')"
              :class="[box, 'w-20', error || invalid ? 'border-red-400' : 'border-slate-300 focus:border-indigo-500']">
     </div>
     <input v-else :id="id" v-model="model" type="date" dir="ltr" :disabled="disabled"

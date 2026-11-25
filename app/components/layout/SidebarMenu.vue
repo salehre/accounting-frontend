@@ -33,7 +33,7 @@ const link = 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
 </script>
 
 <template>
-  <nav class="space-y-1 p-3">
+  <nav class="space-y-1 p-3" :aria-label="$t('common.mainMenu')">
     <template v-for="item in items" :key="item.key">
       <!-- a group: opens under itself -->
       <div v-if="item.children">

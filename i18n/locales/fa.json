@@ -19,7 +19,9 @@
     "previous": "قبلی",
     "next": "بعدی",
     "rangeOf": "{from} تا {to} از {total}",
-    "rial": "ریال"
+    "rial": "ریال",
+    "skipToContent": "پرش به محتوای اصلی",
+    "mainMenu": "منوی اصلی"
   },
   "menu": {
     "dashboard": "داشبورد",
