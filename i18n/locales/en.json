@@ -292,7 +292,9 @@
     "year": "Year",
     "month": "Month",
     "day": "Day",
-    "invalid": "This date does not exist."
+    "invalid": "This date is not valid. Example: 2026-11-25",
+    "pick": "Pick a date",
+    "clear": "Clear the date"
   },
   "fiscal": {
     "subtitle": "Every journal entry belongs to a fiscal year.",

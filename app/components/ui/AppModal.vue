@@ -25,6 +25,9 @@ function onKey(e: KeyboardEvent) {
     return
   }
   if (e.key !== 'Tab') return
+  // a calendar or list that opened outside the dialog (appended to the page) handles its own Tab
+  const from = e.target as HTMLElement | null
+  if (from && from !== document.body && !dialog.value?.contains(from)) return
   const list = focusables()
   if (!list.length) { e.preventDefault(); return }
   const first = list[0]!

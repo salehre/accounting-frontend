@@ -7,7 +7,7 @@
 
 @layer base {
   html {
-    font-family: var(--font-sans);
+    font-family: var(--font-sans), sans-serif;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -23,7 +23,7 @@
 
 /* the toasts use the font of the app */
 [data-sonner-toaster] {
-  font-family: var(--font-sans);
+  font-family: var(--font-sans), sans-serif;
 }
 
 /* Keyboard users always see where the focus is (the mouse does not draw this) */
@@ -57,5 +57,31 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Wide tables scroll sideways on a phone: the first column stays in view so the person always knows which row they read */
+@media (max-width: 639px) {
+  .overflow-x-auto > table :is(th, td):first-child {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    background-color: var(--color-white);
+    border-inline-end: 1px solid var(--color-slate-100);
+  }
+
+  .overflow-x-auto > table thead :is(th, td):first-child {
+    background-color: var(--color-slate-50);
+  }
+}
+
+/* Filter bars: on a phone each fixed-width field (type, status...) takes the full row instead of leaving ragged gaps */
+@media (max-width: 639px) {
+  main .flex-wrap.items-end > :is(.w-36, .w-40, .w-44, .w-48, .w-52, .w-56, .w-60, .w-64) {
+    width: 100%;
+  }
+
+  main .flex-wrap.items-end > .flex-1 {
+    flex-basis: 100%;
   }
 }

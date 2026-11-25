@@ -21,7 +21,8 @@
     "tailwindcss": "4.3.5",
     "vue": "3.5.45",
     "vue-router": "5.5.1",
-    "vue-sonner": "2.0.9"
+    "vue-sonner": "2.0.9",
+    "vue3-persian-datetime-picker": "^1.2.2"
   },
   "devDependencies": {
     "@types/node": "22.20.5",
