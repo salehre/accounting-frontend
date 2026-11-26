@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PayMethod, VoucherDetail, VoucherKind } from '~/types/treasury'
 import { PAY_METHODS } from '~/types/treasury'
-import {useTreasuryLookups} from "~/composables/useTreasuryLookups.ts";
 
 interface Row { key: number; method: string; accountId: number | string | null; detailId: number | string | null; amount: number | null; reference: string }
 
@@ -14,7 +13,14 @@ const lookups = useTreasuryLookups()
 const fmt = useFormat()
 useHead({ title: computed(() => t('treasury.vouchers.newTitle')) })
 
-onMounted(() => { void lookups.load() })
+// the accounts that hold money: when the company has set the list, the money lines choose only from it
+const session = useSessionStore()
+const moneyIds = ref<number[]>([])
+onMounted(async () => {
+  void lookups.load()
+  try { moneyIds.value = (await api.get<{ items: Array<{ accountId: number }> }>('/treasury-vouchers/money-accounts')).items.map((i) => i.accountId) } catch { /* no list: every account */ }
+})
+const moneyOptions = computed(() => (moneyIds.value.length ? lookups.bankOptions.value.filter((o) => moneyIds.value.includes(Number(o.value))) : lookups.bankOptions.value))
 
 const todayIso = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10)
 
@@ -126,11 +132,15 @@ async function submit() {
       <section class="space-y-3 rounded-xl border border-slate-200 bg-white p-5">
         <h2 class="text-base font-semibold text-slate-900">{{ $t('treasury.vouchers.form.ways') }}</h2>
         <p v-if="errs.lines" class="text-sm text-red-600">{{ errs.lines }}</p>
+        <p v-if="moneyIds.length === 0 && session.can('treasury.manage')" class="text-xs text-slate-500">
+          {{ $t('treasury.vouchers.money.hint') }}
+          <NuxtLink to="/treasury/vouchers/accounts" class="text-indigo-700 hover:underline">{{ $t('treasury.vouchers.money.link') }}</NuxtLink>
+        </p>
 
         <div v-for="(r, i) in rows" :key="r.key" class="grid gap-3 rounded-lg border border-slate-100 bg-slate-50 p-3 md:grid-cols-12">
           <div class="md:col-span-2"><AppSelect v-model="r.method" compact :options="methodOptions" :aria-label="$t('treasury.vouchers.form.method')" /></div>
           <div class="md:col-span-4">
-            <ComboBox v-model="r.accountId" :options="lookups.bankOptions.value" :invalid="!!errs[`lines.${i}.accountId`]"
+            <ComboBox v-model="r.accountId" :options="moneyOptions" :invalid="!!errs[`lines.${i}.accountId`]"
                       :aria-label="$t('treasury.vouchers.form.account')" :placeholder="$t('treasury.vouchers.form.accountPlaceholder')" />
             <p v-if="errs[`lines.${i}.accountId`]" class="mt-1 text-xs text-red-600">{{ errs[`lines.${i}.accountId`] }}</p>
           </div>

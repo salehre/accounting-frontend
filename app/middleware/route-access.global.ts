@@ -19,6 +19,7 @@ const RULES: Array<{ prefix: string; permission?: string; feature?: string }> = 
     { prefix: '/treasury', permission: 'treasury.read', feature: 'treasury' },
     { prefix: '/treasury/new', permission: 'treasury.manage', feature: 'treasury' },
     { prefix: '/treasury/vouchers', permission: 'treasury.read', feature: 'treasury.vouchers' },
+    { prefix: '/treasury/vouchers/accounts', permission: 'treasury.read', feature: 'treasury.vouchers' },
     { prefix: '/treasury/vouchers/new', permission: 'treasury.manage', feature: 'treasury.vouchers' },
     { prefix: '/treasury/petty', permission: 'treasury.read', feature: 'treasury.petty' },
     { prefix: '/treasury/settings', permission: 'treasury.manage', feature: 'treasury' },

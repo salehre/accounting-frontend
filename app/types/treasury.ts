@@ -221,3 +221,6 @@ export interface ChequeBook {
 export interface ChequeBookDetail extends ChequeBook {
     leaves: ChequeLeaf[]
 }
+
+/** An account that holds money (a cash box or a bank): the money lines of a voucher may use only these. */
+export interface MoneyAccount { accountId: number; code: string; name: string }

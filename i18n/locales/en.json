@@ -256,7 +256,8 @@
     "trLeafNotUnused": "Only an unused leaf can be voided.",
     "trBookClosed": "This cheque book is closed.",
     "trLeafIssuedOnly": "A cheque leaf can be used only for an issued cheque.",
-    "trLeafUsed": "This leaf is already used or voided."
+    "trLeafUsed": "This leaf is already used or voided.",
+    "trVoucherNotMoney": "Only the cash and bank accounts can take money here."
   },
   "detail": {
     "subtitle": "Customers, suppliers, banks, cash boxes and cost centers. Entries attach them to accounts that require a detail account.",
@@ -1539,6 +1540,15 @@
       "toast": {
         "created": "{kind} {number} registered.",
         "cancelled": "Voucher {number} cancelled."
+      },
+      "money": {
+        "title": "Cash and bank accounts",
+        "subtitle": "The accounts that hold money. When this list is set, the money lines of receipts and payments can use only these accounts.",
+        "add": "Add an account",
+        "empty": "The list is empty; every postable account is accepted for now.",
+        "saved": "Cash and bank accounts saved.",
+        "link": "Cash and bank accounts",
+        "hint": "To avoid mistakes, set which accounts hold money:"
       }
     },
     "petty": {

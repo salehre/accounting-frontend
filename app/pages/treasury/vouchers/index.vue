@@ -63,15 +63,21 @@ onBeforeUnmount(() => clearTimeout(timer))
         <h1 class="text-2xl font-bold text-slate-900">{{ $t('treasury.vouchers.title') }}</h1>
         <p class="mt-1 text-sm text-slate-600">{{ $t('treasury.vouchers.subtitle') }}</p>
       </div>
-      <div v-if="canManage" class="flex flex-wrap gap-2">
-        <NuxtLink to="/treasury/vouchers/new?kind=receipt"
-                  class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-emerald-700">
-          <AppIcon name="plus" />{{ $t('treasury.vouchers.newReceipt') }}
+      <div class="flex flex-wrap gap-2">
+        <NuxtLink to="/treasury/vouchers/accounts"
+                  class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          {{ $t('treasury.vouchers.money.link') }}
         </NuxtLink>
-        <NuxtLink to="/treasury/vouchers/new?kind=payment"
-                  class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
-          <AppIcon name="plus" />{{ $t('treasury.vouchers.newPayment') }}
-        </NuxtLink>
+        <template v-if="canManage">
+          <NuxtLink to="/treasury/vouchers/new?kind=receipt"
+                    class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-emerald-700">
+            <AppIcon name="plus" />{{ $t('treasury.vouchers.newReceipt') }}
+          </NuxtLink>
+          <NuxtLink to="/treasury/vouchers/new?kind=payment"
+                    class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
+            <AppIcon name="plus" />{{ $t('treasury.vouchers.newPayment') }}
+          </NuxtLink>
+        </template>
       </div>
     </div>
 
