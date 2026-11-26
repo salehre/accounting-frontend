@@ -1150,7 +1150,11 @@
       "features": "Features",
       "featuresHint": "The core is always included; pick only the extra features.",
       "limits": "Limits",
-      "badLimit": "A limit must be a whole number of 0 or more, or tick \"Unlimited\"."
+      "badLimit": "A limit must be a whole number of 0 or more, or tick \"Unlimited\".",
+      "companies": "{n} companies on this plan",
+      "deleteBlocked": "Move the companies of this plan to another plan first.",
+      "deleteTitle": "Delete plan \"{name}\"",
+      "deleteMessage": "The plan is deleted for good. This cannot be undone."
     },
     "audit": {
       "title": "Change log",
@@ -1188,7 +1192,8 @@
       "activated": "\"{name}\" was activated.",
       "revoked": "The key was revoked.",
       "planCreated": "Plan \"{name}\" created.",
-      "planSaved": "Plan \"{name}\" saved."
+      "planSaved": "Plan \"{name}\" saved.",
+      "planDeleted": "Plan \"{name}\" deleted."
     },
     "err": {
       "notAvailable": "The panel is not available on this server (it works only in multi-company mode).",
@@ -1212,7 +1217,9 @@
       "invalid_credentials": "Wrong username or password.",
       "platform_unauthenticated": "Please sign in again.",
       "invalid_value": "The value is not valid.",
-      "override_unknown": "This feature or limit does not exist."
+      "override_unknown": "This feature or limit does not exist.",
+      "plan_in_use": "A company is still on this plan. Move them to another plan first.",
+      "plan_protected": "The \"full\" plan cannot be deleted."
     },
     "access": {
       "title": "Features and limits of this company",

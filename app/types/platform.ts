@@ -63,6 +63,7 @@ export interface PlatformPlan {
     name: string
     features: string[]
     limits: Record<string, number | null>
+    companies: number // how many companies are on this plan
 }
 
 export interface PlatformPlans {

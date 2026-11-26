@@ -25,6 +25,24 @@ const featureLabel = (c: string) => {
 }
 const limitLabel = (c: string) => (te(`platform.limit.${permKey(c)}`) ? t(`platform.limit.${permKey(c)}`) : c)
 
+// ---- delete
+const delOpen = ref(false)
+const delPlan = ref<PlatformPlan | null>(null)
+function askDelete(p: PlatformPlan) { delPlan.value = p; delOpen.value = true }
+async function remove() {
+  if (!delPlan.value) return
+  busy.value = true
+  try {
+    await api.del(`/platform/plans/${delPlan.value.code}`)
+    notify.success(t('platform.toast.planDeleted', { name: delPlan.value.name }))
+    delOpen.value = false
+    await load()
+  } catch (e) {
+    delOpen.value = false
+    notify.error(perr.of(e))
+  } finally { busy.value = false }
+}
+
 // ---- create / edit
 const open = ref(false)
 const isNew = ref(true)
@@ -127,13 +145,24 @@ const generalError = computed(() => {
             <span>{{ max === null ? $t('platform.unlimited') : max }}</span>
           </li>
         </ul>
-        <div class="mt-4">
+        <p class="mt-3 text-xs text-slate-500">{{ $t('platform.plans.companies', { n: p.companies }) }}</p>
+        <div class="mt-3 flex flex-wrap gap-2">
           <AppButton variant="secondary" @click="ask(p)">{{ $t('common.edit') }}</AppButton>
+          <AppButton v-if="p.code !== 'full'" variant="secondary" :disabled="p.companies > 0" :title="p.companies > 0 ? $t('platform.plans.deleteBlocked') : undefined" @click="askDelete(p)">{{ $t('common.delete') }}</AppButton>
         </div>
       </section>
     </div>
 
     <p class="text-xs text-slate-500">{{ $t('platform.plans.note') }}</p>
+
+    <ConfirmDialog
+        v-model:open="delOpen"
+        :title="$t('platform.plans.deleteTitle', { name: delPlan?.name ?? '' })"
+        :message="$t('platform.plans.deleteMessage')"
+        :confirm-label="$t('common.delete')"
+        :loading="busy"
+        @confirm="remove"
+    />
 
     <AppModal v-model:open="open" :title="$t(isNew ? 'platform.plans.newTitle' : 'platform.plans.editTitle')">
       <form class="space-y-4" novalidate @submit.prevent="save">
