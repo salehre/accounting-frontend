@@ -1137,7 +1137,17 @@
       "title": "Plans",
       "subtitle": "What each plan includes.",
       "empty": "No plan has been created.",
-      "note": "Plans are made or changed with the command plan:create."
+      "note": "Create and edit plans here; a change to a plan applies to every company on it.",
+      "new": "New plan",
+      "newTitle": "Create a plan",
+      "editTitle": "Edit plan",
+      "code": "Plan code",
+      "codeHint": "2 to 30 lowercase letters, digits or \"-\"; it cannot be changed later.",
+      "name": "Plan name",
+      "features": "Features",
+      "featuresHint": "The core is always included; pick only the extra features.",
+      "limits": "Limits",
+      "badLimit": "A limit must be a whole number of 0 or more, or tick \"Unlimited\"."
     },
     "audit": {
       "title": "Change log",
@@ -1173,7 +1183,9 @@
       "planChanged": "The plan was changed.",
       "suspended": "\"{name}\" was suspended.",
       "activated": "\"{name}\" was activated.",
-      "revoked": "The key was revoked."
+      "revoked": "The key was revoked.",
+      "planCreated": "Plan \"{name}\" created.",
+      "planSaved": "Plan \"{name}\" saved."
     },
     "err": {
       "notAvailable": "The panel is not available on this server (it works only in multi-company mode).",
