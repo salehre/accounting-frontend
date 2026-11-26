@@ -145,7 +145,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
 <template>
   <div class="mx-auto max-w-6xl space-y-4">
     <NuxtLink to="/platform" class="inline-flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
-      <AppIcon name="chevron" class="!size-4 ltr:rotate-180" />{{ $t('platform.companies.title') }}
+      <AppIcon name="chevron" class="size-4! ltr:rotate-180" />{{ $t('platform.companies.title') }}
     </NuxtLink>
 
     <AppAlert v-if="loadError">{{ loadError }}</AppAlert>
@@ -214,37 +214,12 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
         </section>
       </div>
 
-      <section v-if="company.overrides.length" class="rounded-xl border border-slate-200 bg-white">
-        <div class="border-b border-slate-100 px-4 py-3">
-          <h2 class="text-sm font-semibold text-slate-900">{{ $t('platform.detail.overrides') }}</h2>
-          <p class="mt-0.5 text-xs text-slate-500">{{ $t('platform.detail.overridesNote') }}</p>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[640px] text-sm">
-            <thead class="bg-slate-50 text-xs text-slate-500">
-            <tr>
-              <th class="px-4 py-2 text-start font-medium">{{ $t('platform.detail.item') }}</th>
-              <th class="px-4 py-2 text-start font-medium">{{ $t('platform.detail.value') }}</th>
-              <th class="px-4 py-2 text-start font-medium">{{ $t('platform.detail.until') }}</th>
-              <th class="px-4 py-2 text-start font-medium">{{ $t('platform.detail.reason') }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="o in company.overrides" :key="o.kind + o.code" class="border-t border-slate-100">
-              <td class="px-4 py-2">{{ o.kind === 'feature' ? featureLabel(o.code) : limitLabel(o.code) }}</td>
-              <td class="px-4 py-2">{{ o.kind === 'feature' ? (o.enabled ? $t('platform.on') : $t('platform.off')) : (o.value === null ? $t('platform.unlimited') : o.value) }}</td>
-              <td class="px-4 py-2">{{ o.until ? day(o.until) : '—' }}</td>
-              <td class="px-4 py-2">{{ o.reason }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <CompanyAccess :company="company" @changed="took" />
 
       <section v-if="company.licenses.length" class="rounded-xl border border-slate-200 bg-white">
         <div class="border-b border-slate-100 px-4 py-3"><h2 class="text-sm font-semibold text-slate-900">{{ $t('platform.detail.licenseHistory') }}</h2></div>
         <div class="overflow-x-auto">
-          <table class="w-full min-w-[640px] text-sm">
+          <table class="w-full min-w-160 text-sm">
             <thead class="bg-slate-50 text-xs text-slate-500">
             <tr>
               <th class="px-4 py-2 text-start font-medium">{{ $t('platform.detail.key') }}</th>
@@ -274,7 +249,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
           <li v-for="a in audit" :key="a.id" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-2.5">
             <div class="min-w-0">
               <span class="font-medium text-slate-900">{{ actionLabel(a.action) }}</span>
-              <span v-if="detailsText(a)" class="ms-2 break-words text-xs text-slate-500" dir="ltr">{{ detailsText(a) }}</span>
+              <span v-if="detailsText(a)" class="ms-2 wrap-break-word text-xs text-slate-500" dir="ltr">{{ detailsText(a) }}</span>
             </div>
             <div class="whitespace-nowrap text-xs text-slate-500"><span dir="ltr">{{ a.by }}</span> · {{ dayTime(a.at) }}</div>
           </li>

@@ -1024,7 +1024,10 @@
       "reports_export": "Excel export of reports",
       "opening_balance": "Opening balance import",
       "roles_custom": "Custom roles",
-      "bank_reconciliation": "Bank reconciliation"
+      "bank_reconciliation": "Bank reconciliation",
+      "treasury": "Treasury: cheques and cheque books",
+      "treasury_vouchers": "Treasury: receipts and payments",
+      "treasury_petty": "Treasury: petty cash"
     },
     "limit": {
       "users": "Maximum active users"
@@ -1087,7 +1090,7 @@
       "createdAt": "Created",
       "plan": "Plan and features",
       "coreOnly": "Core only",
-      "planNote": "A change of plan applies at once. To change one feature or limit for this company only, use the command tenant:override.",
+      "planNote": "A plan change applies at once. To change one feature or limit for this company only, use \"Features and limits\" lower on this page.",
       "license": "License key",
       "issuedAt": "Issued {date}",
       "noLicense": "No active key.",
@@ -1207,7 +1210,30 @@
       "no_active_license": "This company has no active key.",
       "too_many_attempts": "Too many wrong attempts. Try again later.",
       "invalid_credentials": "Wrong username or password.",
-      "platform_unauthenticated": "Please sign in again."
+      "platform_unauthenticated": "Please sign in again.",
+      "invalid_value": "The value is not valid.",
+      "override_unknown": "This feature or limit does not exist."
+    },
+    "access": {
+      "title": "Features and limits of this company",
+      "note": "They come from the plan. You can switch a feature on or off, or change a limit, for this company only; every change needs a reason and can stop on a day.",
+      "special": "Special change",
+      "fromPlan": "From the plan",
+      "until": "until {date}",
+      "expired": "A special change lasted until {date} and has ended; the plan applies",
+      "turnOn": "Turn on",
+      "turnOff": "Turn off",
+      "remove": "Back to the plan",
+      "changeLimit": "Change limit",
+      "turnOnTitle": "Turn on \"{name}\"",
+      "turnOffTitle": "Turn off \"{name}\"",
+      "limitTitle": "Limit: {name}",
+      "max": "Maximum",
+      "untilLabel": "Until (optional)",
+      "untilHint": "Empty means no end.",
+      "badValue": "A limit must be a whole number of 0 or more, or tick \"Unlimited\".",
+      "saved": "Change saved.",
+      "cleared": "The company is back to its plan."
     }
   },
   "bank": {

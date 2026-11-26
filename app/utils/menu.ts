@@ -18,7 +18,7 @@ export interface MenuItem {
 /**
  * The whole menu in one place. An item is shown when the USER has the permission
  * and the COMPANY plan has the feature, the same two checks the backend makes.
- * A group is shown when at least one of its pages is allowed.
+ * A group is shown when at least one of its pages is allowed (so the treasury group can hold only the parts the plan has).
  */
 export const MENU: MenuItem[] = [
   { key: 'dashboard', to: '/', icon: 'home', ready: true },
@@ -37,13 +37,13 @@ export const MENU: MenuItem[] = [
   },
   { key: 'bank', to: '/bank', icon: 'book', permission: 'bank.read', feature: 'bank-reconciliation', ready: true },
   {
-    key: 'treasury', to: '/treasury', icon: 'book', permission: 'treasury.read', feature: 'treasury', ready: true,
+    key: 'treasury', to: '/treasury', icon: 'book', permission: 'treasury.read', ready: true,
     children: [
-      { label: 'treasury.cheques', to: '/treasury' },
-      { label: 'treasury.books.title', to: '/treasury/books' },
-      { label: 'treasury.vouchers.title', to: '/treasury/vouchers' },
-      { label: 'treasury.petty.title', to: '/treasury/petty' },
-      { label: 'treasury.settings.title', to: '/treasury/settings', permission: 'treasury.manage' },
+      { label: 'treasury.cheques', to: '/treasury', feature: 'treasury' },
+      { label: 'treasury.books.title', to: '/treasury/books', feature: 'treasury' },
+      { label: 'treasury.vouchers.title', to: '/treasury/vouchers', feature: 'treasury.vouchers' },
+      { label: 'treasury.petty.title', to: '/treasury/petty', feature: 'treasury.petty' },
+      { label: 'treasury.settings.title', to: '/treasury/settings', permission: 'treasury.manage', feature: 'treasury' },
     ],
   },
   { key: 'fiscalYears', to: '/fiscal-years', icon: 'calendar', permission: 'entries.read', ready: true },
