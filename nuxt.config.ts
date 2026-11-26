@@ -35,7 +35,7 @@ export default defineNuxtConfig({
 
   i18n: {
     defaultLocale: 'fa',
-    strategy: 'no_prefix', // the language is a setting, not part of the address
+    strategy: 'no_prefix', // the language is a settings, not part of the address
     locales: [
       { code: 'fa', language: 'fa-IR', name: 'فارسی', dir: 'rtl', file: 'fa.json' },
       { code: 'en', language: 'en-US', name: 'English', dir: 'ltr', file: 'en.json' },
