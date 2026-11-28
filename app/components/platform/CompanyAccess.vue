@@ -40,16 +40,19 @@ const limits = computed(() => Object.keys(catalog.value.limits).map((code) => {
 const open = ref(false)
 const busy = ref(false)
 const error = ref<unknown>(null)
+const fe = useFieldErrors()
 const form = reactive({ kind: 'feature' as 'feature' | 'limit', code: '', enabled: true, unlimited: false, value: '', until: '', reason: '' })
 
 function askFeature(code: string, enabled: boolean) {
   Object.assign(form, { kind: 'feature', code, enabled, unlimited: false, value: '', until: '', reason: '' })
   error.value = null
+  fe.clear()
   open.value = true
 }
 function askLimit(code: string, max: number | null) {
   Object.assign(form, { kind: 'limit', code, enabled: true, unlimited: max === null, value: max === null ? '' : String(max), until: '', reason: '' })
   error.value = null
+  fe.clear()
   open.value = true
 }
 
@@ -57,21 +60,27 @@ const title = computed(() => (form.kind === 'feature'
     ? t(form.enabled ? 'platform.access.turnOnTitle' : 'platform.access.turnOffTitle', { name: featureLabel(form.code) })
     : t('platform.access.limitTitle', { name: limitLabel(form.code) })))
 
+watch(() => form.value, () => fe.drop('value'))
+watch(() => form.unlimited, () => fe.drop('value'))
+watch(() => form.reason, () => fe.drop('reason'))
+
 async function save() {
   error.value = null
+  fe.clear()
   const body: Record<string, unknown> = { until: form.until || null, reason: form.reason.trim() }
+  // the same rules as the server: nothing is sent until every one of them is met
+  if (form.reason.trim().length < 5) fe.fail('reason', t('platform.check.reasonShort', { n: 5 }))
+  else if (form.reason.trim().length > 500) fe.fail('reason', t('platform.check.reasonLong', { n: 500 }))
   if (form.kind === 'feature') {
     body.enabled = form.enabled
   } else if (form.unlimited) {
     body.value = null
   } else {
     const n = Number(normalizeDigits(form.value))
-    if (form.value.trim() === '' || !Number.isInteger(n) || n < 0) {
-      error.value = { _local: t('platform.access.badValue') }
-      return
-    }
-    body.value = n
+    if (form.value.trim() === '' || !Number.isInteger(n) || n < 0) fe.fail('value', t('platform.access.badValue'))
+    else body.value = n
   }
+  if (!fe.ok()) return
   busy.value = true
   try {
     emit('changed', await api.put<PlatformCompanyDetail>(`/platform/companies/${props.company.code}/overrides/${form.code}`, body))
@@ -88,11 +97,9 @@ async function clear(code: string) {
   } catch (e) { notify.error(perr.of(e)) } finally { busy.value = false }
 }
 
-const localError = computed(() => (error.value && typeof error.value === 'object' && '_local' in (error.value as object) ? (error.value as { _local: string })._local : null))
-const fieldError = (name: string) => (error.value && !localError.value ? perr.field(error.value, name) : null)
+const fieldError = (name: string) => fe.errs.value[name] ?? (error.value ? perr.field(error.value, name) : null)
 const generalError = computed(() => {
   if (!error.value) return null
-  if (localError.value) return localError.value
   for (const f of ['enabled', 'value', 'until', 'reason']) if (perr.field(error.value, f)) return null
   return perr.of(error.value)
 })

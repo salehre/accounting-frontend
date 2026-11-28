@@ -56,12 +56,22 @@ function startNew() {
   errs.value = {}
   open.value = true
 }
-const canSave = computed(() => name.value.trim() !== '' && accountId.value !== null && !!ceiling.value)
+watch([name, accountId, custodianId, ceiling], () => { errs.value = {} })
+
+// the same rules as the server: nothing is sent until every one of them is met
+function check(): boolean {
+  const e: Record<string, string> = {}
+  if (name.value.trim() === '') e.name = t('treasury.check.nameRequired')
+  if (accountId.value === null) e.fundAccountId = t('treasury.check.accountRequired')
+  if (!ceiling.value || ceiling.value <= 0) e.ceiling = t('treasury.check.ceilingRequired')
+  errs.value = e
+  return Object.keys(e).length === 0
+}
 
 async function save() {
-  if (!canSave.value) return
-  busy.value = true
   formError.value = null
+  if (!check()) return
+  busy.value = true
   errs.value = {}
   try {
     const f = await api.post<PettyFund>('/petty-funds', {
@@ -155,7 +165,7 @@ async function save() {
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="open = false">{{ $t('common.cancel') }}</AppButton>
-        <AppButton :loading="busy" :disabled="!canSave" @click="save">{{ $t('common.save') }}</AppButton>
+        <AppButton :loading="busy" @click="save">{{ $t('common.save') }}</AppButton>
       </template>
     </AppModal>
   </div>

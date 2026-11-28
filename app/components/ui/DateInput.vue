@@ -89,7 +89,7 @@ const box = 'block w-full rounded-lg border bg-white py-2.5 ps-10 pe-9 text-sm s
         <AppIcon name="x" />
       </button>
 
-      <Picker v-if="!disabled" :model-value="model" type="date" :locale="jalali ? 'fa' : 'en'" simple :show-now-btn="true" color="#4f46e5"
+      <Picker v-if="!disabled" :model-value="model" type="date" :locale="jalali ? 'fa' : 'en'" auto-submit :show-now-btn="true" color="#4f46e5"
               format="YYYY-MM-DD" :display-format="jalali ? 'jYYYY/jMM/jDD' : 'YYYY-MM-DD'" :min="min" :max="max"
               :custom-input="`#${id}`" append-to="body" :show="open" @open="open = true" @close="open = false" @update:model-value="model = ($event as string) || ''" />
     </div>

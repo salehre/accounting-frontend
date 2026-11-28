@@ -60,10 +60,14 @@ function startClose() {
   modal.value = 'close'
 }
 
+watch(reason, () => { reasonError.value = null })
+
 async function submit() {
-  busy.value = true
   formError.value = null
   reasonError.value = null
+  // the same rule as the server: nothing is sent until it is met
+  if (modal.value === 'void' && reason.value.trim().length < 3) { reasonError.value = t('treasury.check.voidReasonShort'); return }
+  busy.value = true
   try {
     if (modal.value === 'void') {
       book.value = await api.post<ChequeBookDetail>(`/cheque-books/${id.value}/leaves/${leaf.value!.id}/void`, { reason: reason.value.trim() })
@@ -147,7 +151,7 @@ async function submit() {
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="modal = null">{{ $t('common.cancel') }}</AppButton>
-        <AppButton variant="danger" :loading="busy" :disabled="modal === 'void' && reason.trim().length < 3" @click="submit">{{ $t('treasury.petty.confirm') }}</AppButton>
+        <AppButton variant="danger" :loading="busy" @click="submit">{{ $t('treasury.petty.confirm') }}</AppButton>
       </template>
     </AppModal>
   </div>

@@ -18,7 +18,7 @@ watch(open, (v) => { if (v) { reason.value = ''; error.value = null; reasonError
 async function submit() {
   error.value = null
   reasonError.value = null
-  if (!reason.value.trim()) { reasonError.value = t('yearEnd.reasonShort'); return }
+  if (reason.value.trim().length < 10) { reasonError.value = t('yearEnd.reasonShort'); return }
   busy.value = true
   try {
     await api.post(`/fiscal-years/${props.fiscalYearId}/year-end/reverse`, { reason: reason.value.trim() })

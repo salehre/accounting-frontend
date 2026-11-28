@@ -62,13 +62,26 @@ function startNew() {
   open.value = true
 }
 
-const canSave = computed(() => name.value.trim() !== '' && bankName.value.trim() !== '' && accountId.value !== null
-    && /^\d+$/.test(firstNumber.value) && /^\d+$/.test(leafCount.value) && Number(leafCount.value) >= 1 && Number(leafCount.value) <= 200)
+watch([name, bankName, accountId, firstNumber, leafCount], () => { errs.value = {} })
+
+// the same rules as the server: nothing is sent until every one of them is met
+function check(): boolean {
+  const e: Record<string, string> = {}
+  firstNumber.value = normalizeDigits(firstNumber.value.trim())
+  leafCount.value = normalizeDigits(leafCount.value.trim())
+  if (name.value.trim() === '') e.name = t('treasury.check.nameRequired')
+  if (bankName.value.trim() === '') e.bankName = t('treasury.check.bankNameRequired')
+  if (accountId.value === null) e.bankAccountId = t('treasury.check.bankRequired')
+  if (!/^\d+$/.test(firstNumber.value)) e.firstNumber = t('treasury.check.firstNumber')
+  if (!/^\d+$/.test(leafCount.value) || Number(leafCount.value) < 1 || Number(leafCount.value) > 200) e.leafCount = t('treasury.check.leafCount')
+  errs.value = e
+  return Object.keys(e).length === 0
+}
 
 async function save() {
-  if (!canSave.value) return
-  busy.value = true
   formError.value = null
+  if (!check()) return
+  busy.value = true
   errs.value = {}
   try {
     const b = await api.post<ChequeBook>('/cheque-books', {
@@ -160,7 +173,7 @@ async function save() {
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="open = false">{{ $t('common.cancel') }}</AppButton>
-        <AppButton :loading="busy" :disabled="!canSave" @click="save">{{ $t('common.save') }}</AppButton>
+        <AppButton :loading="busy" @click="save">{{ $t('common.save') }}</AppButton>
       </template>
     </AppModal>
   </div>

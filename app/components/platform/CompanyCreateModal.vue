@@ -24,6 +24,7 @@ const adminPassword = ref('')
 
 const saving = ref(false)
 const error = ref<unknown>(null)
+const fe = useFieldErrors()
 const result = ref<PlatformCreated | null>(null)
 
 const planOptions = computed(() => [
@@ -35,10 +36,17 @@ watch(open, (v) => {
   if (!v) return
   code.value = ''; name.value = ''; endsAt.value = ''; plan.value = ''
   withAdmin.value = true; adminUsername.value = 'admin'; adminFullName.value = ''; adminPassword.value = ''
-  error.value = null; result.value = null
+  error.value = null; result.value = null; fe.clear()
 })
 
-const f = (field: string) => (error.value ? perr.field(error.value, field) : null)
+watch(code, () => fe.drop('code'))
+watch(name, () => fe.drop('name'))
+watch(adminUsername, () => fe.drop('admin.username'))
+watch(adminFullName, () => fe.drop('admin.fullName'))
+watch(adminPassword, () => fe.drop('admin.password'))
+watch(withAdmin, () => { fe.drop('admin.username'); fe.drop('admin.fullName'); fe.drop('admin.password') })
+
+const f = (field: string) => fe.errs.value[field] ?? (error.value ? perr.field(error.value, field) : null)
 const topError = computed(() => {
   if (!error.value) return null
   const e = toApiError(error.value)
@@ -46,9 +54,33 @@ const topError = computed(() => {
   return Object.keys(e.errors).length > 0 ? null : perr.of(error.value)
 })
 
+// the same rules as the server: nothing is sent until every one of them is met
+const COMPANY_CODE = /^[a-z0-9][a-z0-9-]{1,29}$/
+function check(): boolean {
+  fe.clear()
+  const c = code.value.trim().toLowerCase()
+  if (c === '') fe.fail('code', t('platform.check.codeRequired'))
+  else if (!COMPANY_CODE.test(c)) fe.fail('code', t('platform.check.companyCode'))
+  const nm = name.value.trim()
+  if (nm === '') fe.fail('name', t('platform.check.nameRequired'))
+  else if (nm.length > 255) fe.fail('name', t('platform.check.nameLong', { n: 255 }))
+  if (withAdmin.value) {
+    const u = adminUsername.value.trim()
+    if (u === '') fe.fail('admin.username', t('platform.check.usernameRequired'))
+    else if (u.length > 60) fe.fail('admin.username', t('platform.check.usernameLong', { n: 60 }))
+    if (adminFullName.value.trim() === '') fe.fail('admin.fullName', t('platform.check.fullNameRequired'))
+    if (adminPassword.value !== '') {
+      if (adminPassword.value.length < 10) fe.fail('admin.password', t('platform.check.passwordShort', { n: 10 }))
+      else if (byteLength(adminPassword.value) > 72) fe.fail('admin.password', t('platform.check.passwordLong'))
+    }
+  }
+  return fe.ok()
+}
+
 async function submit() {
-  saving.value = true
   error.value = null
+  if (!check()) return
+  saving.value = true
   try {
     const body: Record<string, unknown> = { code: code.value.trim().toLowerCase(), name: name.value.trim() }
     if (endsAt.value) body.endsAt = endsAt.value

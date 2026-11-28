@@ -54,13 +54,18 @@ const renewOpen = ref(false)
 const renameOpen = ref(false)
 const renameName = ref('')
 const renameError = ref<unknown>(null)
+const renameMsg = ref<string | null>(null)
 const busy = ref(false)
-function askRename() { renameName.value = company.value?.name ?? ''; renameError.value = null; renameOpen.value = true }
+watch(renameName, () => { renameMsg.value = null })
+function askRename() { renameName.value = company.value?.name ?? ''; renameError.value = null; renameMsg.value = null; renameOpen.value = true }
 async function rename() {
-  busy.value = true
   renameError.value = null
+  const nm = renameName.value.trim()
+  if (nm === '') { renameMsg.value = t('platform.check.nameRequired'); return }
+  if (nm.length > 255) { renameMsg.value = t('platform.check.nameLong', { n: 255 }); return }
+  busy.value = true
   try {
-    took(await api.patch<PlatformCompanyDetail>(`/platform/companies/${code.value}`, { name: renameName.value }))
+    took(await api.patch<PlatformCompanyDetail>(`/platform/companies/${code.value}`, { name: renameName.value.trim() }))
     notify.success(t('platform.toast.renamed'))
     renameOpen.value = false
   } catch (e) { renameError.value = e } finally { busy.value = false }
@@ -89,12 +94,17 @@ async function savePlan() {
 const suspendOpen = ref(false)
 const suspendReason = ref('')
 const suspendError = ref<unknown>(null)
-function askSuspend() { suspendReason.value = ''; suspendError.value = null; suspendOpen.value = true }
+const suspendMsg = ref<string | null>(null)
+watch(suspendReason, () => { suspendMsg.value = null })
+function askSuspend() { suspendReason.value = ''; suspendError.value = null; suspendMsg.value = null; suspendOpen.value = true }
 async function suspend() {
-  busy.value = true
   suspendError.value = null
+  const r = suspendReason.value.trim()
+  if (r.length < 5) { suspendMsg.value = t('platform.check.reasonShort', { n: 5 }); return }
+  if (r.length > 500) { suspendMsg.value = t('platform.check.reasonLong', { n: 500 }); return }
+  busy.value = true
   try {
-    took(await api.post<PlatformCompanyDetail>(`/platform/companies/${code.value}/suspend`, { reason: suspendReason.value }))
+    took(await api.post<PlatformCompanyDetail>(`/platform/companies/${code.value}/suspend`, { reason: suspendReason.value.trim() }))
     notify.warning(t('platform.toast.suspended', { name: company.value?.name ?? '' }))
     suspendOpen.value = false
   } catch (e) { suspendError.value = e } finally { busy.value = false }
@@ -261,7 +271,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
 
       <AppModal v-model:open="renameOpen" :title="$t('platform.detail.rename')">
         <form novalidate @submit.prevent="rename">
-          <AppInput v-model="renameName" :label="$t('platform.create.name')" :error="renameError ? perr.field(renameError, 'name') : null" autofocus />
+          <AppInput v-model="renameName" :label="$t('platform.create.name')" :error="renameMsg ?? (renameError ? perr.field(renameError, 'name') : null)" autofocus />
           <AppAlert v-if="renameError && !perr.field(renameError, 'name')" class="mt-3">{{ perr.of(renameError) }}</AppAlert>
         </form>
         <template #footer>
@@ -285,7 +295,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
       <AppModal v-model:open="suspendOpen" :title="$t('platform.detail.suspendTitle', { name: company.name })">
         <form class="space-y-3" novalidate @submit.prevent="suspend">
           <p class="text-sm text-slate-700">{{ $t('platform.detail.suspendMessage') }}</p>
-          <AppInput v-model="suspendReason" :label="$t('platform.detail.reason')" :hint="$t('platform.detail.reasonHint')" :error="suspendError ? perr.field(suspendError, 'reason') : null" autofocus />
+          <AppInput v-model="suspendReason" :label="$t('platform.detail.reason')" :hint="$t('platform.detail.reasonHint')" :error="suspendMsg ?? (suspendError ? perr.field(suspendError, 'reason') : null)" autofocus />
           <AppAlert v-if="suspendError && !perr.field(suspendError, 'reason')">{{ perr.of(suspendError) }}</AppAlert>
         </form>
         <template #footer>

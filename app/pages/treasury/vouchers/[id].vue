@@ -46,12 +46,21 @@ function startCancel() {
   errs.value = {}
   open.value = true
 }
-const canCancel = computed(() => reason.value.trim().length >= 5 && date.value !== '')
+watch([reason, date], () => { errs.value = {} })
+
+// the same rules as the server: nothing is sent until every one of them is met
+function check(): boolean {
+  const e: Record<string, string> = {}
+  if (reason.value.trim().length < 5) e.reason = t('treasury.check.reasonShort')
+  if (date.value === '') e.date = t('treasury.check.dateRequired')
+  errs.value = e
+  return Object.keys(e).length === 0
+}
 
 async function cancel() {
-  if (!canCancel.value) return
-  busy.value = true
   formError.value = null
+  if (!check()) return
+  busy.value = true
   errs.value = {}
   try {
     voucher.value = await api.post<VoucherDetail>(`/treasury-vouchers/${id.value}/cancel`, { reason: reason.value.trim(), date: date.value })
@@ -138,7 +147,7 @@ async function cancel() {
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="open = false">{{ $t('common.cancel') }}</AppButton>
-        <AppButton variant="danger" :loading="busy" :disabled="!canCancel" @click="cancel">{{ $t('treasury.vouchers.cancel') }}</AppButton>
+        <AppButton variant="danger" :loading="busy" @click="cancel">{{ $t('treasury.vouchers.cancel') }}</AppButton>
       </template>
     </AppModal>
   </div>

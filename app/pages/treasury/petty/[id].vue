@@ -104,21 +104,36 @@ function start(m: Exclude<Modal, null>, s?: PettySettlement) {
 
 const titleKey = computed(() => ({ fund: 'fundTitle', return: 'returnTitle', expense: 'expenseTitle', settle: 'settleTitle', cancelSettlement: 'cancelSettlementTitle', close: 'closeTitle', ceiling: 'ceilingTitle' }[modal.value ?? 'fund']))
 
-const canSubmit = computed(() => {
-  switch (modal.value) {
-    case 'fund': case 'return': return !!amount.value && sourceId.value !== null && date.value !== ''
-    case 'expense': return !!amount.value && expAccountId.value !== null && description.value.trim() !== '' && date.value !== ''
-    case 'settle': return sourceId.value !== null && date.value !== '' && settleTotal.value > 0
-    case 'cancelSettlement': return reason.value.trim().length >= 5
-    case 'ceiling': return !!ceiling.value
-    default: return true
+watch([date, amount, sourceId, expAccountId, description, reason, ceiling], () => { errs.value = {} })
+
+// the same rules as the server: nothing is sent until every one of them is met
+function check(): boolean {
+  const e: Record<string, string> = {}
+  const m = modal.value
+  if (m === 'fund' || m === 'return' || m === 'expense' || m === 'settle' || m === 'cancelSettlement') {
+    if (date.value === '') e.date = t('treasury.check.dateRequired')
   }
-})
+  if (m === 'fund' || m === 'return' || m === 'expense') {
+    if (!amount.value || amount.value <= 0) e.amount = t('treasury.check.amountRequired')
+  }
+  if (m === 'fund' || m === 'return' || m === 'settle') {
+    if (sourceId.value === null) e.sourceAccountId = t('treasury.check.sourceRequired')
+  }
+  if (m === 'expense') {
+    if (expAccountId.value === null) e.accountId = t('treasury.check.accountRequired')
+    if (description.value.trim() === '') e.description = t('treasury.check.descriptionRequired')
+  }
+  if (m === 'settle' && settleTotal.value <= 0) e.expenseIds = t('treasury.check.settleNothing')
+  if (m === 'cancelSettlement' && reason.value.trim().length < 5) e.reason = t('treasury.check.reasonShort')
+  if (m === 'ceiling' && (!ceiling.value || ceiling.value <= 0)) e.ceiling = t('treasury.check.ceilingRequired')
+  errs.value = e
+  return Object.keys(e).length === 0
+}
 
 async function submit() {
-  if (!canSubmit.value || !fund.value) return
-  busy.value = true
   formError.value = null
+  if (!fund.value || !check()) return
+  busy.value = true
   errs.value = {}
   const base = `/petty-funds/${id.value}`
   const source = { sourceAccountId: Number(sourceId.value), sourceDetailId: sourceDetailId.value === null ? null : Number(sourceDetailId.value) }
@@ -239,7 +254,7 @@ async function cancelExpense(x: PettyExpense) {
         </div>
         <p v-if="!expenses.length" class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noExpenses') }}</p>
         <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-          <table class="w-full min-w-160 text-sm">
+          <table class="w-full min-w-[640px] text-sm">
             <thead class="bg-slate-50 text-xs text-slate-500">
             <tr>
               <th class="w-10 px-3 py-2.5"><input v-if="canManage && active && openRows.length" type="checkbox" :checked="allSelected" :aria-label="$t('treasury.petty.selectAll')" @change="toggleAll"></th>
@@ -275,7 +290,7 @@ async function cancelExpense(x: PettyExpense) {
       <!-- settlements -->
       <section v-else-if="tab === 'settlements'" class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <p v-if="!fund.settlements.length" class="p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noSettlements') }}</p>
-        <table v-else class="w-full min-w-140 text-sm">
+        <table v-else class="w-full min-w-[560px] text-sm">
           <thead class="bg-slate-50 text-xs text-slate-500">
           <tr>
             <th class="px-3 py-2.5 text-start font-medium">{{ $t('treasury.petty.settlementNo') }}</th>
@@ -310,7 +325,7 @@ async function cancelExpense(x: PettyExpense) {
       <!-- movements -->
       <section v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <p v-if="!fund.movements.length" class="p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noMovements') }}</p>
-        <table v-else class="w-full min-w-130 text-sm">
+        <table v-else class="w-full min-w-[520px] text-sm">
           <tbody class="divide-y divide-slate-100">
           <tr v-for="m in fund.movements" :key="m.id">
             <td class="px-3 py-2.5" dir="auto">{{ fmt.date(m.date) }}</td>
@@ -406,7 +421,7 @@ async function cancelExpense(x: PettyExpense) {
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="modal = null">{{ $t('common.cancel') }}</AppButton>
-        <AppButton :variant="modal === 'close' || modal === 'cancelSettlement' ? 'danger' : 'primary'" :loading="busy" :disabled="!canSubmit" @click="submit">{{ $t('treasury.petty.confirm') }}</AppButton>
+        <AppButton :variant="modal === 'close' || modal === 'cancelSettlement' ? 'danger' : 'primary'" :loading="busy" @click="submit">{{ $t('treasury.petty.confirm') }}</AppButton>
       </template>
     </AppModal>
   </div>

@@ -18,6 +18,7 @@ const months = ref('12')
 const endsAt = ref('')
 const saving = ref(false)
 const error = ref<unknown>(null)
+const fe = useFieldErrors()
 
 const modeOptions = computed(() => [
   { value: 'months', label: t('platform.renew.byMonths') },
@@ -27,14 +28,20 @@ const monthOptions = computed(() => [1, 2, 3, 6, 12, 24, 36].map((n) => ({ value
 
 watch(open, (v) => {
   if (!v) return
-  mode.value = 'months'; months.value = '12'; endsAt.value = ''; error.value = null
+  mode.value = 'months'; months.value = '12'; endsAt.value = ''; error.value = null; fe.clear()
 })
+watch(endsAt, () => fe.drop('endsAt'))
+watch(mode, () => fe.clear())
 
-const f = (field: string) => (error.value ? perr.field(error.value, field) : null)
+const f = (field: string) => fe.errs.value[field] ?? (error.value ? perr.field(error.value, field) : null)
 
 async function submit() {
-  saving.value = true
   error.value = null
+  fe.clear()
+  if (mode.value === 'date' && !endsAt.value) { fe.fail('endsAt', t('platform.check.dateRequired')); return }
+  const m = Number(months.value)
+  if (mode.value === 'months' && (!Number.isInteger(m) || m < 1 || m > 60)) { fe.fail('months', t('platform.check.monthsRange')); return }
+  saving.value = true
   try {
     const body = mode.value === 'months' ? { months: Number(months.value) } : { endsAt: endsAt.value }
     const res = await api.post<PlatformCompanyDetail>(`/platform/companies/${props.company.code}/renew`, body)
@@ -65,7 +72,7 @@ async function submit() {
 
     <template #footer>
       <AppButton variant="secondary" @click="open = false">{{ $t('common.cancel') }}</AppButton>
-      <AppButton :loading="saving" :disabled="mode === 'date' && !endsAt" @click="submit">{{ $t('platform.renew.submit') }}</AppButton>
+      <AppButton :loading="saving" @click="submit">{{ $t('platform.renew.submit') }}</AppButton>
     </template>
   </AppModal>
 </template>

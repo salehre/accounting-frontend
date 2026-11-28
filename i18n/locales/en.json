@@ -834,7 +834,7 @@
     "reverseWarning": "A reversing entry is posted for each of the four entries. Every fiscal year involved must be open.",
     "reason": "Reason",
     "reasonHint": "The reason is saved in the audit log.",
-    "reasonShort": "Write the reason.",
+    "reasonShort": "The reason must be at least 10 characters.",
     "blockers": {
       "title": "Blockers",
       "settings_missing": "The technical accounts (profit and loss, retained earnings, closing, opening) are not chosen yet: {fields}.",
@@ -999,6 +999,22 @@
     "home": "Back to the home page"
   },
   "platform": {
+    "check": {
+      "codeRequired": "Enter the code.",
+      "companyCode": "The code must be 2 to 30 lowercase English letters, digits or \"-\", starting with a letter or digit.",
+      "planCode": "The plan code must be 2 to 30 lowercase English letters, digits or \"-\", starting with a letter or digit.",
+      "nameRequired": "Enter the name.",
+      "nameLong": "The name must not be longer than {n} characters.",
+      "usernameRequired": "Enter the administrator's user name.",
+      "usernameLong": "The user name must not be longer than {n} characters.",
+      "fullNameRequired": "Enter the administrator's full name.",
+      "passwordShort": "The password must be at least {n} characters.",
+      "passwordLong": "The password is too long (at most 72 bytes).",
+      "dateRequired": "Choose the end date.",
+      "monthsRange": "The period must be between 1 and 60 months.",
+      "reasonShort": "The reason must be at least {n} characters.",
+      "reasonLong": "The reason must not be longer than {n} characters."
+    },
     "title": "Platform panel",
     "noPlan": "No plan",
     "noPlanNote": "With no plan every feature is on and nothing is limited.",
@@ -1365,6 +1381,22 @@
     }
   },
   "treasury": {
+    "check": {
+      "nameRequired": "Enter the name.",
+      "accountRequired": "Choose the account.",
+      "ceilingRequired": "Enter the ceiling as a number greater than zero.",
+      "bankNameRequired": "Enter the bank name.",
+      "bankRequired": "Choose the bank account.",
+      "firstNumber": "Enter the number of the first leaf, digits only.",
+      "leafCount": "The number of leaves must be between 1 and 200.",
+      "dateRequired": "Choose the date.",
+      "amountRequired": "Enter the amount as a number greater than zero.",
+      "sourceRequired": "Choose the bank or cash account.",
+      "descriptionRequired": "Enter the description.",
+      "settleNothing": "There are no expenses to settle.",
+      "reasonShort": "The reason must be at least 5 characters.",
+      "voidReasonShort": "The reason must be at least 3 characters."
+    },
     "title": "Treasury",
     "cheques": "Cheques",
     "subtitle": "Cheques received and issued, their status and due dates. Every change of status makes its own journal entry.",

@@ -61,12 +61,22 @@ function start(a: ChequeAction) {
 
 const needsBank = computed(() => action.value === 'deposit')
 const needsTarget = computed(() => action.value === 'endorse')
-const canSend = computed(() => date.value !== '' && (!needsBank.value || bankAccountId.value !== null) && (!needsTarget.value || accountId.value !== null))
+watch([date, bankAccountId, accountId], () => { errs.value = {} })
+
+// the same rules as the server: nothing is sent until every one of them is met
+function check(): boolean {
+  const e: Record<string, string> = {}
+  if (date.value === '') e.date = t('treasury.check.dateRequired')
+  if (needsBank.value && bankAccountId.value === null) e.bankAccountId = t('treasury.check.bankRequired')
+  if (needsTarget.value && accountId.value === null) e.accountId = t('treasury.check.accountRequired')
+  errs.value = e
+  return Object.keys(e).length === 0
+}
 
 async function send() {
-  if (!action.value || !canSend.value) return
-  busy.value = true
   formError.value = null
+  if (!action.value || !check()) return
+  busy.value = true
   errs.value = {}
   try {
     cheque.value = await api.post<ChequeDetail>(`/cheques/${id.value}/${action.value}`, {
@@ -191,7 +201,7 @@ const danger = (a: ChequeAction) => a === 'cancel' || a === 'return' || a === 'b
       </div>
       <template #footer>
         <AppButton variant="secondary" @click="open = false">{{ $t('common.cancel') }}</AppButton>
-        <AppButton :variant="action && danger(action) ? 'danger' : 'primary'" :loading="busy" :disabled="!canSend" @click="send">{{ $t('treasury.confirm') }}</AppButton>
+        <AppButton :variant="action && danger(action) ? 'danger' : 'primary'" :loading="busy" @click="send">{{ $t('treasury.confirm') }}</AppButton>
       </template>
     </AppModal>
   </div>

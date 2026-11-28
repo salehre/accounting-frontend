@@ -48,6 +48,7 @@ const open = ref(false)
 const isNew = ref(true)
 const busy = ref(false)
 const error = ref<unknown>(null)
+const fe = useFieldErrors()
 const form = reactive({
   code: '',
   name: '',
@@ -61,6 +62,7 @@ const limitCodes = computed(() => Object.keys(data.value?.catalog.limits ?? {}))
 function ask(plan: PlatformPlan | null) {
   isNew.value = plan === null
   error.value = null
+  fe.clear()
   form.code = plan?.code ?? ''
   form.name = plan?.name ?? ''
   form.features = [...(plan?.features ?? [])]
@@ -80,22 +82,39 @@ function toggle(code: string) {
   else form.features.push(code)
 }
 
-async function save() {
-  busy.value = true
-  error.value = null
+// the same rules as the server: nothing is sent until every one of them is met
+const PLAN_CODE = /^[a-z0-9][a-z0-9-]{1,29}$/
+watch(() => form.code, () => fe.drop('code'))
+watch(() => form.name, () => fe.drop('name'))
+watch(() => form.limits, () => fe.drop('limits'), { deep: true })
+
+function check(): Record<string, number | null> | null {
+  fe.clear()
+  if (isNew.value) {
+    const c = form.code.trim().toLowerCase()
+    if (c === '') fe.fail('code', t('platform.check.codeRequired'))
+    else if (!PLAN_CODE.test(c)) fe.fail('code', t('platform.check.planCode'))
+  }
+  const nm = form.name.trim()
+  if (nm === '') fe.fail('name', t('platform.check.nameRequired'))
+  else if (nm.length > 100) fe.fail('name', t('platform.check.nameLong', { n: 100 }))
   const limits: Record<string, number | null> = {}
   for (const code of limitCodes.value) {
     const l = form.limits[code]
     if (!l) continue
     if (l.unlimited) { limits[code] = null; continue }
     const n = Number(normalizeDigits(l.value))
-    if (l.value.trim() === '' || !Number.isInteger(n) || n < 0) {
-      error.value = { _local: t('platform.plans.badLimit') }
-      busy.value = false
-      return
-    }
+    if (l.value.trim() === '' || !Number.isInteger(n) || n < 0) { fe.fail('limits', t('platform.plans.badLimit')); continue }
     limits[code] = n
   }
+  return fe.ok() ? limits : null
+}
+
+async function save() {
+  error.value = null
+  const limits = check()
+  if (limits === null) return
+  busy.value = true
   try {
     const code = form.code.trim().toLowerCase()
     await api.put(`/platform/plans/${code}`, { name: form.name.trim(), features: form.features, limits })
@@ -105,11 +124,9 @@ async function save() {
   } catch (e) { error.value = e } finally { busy.value = false }
 }
 
-const localError = computed(() => (error.value && typeof error.value === 'object' && '_local' in (error.value as object) ? (error.value as { _local: string })._local : null))
-const fieldError = (name: string) => (error.value && !localError.value ? perr.field(error.value, name) : null)
+const fieldError = (name: string) => fe.errs.value[name] ?? (error.value ? perr.field(error.value, name) : null)
 const generalError = computed(() => {
   if (!error.value) return null
-  if (localError.value) return localError.value
   for (const f of ['code', 'name', 'features', 'limits']) if (perr.field(error.value, f)) return null
   return perr.of(error.value)
 })
