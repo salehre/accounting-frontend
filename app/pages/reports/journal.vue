@@ -174,7 +174,7 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
         </article>
       </div>
 
-      <div v-if="nextCursor" class="text-center">
+      <div v-if="nextCursor" class="flex justify-end">
         <AppButton variant="secondary" :loading="moreLoading" @click="more">{{ $t('reports.loadMore') }}</AppButton>
       </div>
     </template>

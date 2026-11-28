@@ -73,10 +73,10 @@ async function change() {
         <AppInput v-model="current" :label="$t('password.current')" type="password" ltr autocomplete="current-password" :error="errs.current" />
         <AppInput v-model="next" :label="$t('password.new')" type="password" ltr autocomplete="new-password" :hint="$t('password.rule', { n: MIN })" :error="errs.next" />
         <AppInput v-model="again" :label="$t('password.repeat')" type="password" ltr autocomplete="new-password" :error="errs.again" />
-        <AppButton type="submit" :loading="loading">{{ $t('common.save') }}</AppButton>
+        <div class="flex justify-end"><AppButton type="submit" :loading="loading">{{ $t('common.save') }}</AppButton></div>
       </form>
     </section>
 
-    <AppButton variant="secondary" @click="session.logout()"><AppIcon name="logout" />{{ $t('auth.logout') }}</AppButton>
+    <div class="flex justify-end"><AppButton variant="secondary" @click="session.logout()"><AppIcon name="logout" />{{ $t('auth.logout') }}</AppButton></div>
   </div>
 </template>

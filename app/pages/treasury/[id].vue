@@ -127,7 +127,7 @@ const danger = (a: ChequeAction) => a === 'cancel' || a === 'return' || a === 'b
           </h1>
           <p class="mt-1 text-sm text-slate-600">{{ $t(`treasury.direction.${cheque.direction}`) }} · {{ cheque.bankName }}<template v-if="cheque.branch"> · {{ cheque.branch }}</template></p>
         </div>
-        <div v-if="canManage && cheque.actions.length" class="flex flex-wrap gap-2">
+        <div v-if="canManage && cheque.actions.length" class="flex flex-wrap justify-end gap-2">
           <AppButton v-for="a in cheque.actions" :key="a" :variant="danger(a) ? 'secondary' : 'primary'" @click="start(a)">{{ $t(`treasury.action.${a}`) }}</AppButton>
         </div>
       </div>

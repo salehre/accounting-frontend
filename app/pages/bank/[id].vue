@@ -147,7 +147,7 @@ const stateClass = { open: 'bg-amber-100 text-amber-800', matched: 'bg-emerald-1
           </h1>
           <p class="mt-1 text-sm text-slate-600" dir="auto">{{ fmt.date(statement.dateFrom) }} – {{ fmt.date(statement.dateTo) }}</p>
         </div>
-        <div v-if="session.can('bank.manage') && !session.readOnly" class="flex flex-wrap gap-2">
+        <div v-if="session.can('bank.manage') && !session.readOnly" class="flex flex-wrap justify-end gap-2">
           <template v-if="statement.status === 'open'">
             <AppButton variant="secondary" :loading="busy" @click="autoMatch">{{ $t('bank.auto') }}</AppButton>
             <AppButton :disabled="!canFinish || busy" @click="confirmFinish = true">{{ $t('bank.finish') }}</AppButton>
@@ -168,7 +168,7 @@ const stateClass = { open: 'bg-amber-100 text-amber-800', matched: 'bg-emerald-1
           <span>{{ $t('bank.sel.picked') }}: <b class="tabular-nums" dir="ltr">{{ fmt.money(pickedSum) }}</b> ({{ fmt.money(picked.length) }})</span>
           <span v-if="selectedLine && picked.length">{{ $t('bank.sel.gap') }}: <b class="tabular-nums" dir="ltr" :class="pickedSum === selectedLine.amount ? 'text-emerald-700' : 'text-rose-700'">{{ fmt.money(selectedLine.amount - pickedSum) }}</b></span>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-end gap-2">
           <AppButton :disabled="!canMatch || busy" @click="match">{{ $t('bank.match') }}</AppButton>
           <AppButton variant="secondary" :disabled="!canClear || busy" @click="clear">{{ $t('bank.clear') }}</AppButton>
           <AppButton v-if="canUnclear" variant="secondary" :disabled="busy" @click="unclear">{{ $t('bank.unclear') }}</AppButton>

@@ -217,7 +217,7 @@ async function cancelExpense(x: PettyExpense) {
           </h1>
           <p class="mt-1 text-sm text-slate-600">{{ fund.custodianName ?? $t('treasury.petty.noCustodian') }} · {{ fund.fundAccount }}</p>
         </div>
-        <div v-if="canManage && active" class="flex flex-wrap gap-2">
+        <div v-if="canManage && active" class="flex flex-wrap justify-end gap-2">
           <AppButton @click="start('fund')">{{ $t('treasury.petty.fund') }}</AppButton>
           <AppButton variant="secondary" @click="start('return')">{{ $t('treasury.petty.giveBack') }}</AppButton>
           <AppButton variant="secondary" @click="start('ceiling')">{{ $t('treasury.petty.changeCeiling') }}</AppButton>
@@ -247,7 +247,7 @@ async function cancelExpense(x: PettyExpense) {
       <section v-if="tab === 'expenses'" class="space-y-3">
         <div class="flex flex-wrap items-end justify-between gap-3">
           <div class="w-44"><AppSelect v-model="expStatus" :label="$t('treasury.filters.status')" :options="statusOptions" /></div>
-          <div v-if="canManage && active" class="flex flex-wrap gap-2">
+          <div v-if="canManage && active" class="flex flex-wrap justify-end gap-2">
             <AppButton variant="secondary" @click="start('expense')"><AppIcon name="plus" />{{ $t('treasury.petty.addExpense') }}</AppButton>
             <AppButton :disabled="fund.openExpenses === 0" @click="start('settle')">{{ selected.length ? $t('treasury.petty.settleSelected', { n: selected.length }) : $t('treasury.petty.settle') }}</AppButton>
           </div>

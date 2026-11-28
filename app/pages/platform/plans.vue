@@ -171,7 +171,7 @@ const generalError = computed(() => {
           </li>
         </ul>
         <p class="mt-3 text-xs text-slate-500">{{ $t('platform.plans.companies', { n: p.companies }) }}</p>
-        <div class="mt-3 flex flex-wrap gap-2">
+        <div class="mt-3 flex flex-wrap justify-end gap-2">
           <AppButton variant="secondary" @click="ask(p)">{{ $t('common.edit') }}</AppButton>
           <AppButton v-if="p.code !== 'full'" variant="secondary" :disabled="p.companies > 0" :title="p.companies > 0 ? $t('platform.plans.deleteBlocked') : undefined" @click="askDelete(p)">{{ $t('common.delete') }}</AppButton>
         </div>

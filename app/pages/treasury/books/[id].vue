@@ -105,7 +105,7 @@ async function submit() {
           </h1>
           <p class="mt-1 text-sm text-slate-600">{{ book.bankName }}<span v-if="book.branch"> · {{ book.branch }}</span> · {{ book.bankAccount }}<span v-if="book.bankDetailName"> · {{ book.bankDetailName }}</span></p>
         </div>
-        <div v-if="canManage && active" class="flex flex-wrap gap-2">
+        <div v-if="canManage && active" class="flex flex-wrap justify-end gap-2">
           <NuxtLink v-if="book.nextLeafId" :to="{ path: '/treasury/new', query: { book: book.id } }"
                     class="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-indigo-700">{{ $t('treasury.books.issueCheque') }}</NuxtLink>
           <AppButton variant="secondary" @click="startClose">{{ $t('treasury.books.close') }}</AppButton>

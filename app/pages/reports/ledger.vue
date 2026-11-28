@@ -189,7 +189,7 @@ const cell = (n: number) => (n ? fmt.money(n) : '—')
           </tr>
           </tbody>
         </table>
-        <div v-if="nextCursor" class="border-t border-slate-100 p-3 text-center">
+        <div v-if="nextCursor" class="border-t border-slate-100 flex justify-end p-3">
           <AppButton variant="secondary" :loading="moreLoading" @click="more">{{ $t('reports.loadMore') }}</AppButton>
         </div>
       </div>

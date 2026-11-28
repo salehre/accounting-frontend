@@ -151,7 +151,7 @@ const stateColor = {
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-3">
+      <div class="flex flex-wrap justify-end gap-3">
         <AppButton v-if="canManage && data.actions.generate" :loading="busy === 'generate'" @click="generate">{{ $t('yearEnd.generate') }}</AppButton>
         <AppButton v-if="canClose && data.actions.post" @click="postOpen = true">{{ $t('yearEnd.post') }}</AppButton>
         <AppButton v-if="canManage && data.actions.discard" variant="secondary" @click="discardOpen = true">{{ $t('yearEnd.discard') }}</AppButton>

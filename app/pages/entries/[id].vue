@@ -110,7 +110,7 @@ const reverseOpen = ref(false)
           <p v-if="entry.description" class="mt-2 text-sm text-slate-800">{{ entry.description }}</p>
         </div>
 
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-end gap-2">
           <template v-if="entry.status === 'draft'">
             <AppButton v-if="canPost" :disabled="!entry.isBalanced" @click="postOpen = true">{{ $t('entries.post') }}</AppButton>
             <NuxtLink v-if="canWrite" :to="`/entries/new?from=${entry.id}&replace=1`"><AppButton variant="secondary"><AppIcon name="edit" />{{ $t('entries.editDraft') }}</AppButton></NuxtLink>

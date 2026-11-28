@@ -103,7 +103,7 @@ function lastLogin(v: string | null): string {
         <h1 class="text-2xl font-bold text-slate-900">{{ $t('users.title') }}</h1>
         <p class="mt-1 text-sm text-slate-600">{{ $t('users.subtitle') }}</p>
       </div>
-      <div class="flex gap-2">
+      <div class="flex justify-end gap-2">
         <NuxtLink to="/roles" class="inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">{{ $t('roles.title') }}</NuxtLink>
         <AppButton v-if="canManage" @click="add"><AppIcon name="plus" />{{ $t('users.add') }}</AppButton>
       </div>

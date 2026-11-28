@@ -68,7 +68,7 @@ function change(kind: 'soft' | 'hard', oldDate: string | null, newDate: string |
             <template v-if="status.softLockDate">{{ fmt.date(status.softLockDate) }}</template>
             <span v-else class="text-sm font-normal text-slate-500">{{ $t('locks.none') }}</span>
           </p>
-          <AppButton v-if="canSoft" variant="secondary" @click="softOpen = true">{{ $t('locks.soft.change') }}</AppButton>
+          <div v-if="canSoft" class="flex justify-end"><AppButton variant="secondary" @click="softOpen = true">{{ $t('locks.soft.change') }}</AppButton></div>
         </section>
 
         <section class="space-y-3 rounded-xl border border-slate-200 bg-white p-5">
@@ -78,7 +78,7 @@ function change(kind: 'soft' | 'hard', oldDate: string | null, newDate: string |
             <template v-if="status.hardLockDate">{{ fmt.date(status.hardLockDate) }}</template>
             <span v-else class="text-sm font-normal text-slate-500">{{ $t('locks.none') }}</span>
           </p>
-          <AppButton v-if="canHard" variant="danger" @click="hardOpen = true">{{ $t('locks.hard.apply') }}</AppButton>
+          <div v-if="canHard" class="flex justify-end"><AppButton variant="danger" @click="hardOpen = true">{{ $t('locks.hard.apply') }}</AppButton></div>
         </section>
       </div>
 

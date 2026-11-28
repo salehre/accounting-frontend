@@ -171,7 +171,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
           </div>
           <p class="mt-1 text-sm text-slate-500" dir="ltr">{{ company.code }} · {{ company.database }}</p>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-end gap-2">
           <AppButton @click="renewOpen = true">{{ $t('platform.detail.renew') }}</AppButton>
           <AppButton variant="secondary" @click="askPlan">{{ $t('platform.detail.changePlan') }}</AppButton>
           <AppButton v-if="company.status === 'active'" variant="danger" @click="askSuspend">{{ $t('platform.detail.suspend') }}</AppButton>
@@ -217,7 +217,7 @@ const actionLabel = (a: string) => (te(`platform.action.${a}`) ? t(`platform.act
             <p class="mt-1 text-xs text-slate-500">{{ $t('platform.detail.issuedAt', { date: day(company.license.issuedAt) }) }}</p>
           </template>
           <p v-else class="text-sm text-slate-500">{{ $t('platform.detail.noLicense') }}</p>
-          <div class="mt-3 flex flex-wrap gap-2">
+          <div class="mt-3 flex flex-wrap justify-end gap-2">
             <AppButton variant="secondary" :loading="busy" @click="askIssue">{{ company.license.active ? $t('platform.detail.reissue') : $t('platform.detail.issue') }}</AppButton>
             <AppButton v-if="company.license.active" variant="secondary" @click="revokeOpen = true">{{ $t('platform.detail.revoke') }}</AppButton>
           </div>
