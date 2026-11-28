@@ -5,6 +5,7 @@ const { t } = useI18n()
 const api = useApi()
 const notify = useNotify()
 const session = useSessionStore()
+const logoutOpen = ref(false)
 const roleLabel = useRoleLabel()
 useHead({ title: computed(() => t('profile.title')) })
 
@@ -77,6 +78,7 @@ async function change() {
       </form>
     </section>
 
-    <div class="flex justify-end"><AppButton variant="secondary" @click="session.logout()"><AppIcon name="logout" />{{ $t('auth.logout') }}</AppButton></div>
+    <div class="flex justify-end"><AppButton variant="secondary" @click="logoutOpen = true"><AppIcon name="logout" />{{ $t('auth.logout') }}</AppButton></div>
+    <LogoutConfirm v-model:open="logoutOpen" />
   </div>
 </template>

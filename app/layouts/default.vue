@@ -2,6 +2,7 @@
 const session = useSessionStore()
 const route = useRoute()
 const open = ref(false)
+const logoutOpen = ref(false)
 
 watch(() => route.path, () => { open.value = false })
 
@@ -67,7 +68,7 @@ const skipToContent = () => main.value?.focus()
             <div class="text-sm font-medium text-slate-900">{{ session.user?.fullName }}</div>
             <div class="text-xs text-slate-500">{{ session.user?.role }}</div>
           </NuxtLink>
-          <button type="button" class="rounded-lg p-2 text-slate-600 hover:bg-slate-100" :title="$t('auth.logout')" @click="session.logout()">
+          <button type="button" class="rounded-lg p-2 text-slate-600 hover:bg-slate-100" :title="$t('auth.logout')" @click="logoutOpen = true">
             <AppIcon name="logout" />
             <span class="sr-only">{{ $t('auth.logout') }}</span>
           </button>
@@ -84,5 +85,6 @@ const skipToContent = () => main.value?.focus()
 
       <main id="main" ref="main" tabindex="-1" class="flex-1 p-4 outline-none sm:p-6"><slot /></main>
     </div>
+    <LogoutConfirm v-model:open="logoutOpen" />
   </div>
 </template>

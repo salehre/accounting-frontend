@@ -131,7 +131,7 @@ function finish() {
       <AppAlert v-if="topError">{{ topError }}</AppAlert>
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <AppInput v-model="code" :label="$t('platform.create.code')" :hint="$t('platform.create.codeHint')" :error="f('code')" ltr autofocus />
+        <AppInput v-model="code" :label="$t('platform.create.code')" :hint="$t('platform.create.codeHint')" :error="f('code')" ltr align-start autofocus />
         <AppInput v-model="name" :label="$t('platform.create.name')" :error="f('name')" />
         <AppSelect v-model="plan" :label="$t('platform.create.plan')" :options="planOptions" :error="f('plan')" />
         <DateInput v-model="endsAt" :label="$t('platform.create.endsAt')" :hint="$t('platform.create.endsAtHint')" :error="f('endsAt')" />

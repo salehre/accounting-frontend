@@ -62,7 +62,9 @@
     "logout": "Sign out",
     "fillAll": "Fill in all fields.",
     "badCredentials": "Wrong username or password.",
-    "companyNotFound": "This company code was not found."
+    "companyNotFound": "This company code was not found.",
+    "logoutTitle": "Sign out",
+    "logoutAsk": "Are you sure you want to sign out?"
   },
   "password": {
     "title": "Your password",

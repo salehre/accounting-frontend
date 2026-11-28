@@ -6,6 +6,7 @@ defineProps<{
   error?: string | null
   autocomplete?: string
   ltr?: boolean      // codes, user names, e-mail, passwords: always typed left to right
+  alignStart?: boolean // with ltr: still start the text at the reading side of the page (right in a right-to-left page)
   autofocus?: boolean
   disabled?: boolean
   hint?: string
@@ -17,17 +18,17 @@ const id = useId()
   <div>
     <label :for="id" class="mb-1.5 block text-sm font-medium text-slate-700">{{ label }}</label>
     <input
-      :id="id"
-      v-model="model"
-      :type="type ?? 'text'"
-      :autocomplete="autocomplete"
-      :autofocus="autofocus"
-      :disabled="disabled"
-      :dir="ltr ? 'ltr' : undefined"
-      :aria-invalid="error ? 'true' : undefined"
-      class="block w-full rounded-lg border bg-white px-3 py-2.5 text-sm shadow-sm outline-none transition
+        :id="id"
+        v-model="model"
+        :type="type ?? 'text'"
+        :autocomplete="autocomplete"
+        :autofocus="autofocus"
+        :disabled="disabled"
+        :dir="ltr ? 'ltr' : undefined"
+        :aria-invalid="error ? 'true' : undefined"
+        class="block w-full rounded-lg border bg-white px-3 py-2.5 text-sm shadow-sm outline-none transition
              focus:ring-2 focus:ring-indigo-500/40 disabled:bg-slate-100 disabled:text-slate-500"
-      :class="error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-indigo-500'"
+        :class="[error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-indigo-500', alignStart ? 'rtl:text-right' : '']"
     >
     <p v-if="hint && !error" class="mt-1 text-xs text-slate-500">{{ hint }}</p>
     <p v-if="error" class="mt-1 text-xs text-red-600">{{ error }}</p>

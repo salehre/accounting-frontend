@@ -191,7 +191,7 @@ const generalError = computed(() => {
 
     <AppModal v-model:open="open" :title="$t(isNew ? 'platform.plans.newTitle' : 'platform.plans.editTitle')">
       <form class="space-y-4" novalidate @submit.prevent="save">
-        <AppInput v-model="form.code" :label="$t('platform.plans.code')" :hint="$t('platform.plans.codeHint')" :error="fieldError('code')" :disabled="!isNew" ltr :autofocus="isNew" />
+        <AppInput v-model="form.code" :label="$t('platform.plans.code')" :hint="$t('platform.plans.codeHint')" :error="fieldError('code')" :disabled="!isNew" ltr align-start :autofocus="isNew" />
         <AppInput v-model="form.name" :label="$t('platform.plans.name')" :error="fieldError('name')" :autofocus="!isNew" />
 
         <fieldset>

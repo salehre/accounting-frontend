@@ -3,6 +3,7 @@ definePageMeta({ layout: 'auth', path: '/choose-password' })
 
 const { t } = useI18n()
 const session = useSessionStore()
+const logoutOpen = ref(false)
 
 const MIN = 10
 const mode = ref<'choose' | 'change'>('choose')
@@ -75,6 +76,7 @@ async function change() {
       </div>
     </form>
 
-    <button class="w-full text-center text-sm text-slate-500 hover:text-slate-700" @click="session.logout()">{{ $t('auth.logout') }}</button>
+    <button class="w-full text-center text-sm text-slate-500 hover:text-slate-700" @click="logoutOpen = true">{{ $t('auth.logout') }}</button>
+    <LogoutConfirm v-model:open="logoutOpen" />
   </div>
 </template>
