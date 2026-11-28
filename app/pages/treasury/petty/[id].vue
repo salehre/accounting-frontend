@@ -254,7 +254,7 @@ async function cancelExpense(x: PettyExpense) {
         </div>
         <p v-if="!expenses.length" class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noExpenses') }}</p>
         <div v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-          <table class="w-full min-w-[640px] text-sm">
+          <table class="w-full min-w-160 text-sm">
             <thead class="bg-slate-50 text-xs text-slate-500">
             <tr>
               <th class="w-10 px-3 py-2.5"><input v-if="canManage && active && openRows.length" type="checkbox" :checked="allSelected" :aria-label="$t('treasury.petty.selectAll')" @change="toggleAll"></th>
@@ -290,7 +290,7 @@ async function cancelExpense(x: PettyExpense) {
       <!-- settlements -->
       <section v-else-if="tab === 'settlements'" class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <p v-if="!fund.settlements.length" class="p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noSettlements') }}</p>
-        <table v-else class="w-full min-w-[560px] text-sm">
+        <table v-else class="w-full min-w-140 text-sm">
           <thead class="bg-slate-50 text-xs text-slate-500">
           <tr>
             <th class="px-3 py-2.5 text-start font-medium">{{ $t('treasury.petty.settlementNo') }}</th>
@@ -325,7 +325,7 @@ async function cancelExpense(x: PettyExpense) {
       <!-- movements -->
       <section v-else class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <p v-if="!fund.movements.length" class="p-8 text-center text-sm text-slate-500">{{ $t('treasury.petty.noMovements') }}</p>
-        <table v-else class="w-full min-w-[520px] text-sm">
+        <table v-else class="w-full min-w-130 text-sm">
           <tbody class="divide-y divide-slate-100">
           <tr v-for="m in fund.movements" :key="m.id">
             <td class="px-3 py-2.5" dir="auto">{{ fmt.date(m.date) }}</td>

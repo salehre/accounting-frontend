@@ -57,6 +57,14 @@ const form = reactive({
 })
 
 const featureCodes = computed(() => Object.keys(data.value?.catalog.features ?? {}))
+// ticking "unlimited" clears the typed number; the field is disabled by the template
+function setUnlimited(code: string, on: boolean) {
+  const l = form.limits[code]
+  if (!l) return
+  l.unlimited = on
+  if (on) l.value = ''
+}
+
 const limitCodes = computed(() => Object.keys(data.value?.catalog.limits ?? {}))
 
 function ask(plan: PlatformPlan | null) {
@@ -212,7 +220,7 @@ const generalError = computed(() => {
                 class="w-24 rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm disabled:bg-slate-100"
             >
             <label v-if="form.limits[c]" class="flex items-center gap-1.5 text-sm text-slate-600">
-              <input v-model="form.limits[c].unlimited" type="checkbox" class="h-4 w-4 accent-indigo-600">
+              <input type="checkbox" class="h-4 w-4 accent-indigo-600" :checked="form.limits[c].unlimited" @change="setUnlimited(c, ($event.target as HTMLInputElement).checked)">
               {{ $t('platform.unlimited') }}
             </label>
           </div>
